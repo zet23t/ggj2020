@@ -40,7 +40,8 @@ public class BlockMapVisualizer : MonoBehaviour
                 }
             }
         }
-        go.AddComponent<Rigidbody>();
+        var body = go.AddComponent<Rigidbody>();
+        body.isKinematic = true;
     }
 
     // Update is called once per frame
