@@ -236,7 +236,8 @@ MonoBehaviour:
   WorldCamera: {fileID: 124470882}
   Width: 8
   Height: 8
-  ActivateVeclocity: -0.5
+  ActivateVeclocity: -2
+  MaterialRegistry: {fileID: 11400000, guid: a6ca048d598d5dc4c865bb7e1b6d125e, type: 2}
   BlockRegistry: {fileID: 11400000, guid: a2d362aa0f2c0b24b8c1128699490f2e, type: 2}
 --- !u!4 &552314289
 Transform:
@@ -246,7 +247,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 552314287}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 0}
