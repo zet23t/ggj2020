@@ -21,6 +21,11 @@ public class BlockMapVisualizer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SpawnBlocks();
+    }
+
+    private void SpawnBlocks()
+    {
         for (int j = 0; j < 10; j += 4)
         {
             int x = 0;
@@ -46,6 +51,18 @@ public class BlockMapVisualizer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            // Destroy existing blocks
+            foreach (var kinematicBlock in (KinematicBlock[]) FindObjectsOfType(typeof(KinematicBlock)))
+            {
+                Destroy(kinematicBlock.gameObject);
+            }
+
+            // Re-Spawn blocks
+            SpawnBlocks();
+        }
+        
         var touches = LeanTouch.GetFingers(true, false, 1);
         if (touches == null || touches.Count == 0)
         {
