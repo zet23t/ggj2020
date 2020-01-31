@@ -18,4 +18,5 @@ public interface IBlockMap
 { 
     void PlaceBlock(Block block, BlockOrientation orientation);
     List<BlockPlacement> GetAllBlocks();
+    void Tick();
 }
