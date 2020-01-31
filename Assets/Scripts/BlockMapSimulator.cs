@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Tilemaps;
 
 /// <summary>
 /// Simulates the 2D-Grid of our game.
@@ -64,10 +65,12 @@ public class BlockMapSimulator : IBlockMap
     }
 
     /// <summary>
-    /// Places a block at the given position.
+    /// Places a block at the given position and orientation.
     /// </summary>
     public void PlaceBlock(Block block, BlockOrientation orientation, int x, int y)
     {
+        block = block.GetRotatedBlock(orientation);
+        
         if (!CanPlaceBlock(block, orientation, x, y))
         {
             throw new InvalidOperationException("No block can be placed here! Use CanPlaceBlock() first!");
@@ -88,7 +91,6 @@ public class BlockMapSimulator : IBlockMap
             {
                 if (block.IsFieldSet(iX, iY))
                 {
-                    //TODO: Rotation
                     _blockGrid[(y + iY) * this._height + (x + iX)] = blockId;
                 }
             }
@@ -96,10 +98,12 @@ public class BlockMapSimulator : IBlockMap
     }
 
     /// <summary>
-    /// Checks if a block can be placed at a given position.
+    /// Checks if a block can be placed at a given position and orientation.
     /// </summary>
     public bool CanPlaceBlock(Block block, BlockOrientation orientation, int x, int y)
     {
+        block = block.GetRotatedBlock(orientation);
+        
         for (int iX = 0; iX < block.GetWidth(); iX++)
         {
             for (int iY = 0; iY < block.GetHeight(); iY++)
@@ -114,9 +118,11 @@ public class BlockMapSimulator : IBlockMap
         return true;
     }
 
-    // simulates a single step in the simulation
+    /// <summary>
+    /// Simulates a single step in the simulation.
+    /// </summary>
     public void Tick()
     {
-
+        
     }
 }
