@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.Tilemaps;
 
 /// <summary>
 /// Simulates the 2D-Grid of our game.
@@ -62,6 +61,39 @@ public class BlockMapSimulator : IBlockMap
     public List<BlockPlacement> GetAllBlocks()
     {
         return _blocks.Values.ToList();
+    }
+
+    /// <summary>
+    /// Lets an explosion occur on the given position withhin a given radius. All Blocks withhin thatradius will be
+    /// removed from the game field and returned in a list.
+    public List<BlockPlacement> Explode(int x, int y, float fRadius)
+    {
+        List<BlockPlacement> explodedBlocks = new List<BlockPlacement>();
+        HashSet<int> explodedBlocksIds = new HashSet<int>();
+
+        for (int iX = 0; iX < _width; iX++)
+        {
+            for (int iY = 0; iY < _height; iY++)
+            {
+                if (Math.Pow(iX - x, 2) + Math.Pow(iY - y, 2) <= Math.Pow(fRadius, 2))
+                {
+                    int id = _blockGrid[y * this._height + x];
+                    if (id >= 0)
+                    {
+                        explodedBlocksIds.Add(id);
+                        _blockGrid[y * this._height + x] = -1;
+                    }
+                }
+            }
+        }
+
+        foreach (int id in explodedBlocksIds)
+        {
+            explodedBlocks.Add(_blocks[id]);
+            _blocks.Remove(id);
+        }
+
+        return explodedBlocks;
     }
 
     /// <summary>
