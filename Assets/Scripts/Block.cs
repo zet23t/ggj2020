@@ -10,6 +10,16 @@ public class Block : ScriptableObject {
     
     public GameObject Prefab;
 
+    public int GetWidth()
+    {
+        return width;
+    }
+
+    public int GetHeight()
+    {
+        return height;
+    }
+    
     public bool IsFieldSet(int x, int y)
     {
         if (x < 0 || y < 0 || x >= width || y >= height)

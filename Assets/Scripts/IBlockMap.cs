@@ -11,12 +11,14 @@ public class BlockPlacement
 {
     public int BlockId;
     public Block Block;
-    BlockOrientation Orientation;
+    public BlockOrientation Orientation;
 }
 
 public interface IBlockMap
 { 
-    void PlaceBlock(Block block, BlockOrientation orientation);
+    void PlaceBlock(Block block, BlockOrientation orientation, int x, int y);
+
+    bool CanPlaceBlock(Block block, BlockOrientation orientation, int x, int y);
     List<BlockPlacement> GetAllBlocks();
     void Tick();
 }
