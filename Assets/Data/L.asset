@@ -14,8 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 2
   height: 4
-  entries:
-  - bools: 
-  - bools: 
-  - bools: 
+  fields: 0000000000000000
   Prefab: {fileID: -927199367670048503, guid: c300bf7fcceccc34ab8ebf0c58d0f178, type: 3}
