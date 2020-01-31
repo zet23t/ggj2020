@@ -235,7 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Width: 8
   Height: 8
-  BlockRegistry: {fileID: 0}
+  BlockRegistry: {fileID: 11400000, guid: a2d362aa0f2c0b24b8c1128699490f2e, type: 2}
 --- !u!4 &552314289
 Transform:
   m_ObjectHideFlags: 0
@@ -245,7 +245,7 @@ Transform:
   m_GameObject: {fileID: 552314287}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
