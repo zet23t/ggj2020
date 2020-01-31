@@ -8,6 +8,7 @@ public class BlockMapVisualizer : MonoBehaviour
     public Camera WorldCamera;
     public int Width;
     public int Height;
+    public float ActivateVeclocity = 1;
 
     public BlockRegistry BlockRegistry;
 
@@ -31,7 +32,7 @@ public class BlockMapVisualizer : MonoBehaviour
     {
         var go = Instantiate(block.Prefab, transform.TransformPoint(position), Quaternion.identity, transform);
         var kblock = go.AddComponent<KinematicBlock>();
-        kblock.Initialize(block);
+        kblock.Initialize(this, block);
         return kblock;
     }
 

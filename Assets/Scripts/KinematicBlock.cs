@@ -4,9 +4,11 @@ using UnityEngine;
 public class KinematicBlock : MonoBehaviour
 {
     private Rigidbody body;
+    private BlockMapVisualizer visualizer;
 
-    public void Initialize(Block block)
+    public void Initialize(BlockMapVisualizer visualizer,  Block block)
     {
+        this.visualizer = visualizer;
         for (int x = 0; x < block.Width; x += 1)
         {
             for (int y = 0; y < block.Height; y += 1)
@@ -25,6 +27,12 @@ public class KinematicBlock : MonoBehaviour
 
     public void Activate()
     {
+        if (!body.isKinematic)
+        {
+            return;
+        }
         body.isKinematic = false;
+        body.AddForce(Vector3.forward * visualizer.ActivateVeclocity, ForceMode.VelocityChange);
+
     }
 }

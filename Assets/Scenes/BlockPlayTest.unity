@@ -236,6 +236,7 @@ MonoBehaviour:
   WorldCamera: {fileID: 124470882}
   Width: 8
   Height: 8
+  ActivateVeclocity: -0.5
   BlockRegistry: {fileID: 11400000, guid: a2d362aa0f2c0b24b8c1128699490f2e, type: 2}
 --- !u!4 &552314289
 Transform:
