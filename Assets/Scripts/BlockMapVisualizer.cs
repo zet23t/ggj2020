@@ -10,6 +10,7 @@ public class BlockMapVisualizer : MonoBehaviour
     public int Height;
     public float ActivateVeclocity = 1;
 
+    public BlockMaterialRegistry MaterialRegistry;
     public BlockRegistry BlockRegistry;
 
     // Start is called before the first frame update
@@ -22,8 +23,9 @@ public class BlockMapVisualizer : MonoBehaviour
             for (int i = 0; i < BlockRegistry.Blocks.Length; i += 1)
             {
                 var block = BlockRegistry.Blocks[i];
-                InstantiateBlock(block, new Vector3(x, block.Height + j, 0));
                 x += block.Width;
+                var material = MaterialRegistry.Materials[Random.Range(0, MaterialRegistry.Materials.Length)];
+                InstantiateBlock(block, new Vector3(x, block.Height + j, 0));
             }
         }
     }

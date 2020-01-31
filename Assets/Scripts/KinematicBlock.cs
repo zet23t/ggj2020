@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class KinematicBlock : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class KinematicBlock : MonoBehaviour
             return;
         }
         body.isKinematic = false;
-        body.AddForce(Vector3.forward * visualizer.ActivateVeclocity, ForceMode.VelocityChange);
+        body.AddForceAtPosition(Vector3.forward * visualizer.ActivateVeclocity, transform.position + Random.insideUnitSphere * .04f, ForceMode.VelocityChange);
 
     }
 }
