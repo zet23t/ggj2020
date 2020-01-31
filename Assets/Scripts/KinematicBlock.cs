@@ -45,30 +45,42 @@ public class KinematicBlock : MonoBehaviour
 
     private IEnumerator HandleFinger(Lean.Touch.LeanFinger leanFinger, RaycastHit hit)
     {
+        //SetCollidersEnabled(false);
         Plane plane = new Plane(Vector3.forward, hit.point);
+        Plane projPlane = new Plane(Vector3.forward, visualizer.MovePlanePoint);
         var localPos = transform.InverseTransformPoint(hit.point);
         body.isKinematic = true;
         while (!leanFinger.Up)
         {
             Ray ray = visualizer.WorldCamera.ScreenPointToRay(leanFinger.ScreenPosition);
-            if (plane.Raycast(ray, out float distance))
+            if (plane.Raycast(ray, out float distancePlane) && projPlane.Raycast(ray, out float distanceProjPlane))
             {
-                var proj = ray.GetPoint(distance);
+                var projA = ray.GetPoint(distancePlane);
+                var projB = ray.GetPoint(distanceProjPlane);
+                var factor = Mathf.InverseLerp(0.5f, 1.5f, projB.y);
+                var proj = Vector3.Lerp(projA,projB, factor);
                 var currentAttach = transform.TransformPoint(localPos);
-                body.MovePosition((proj - currentAttach) + transform.position);
+                body.MovePosition(Vector3.MoveTowards(body.position, (proj - currentAttach) + body.position, visualizer.MoveBackPerSecond * Time.deltaTime));
+                body.MoveRotation(Quaternion.RotateTowards(body.rotation, Quaternion.identity, visualizer.RotateBackPerSecond * Time.deltaTime * factor));
             }
 
             yield return new WaitForEndOfFrame();
         }
+        // SetCollidersEnabled(true);
         body.isKinematic = false;
     }
 
     private IEnumerator PushOutRoutine()
     {
-        foreach (var collider in colliders) collider.enabled = false;
-        for (int i=0;i<5;i+=1)
+        SetCollidersEnabled(false);
+        for (int i = 0; i < 5; i += 1)
             yield return new WaitForFixedUpdate();
-        foreach (var collider in colliders) collider.enabled = true;
+        SetCollidersEnabled(true);
 
+    }
+
+    private void SetCollidersEnabled(bool b)
+    {
+        foreach (var collider in colliders) collider.enabled = b;
     }
 }

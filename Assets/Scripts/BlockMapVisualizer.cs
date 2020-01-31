@@ -13,6 +13,11 @@ public class BlockMapVisualizer : MonoBehaviour
     public BlockMaterialRegistry MaterialRegistry;
     public BlockRegistry BlockRegistry;
 
+    public float RotateBackPerSecond = 180;
+    public float MoveBackPerSecond = 2;
+
+    public Vector3 MovePlanePoint => transform.TransformPoint(new Vector3(0,0,-2f));
+
     // Start is called before the first frame update
     void Start()
     {
