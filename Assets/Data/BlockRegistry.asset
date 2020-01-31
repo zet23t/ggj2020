@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027b8bb846d6685409b754b24235fcf0, type: 3}
   m_Name: BlockRegistry
   m_EditorClassIdentifier: 
-  Blocks: []
+  Blocks:
+  - {fileID: 11400000, guid: 36248cebb0e6cc249abd75ab6b7f1a3a, type: 2}
