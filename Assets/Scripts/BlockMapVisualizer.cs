@@ -12,10 +12,12 @@ public class BlockMapVisualizer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        int x = 0;
         for (int i=0;i<5;i+=1)
         {
             var block = BlockRegistry.Blocks[Random.Range(0, BlockRegistry.Blocks.Length)];
-            Instantiate(block.Prefab, Random.insideUnitSphere, Quaternion.identity, transform);
+            Instantiate(block.Prefab, transform.TransformPoint(new Vector3(x, block.Height, 0)), Quaternion.identity, transform);
+            x += block.Width;
         }
     }
 
