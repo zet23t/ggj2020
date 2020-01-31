@@ -1,11 +1,8 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: e9e908d5c3d216a40a41b1631c30a7f6
-=======
-guid: a0a98ebb0083dd445b5e303b3a570f5a
->>>>>>> Doing: BlockMapSimulator
+guid: da8a88708d8e3f349920ae0d6cc7e3c1
+timeCreated: 1480979980
+licenseType: Store
 MonoImporter:
-  externalObjects: {}
   serializedVersion: 2
   defaultReferences: []
   executionOrder: 0
