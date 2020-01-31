@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-enum BlockOrientation{
+public enum BlockOrientation{
 
 }
 
