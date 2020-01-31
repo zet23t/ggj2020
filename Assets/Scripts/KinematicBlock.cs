@@ -17,7 +17,7 @@ public class KinematicBlock : MonoBehaviour
                 {
                     var box = gameObject.AddComponent<BoxCollider>();
                     box.center = new Vector3(x + .5f - block.Width, -y - .5f, 0);
-                    box.size = Vector3.one;
+                    box.size = Vector3.one * 0.98f;
                 }
             }
         }
