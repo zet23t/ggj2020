@@ -5,12 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/BlockPlayTest.unity
-    guid: bb8939f31a9b8da419c9d36ecc12f37d
-  - enabled: 0
-    path: Assets/Scenes/BlockTest.unity
-    guid: 83d6dfd9f56c92f44b6e74ae445d7e96
   - enabled: 1
     path: Assets/Scenes/StartingScene.unity
     guid: 9f557ac2f537747e389aacc2275fad8e
@@ -20,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Level1.unity
     guid: b6787607a0ac84fea863832ead195298
+  - enabled: 1
+    path: Assets/Scenes/BlockPlayTest.unity
+    guid: bb8939f31a9b8da419c9d36ecc12f37d
+  - enabled: 0
+    path: Assets/Scenes/BlockTest.unity
+    guid: 83d6dfd9f56c92f44b6e74ae445d7e96
   m_configObjects: {}
