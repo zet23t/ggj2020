@@ -7,6 +7,9 @@ public class Block : ScriptableObject {
     private int width, height;
     [SerializeField]
     private bool[] fields;
+
+    public int Width => width;
+    public int Height => height;
     
     public GameObject Prefab;
 
