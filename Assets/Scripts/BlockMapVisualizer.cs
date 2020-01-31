@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Lean.Touch;
 using UnityEngine;
 
 public class BlockMapVisualizer : MonoBehaviour
 {
+    public Camera WorldCamera;
     public int Width;
     public int Height;
 
@@ -25,29 +27,29 @@ public class BlockMapVisualizer : MonoBehaviour
         }
     }
 
-    private void InstantiateBlock(Block block, Vector3 position)
+    private KinematicBlock InstantiateBlock(Block block, Vector3 position)
     {
         var go = Instantiate(block.Prefab, transform.TransformPoint(position), Quaternion.identity, transform);
-        for (int x = 0; x < block.Width; x += 1)
-        {
-            for (int y = 0; y < block.Height; y += 1)
-            {
-                if (block.IsFieldSet(x, y))
-                {
-                    var box = go.AddComponent<BoxCollider>();
-                    box.center = new Vector3(x + .5f - block.Width, -y - .5f, 0);
-                    box.size = Vector3.one;
-                }
-            }
-        }
-        var body = go.AddComponent<Rigidbody>();
-        body.isKinematic = true;
+        var kblock = go.AddComponent<KinematicBlock>();
+        kblock.Initialize(block);
+        return kblock;
     }
 
     // Update is called once per frame
     void Update()
     {
+        var touches = LeanTouch.GetFingers(true, false, 1);
+        if (touches == null || touches.Count == 0)
+        {
+            return;
+        }
 
+        var ray = WorldCamera.ScreenPointToRay(touches[0].ScreenPosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 20, -1) && hit.collider.GetComponent<KinematicBlock>())
+        {
+            var kb = hit.collider.GetComponent<KinematicBlock>();
+            kb.Activate();
+        }
     }
 
     private void OnDrawGizmos()
