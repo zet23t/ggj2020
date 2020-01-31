@@ -271,7 +271,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3135866730103547351, guid: db9642c9a741d407ebced774c0b75bc0,
           type: 3}
-        m_MethodName: LoadCredits
+        m_MethodName: LoadCreditsScreen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -961,7 +961,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3135866730103547351, guid: db9642c9a741d407ebced774c0b75bc0,
           type: 3}
-        m_MethodName: LoadLevel1
+        m_MethodName: LoadFirstLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -970,7 +970,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &1868149927
 MonoBehaviour:
   m_ObjectHideFlags: 0
