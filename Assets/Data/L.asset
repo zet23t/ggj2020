@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab55f7a0388d3ca4fb12f400d650c9ed, type: 3}
   m_Name: L
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
-  fields: 
-  Prefab: {fileID: 0}
+  width: 2
+  height: 4
+  entries:
+  - bools: 
+  - bools: 
+  - bools: 
+  Prefab: {fileID: -927199367670048503, guid: c300bf7fcceccc34ab8ebf0c58d0f178, type: 3}

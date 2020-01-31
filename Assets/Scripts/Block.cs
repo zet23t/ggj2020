@@ -3,21 +3,19 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Block", menuName = "GJ2020/Block", order = 0)]
 public class Block : ScriptableObject {
-    public int width, height;
+    [SerializeField]
+    private int width, height;
     [SerializeField]
     private bool[] fields;
+    
+    public GameObject Prefab;
 
     public bool IsFieldSet(int x, int y)
     {
-        return fields[x];
-    }
-
-    public GameObject Prefab;
-    
-    private void OnValidate() {
-        if (fields == null || width * height != fields.Length)
+        if (x < 0 || y < 0 || x >= width || y >= height)
         {
-            fields = new bool[width * height];
+            return false;
         }
+        return fields[x + y * width];
     }
 }
