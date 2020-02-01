@@ -15,7 +15,8 @@ public class Block : ScriptableObject {
     public GameObject Prefab;
 
     private Dictionary<BlockOrientation, Block> _rotations = new Dictionary<BlockOrientation, Block>();
-    
+
+
     public int GetWidth()
     {
         return width;

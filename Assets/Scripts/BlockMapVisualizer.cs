@@ -1,5 +1,11 @@
-﻿using Lean.Touch;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Timers;
+using Lean.Touch;
 using UnityEngine;
+using Random = UnityEngine.Random;
 using UnityEngine.UI;
 
 public class BlockMapVisualizer : MonoBehaviour
@@ -18,16 +24,40 @@ public class BlockMapVisualizer : MonoBehaviour
     public float SnapBackDampening = 100;
     private BlockMapSimulator simulator;
 
+    private KinematicBlock[] kinematicBlocks;
+
     public Vector3 MovePlanePoint => transform.TransformPoint(new Vector3(0, 0, -1.05f));
     public Vector3 PlayPlanePoint => transform.TransformPoint(new Vector3(0, 0, 0));
 
     public Text DebugOutput;
+    private float timeElaspedSinceLastTrigger = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         simulator = new BlockMapSimulator(Width, Height, BlockRegistry);
         SpawnBlocks();
+    }
+
+    private void ExplodeRandomBlock()
+    {
+        print("triggered!");
+
+        kinematicBlocks = (KinematicBlock[]) FindObjectsOfType(typeof(KinematicBlock));
+
+        BlockPlacement explodedBlock = null;
+        while (explodedBlock == null)
+        {
+            var possiblyExplodedBlocks = simulator.Explode(Random.Range(0, 100), Random.Range(0, 100), 0.0f);
+            if (possiblyExplodedBlocks.Count != 0)
+            {
+                explodedBlock = possiblyExplodedBlocks[0];
+            }
+        }
+
+        var currentKineticBlock = kinematicBlocks.First(block => block.BlockID == explodedBlock.BlockId);
+
+        currentKineticBlock.PushOut();
     }
 
     private void SpawnBlocks()
@@ -40,9 +70,9 @@ public class BlockMapVisualizer : MonoBehaviour
             {
                 var block = BlockRegistry.Blocks[i];
                 x += block.Width;
-                var material = MaterialRegistry.Materials[UnityEngine.Random.Range(0, MaterialRegistry.Materials.Length)];
+                var material =
+                    MaterialRegistry.Materials[UnityEngine.Random.Range(0, MaterialRegistry.Materials.Length)];
                 InstantiateBlock(block, x, block.Height + j, material);
-                
             }
         }
     }
@@ -59,16 +89,26 @@ public class BlockMapVisualizer : MonoBehaviour
             Destroy(go);
             return null;
         }
+
         kblock.BlockID = simulator.PlaceBlock(block, BlockOrientation.O0, simPos.x, simPos.y);
-        
+
         return kblock;
     }
 
     // Update is called once per frame
     void Update()
     {
-        DebugOutput.text = simulator.ToString();
-        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ) && Input.GetKeyDown(KeyCode.R))
+        timeElaspedSinceLastTrigger += Time.deltaTime;
+
+        if (timeElaspedSinceLastTrigger > 3.0f)
+        {
+            ExplodeRandomBlock();
+
+            timeElaspedSinceLastTrigger -= 3.0f;
+        }
+
+        //DebugOutput.text = simulator.ToString();
+        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.R))
         {
             // Destroy existing blocks
             foreach (var kinematicBlock in (KinematicBlock[]) FindObjectsOfType(typeof(KinematicBlock)))
@@ -102,17 +142,20 @@ public class BlockMapVisualizer : MonoBehaviour
     public bool InsideBox(KinematicBlock block)
     {
         Block oriented = block.GetOrientedBlock(out Vector2Int position);
-        return position.x >= 0 && position.y >= oriented.Height && position.x + oriented.Width <= Width && position.y <= Height;
+        return position.x >= 0 && position.y >= oriented.Height && position.x + oriented.Width <= Width &&
+               position.y <= Height;
     }
 
     public bool CanPlace(KinematicBlock block)
     {
         Block oriented = block.GetOrientedBlock(out Vector2Int position);
         // TODO: simulator check
-        if (!(position.x >= 0 && position.y >= oriented.Height && position.x + oriented.Width <= Width && position.y <= Height))
+        if (!(position.x >= 0 && position.y >= oriented.Height && position.x + oriented.Width <= Width &&
+              position.y <= Height))
         {
             return false;
         }
+
         var b = block.GetOrientedBlock(out Vector2Int pos);
         return simulator.CanPlaceBlock(b, block.CurrentRotationToOrientation(), pos.x, pos.y);
     }

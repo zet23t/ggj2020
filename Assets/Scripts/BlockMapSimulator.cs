@@ -3,7 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Simulates the 2D-Grid of our game.
@@ -16,24 +18,24 @@ public class BlockMapSimulator : IBlockMap
     /// The width of the grid
     /// </summary>
     public int Width;
-    
+
     /// <summary>
     /// The height of the grid
     /// </summary>
     public int Height;
-    
+
     /// <summary>
     /// Information about all available Block types
     /// </summary>
     public BlockRegistry Registry;
-    
+
     /// <summary>
     /// A two-dimensional grid that represents the game field.
     /// The block id refers to a BlockPlacement-Object from <see cref="_blocks"/>.
     /// If the block id equals -1, there is no block at that position.
     /// </summary>
     private readonly int[] _blockGrid;
-    
+
     /// <summary>
     /// A Dicitonary with all Blocks in the game field.
     /// The index is an unique ID of the Block.
@@ -63,14 +65,14 @@ public class BlockMapSimulator : IBlockMap
     {
         return _blocks.Values.ToList();
     }
-
+    
     /// <summary>
     /// Lets an explosion occur on the given position withhin a given radius. All Blocks withhin thatradius will be
     /// removed from the game field and returned in a list.
     public List<BlockPlacement> Explode(int x, int y, float fRadius)
     {
         y = Height - y;
-        
+
         List<BlockPlacement> explodedBlocks = new List<BlockPlacement>();
         HashSet<int> explodedBlocksIds = new HashSet<int>();
 
@@ -105,23 +107,23 @@ public class BlockMapSimulator : IBlockMap
     public int PlaceBlock(Block block, BlockOrientation orientation, int x, int y)
     {
         y = Height - y;
-        
+
         block = block.GetRotatedBlock(orientation);
-        
+
         if (!CanPlaceBlock(block, orientation, x, y, false))
         {
             throw new InvalidOperationException("No block can be placed here! Use CanPlaceBlock() first!");
         }
-        
+
         int blockId = _idCounter++;
-        
+
         _blocks.Add(blockId, new BlockPlacement()
         {
             BlockId = blockId,
             Block = block,
             Orientation = orientation
         });
-        
+
         for (int iX = 0; iX < block.GetWidth(); iX++)
         {
             for (int iY = 0; iY < block.GetHeight(); iY++)
@@ -141,12 +143,12 @@ public class BlockMapSimulator : IBlockMap
     /// </summary>
     public bool CanPlaceBlock(Block block, BlockOrientation orientation, int x, int y, bool invertYAxis = true)
     {
-        if(invertYAxis)
+        if (invertYAxis)
             y = Height - y;
-        
+
         //if (x < 0 || y < 0 || x >= Width - 1 || y >= Height - 1)
         //    return false;
-        
+
         block = block.GetRotatedBlock(orientation);
 
         for (int iX = 0; iX < block.GetWidth(); iX++)
@@ -158,6 +160,7 @@ public class BlockMapSimulator : IBlockMap
                 {
                     return false;
                 }
+
                 if (block.IsFieldSet(iX, iY) && _blockGrid[(y + iY) * Width + (x + iX)] > 0)
                 {
                     return false;
@@ -173,7 +176,6 @@ public class BlockMapSimulator : IBlockMap
     /// </summary>
     public void Tick()
     {
-        
     }
 
     public override string ToString()
@@ -185,7 +187,7 @@ public class BlockMapSimulator : IBlockMap
             {
                 str += _blockGrid[iY * Width + iX] != -1 ? "#" : "_";
             }
-        
+
             str += "\n";
         }
 

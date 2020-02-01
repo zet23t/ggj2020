@@ -9,7 +9,7 @@ public class KinematicBlock : MonoBehaviour
     private Rigidbody body;
     private BlockMapVisualizer visualizer;
     private List<Collider> colliders = new List<Collider>();
-    private Block block;
+    public Block block;
     private BlockOrientation orientation;
 
     public int BlockID;
