@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class BlockMapVisualizer : MonoBehaviour
 {
+    public bool IsEditor;
     public PhysicMaterial BlockMaterial;
     public Camera WorldCamera;
     public int Width;
@@ -134,6 +135,11 @@ public class BlockMapVisualizer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (IsEditor)
+        {
+            
+            return;
+        }
         UpdateBlockPush();
 
         DebugOutput.text = simulator.ToString();
