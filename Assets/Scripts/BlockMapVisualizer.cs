@@ -111,4 +111,9 @@ public class BlockMapVisualizer : MonoBehaviour
         pos.y = Mathf.Round(pos.y);
         return transform.TransformPoint(pos);
     }
+
+    public float GetBottom()
+    {
+        return transform.position.y;
+    }
 }
