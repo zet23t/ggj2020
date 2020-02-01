@@ -55,7 +55,7 @@ public class BlockMapVisualizer : MonoBehaviour
         var go = Instantiate(block.Prefab, transform.TransformPoint(position), Quaternion.identity, transform);
         var kblock = go.AddComponent<KinematicBlock>();
         kblock.Initialize(this, block, m, BlockMaterial);
-        MapSimulator.PlaceBlock(block, BlockOrientation.O0, (int)position.x - block.Width, (int)position.y - block.Height);
+        // MapSimulator.PlaceBlock(block, BlockOrientation.O0, (int)position.x - block.Width, (int)position.y - block.Height);
         return kblock;
     }
 
@@ -83,7 +83,7 @@ public class BlockMapVisualizer : MonoBehaviour
         if (touches[0].Down)
         {
             var ray = WorldCamera.ScreenPointToRay(touches[0].ScreenPosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 20, -1) && hit.collider.GetComponent<KinematicBlock>())
+            if (Physics.Raycast(ray, out RaycastHit hit, 20, ~(1<<2)) && hit.collider.GetComponent<KinematicBlock>())
             {
                 var kb = hit.collider.GetComponent<KinematicBlock>();
                 kb.Activate(touches[0], hit);
@@ -95,7 +95,7 @@ public class BlockMapVisualizer : MonoBehaviour
     {
         Block oriented = block.GetOrientedBlock(out Vector2Int position);
         // TODO: simulator check
-        return true;
+        return position.x >= 0 && position.y >= oriented.Height && position.x + oriented.Width <= Width && position.y <= Height;
     }
 
     private void OnDrawGizmos()
@@ -112,8 +112,8 @@ public class BlockMapVisualizer : MonoBehaviour
         return transform.TransformPoint(pos);
     }
 
-    public bool IsFitting(KinematicBlock kinematicBlock)
+    public float GetBottom()
     {
-        return kinematicBlock.transform.position.y > 1;
+        return transform.position.y;
     }
 }
