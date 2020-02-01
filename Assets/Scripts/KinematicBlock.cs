@@ -13,9 +13,26 @@ public class KinematicBlock : MonoBehaviour
 
     public Block GetOrientedBlock(out Vector2Int position)
     {
-        position = Vector2Int.RoundToInt(body.position);
-        
+        position = GetTopLeftPoint();
+
         return block;
+    }
+
+    private Vector2Int GetTopLeftPoint()
+    {
+        Vector3 minPos = visualizer.SnapPoint(body.position);
+        for (int x = 0; x < block.Width; x += 1)
+        {
+            for (int y = 0; y < block.Height; y += 1)
+            {
+                var testPos = visualizer.SnapPoint(transform.TransformPoint(-x -1f, -y - 1f, 0));
+                minPos.x = Mathf.Min(testPos.x, minPos.x);
+                minPos.y = Mathf.Max(testPos.y, minPos.y);
+            }
+        }
+        Vector3 space = visualizer.transform.InverseTransformPoint(minPos);
+        
+        return Vector2Int.RoundToInt(space);
     }
 
     public void Initialize(BlockMapVisualizer visualizer, Block block, BlockMaterial m, PhysicMaterial blocksMaterial)
@@ -75,19 +92,19 @@ public class KinematicBlock : MonoBehaviour
                 switch (tracer.GetGesture())
                 {
                     case Gesture.RotateLeft:
-                        targetRotation = targetRotation * Quaternion.Euler(0,0,90);
+                        targetRotation = targetRotation * Quaternion.Euler(0, 0, 90);
                         tracer.Reset();
                         break;
                     case Gesture.RotateRight:
-                        targetRotation = targetRotation * Quaternion.Euler(0,0,-90);
+                        targetRotation = targetRotation * Quaternion.Euler(0, 0, -90);
                         tracer.Reset();
                         break;
                     case Gesture.MirrorHorizontal:
-                        targetRotation = targetRotation * Quaternion.Euler(0,180,0);
+                        targetRotation = targetRotation * Quaternion.Euler(0, 180, 0);
                         tracer.Reset();
                         break;
                     case Gesture.MirrorVertical:
-                        targetRotation = targetRotation * Quaternion.Euler(180,0,0);
+                        targetRotation = targetRotation * Quaternion.Euler(180, 0, 0);
                         tracer.Reset();
                         break;
 
@@ -140,5 +157,11 @@ public class KinematicBlock : MonoBehaviour
     private void SetCollidersEnabled(bool b)
     {
         foreach (var collider in colliders) collider.enabled = b;
+    }
+
+    private void OnDrawGizmosSelected() {
+        Vector2Int p2d = GetTopLeftPoint();
+        var pos = visualizer.transform.TransformPoint(new Vector3(p2d.x, p2d.y, 0));
+        Gizmos.DrawWireSphere(new Vector3(pos.x, pos.y, 0), .125f);
     }
 }

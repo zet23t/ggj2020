@@ -14,12 +14,12 @@ public class BlockMapSimulator : IBlockMap
     /// <summary>
     /// The width of the grid
     /// </summary>
-    private readonly int _width;
+    public int Width;
     
     /// <summary>
     /// The height of the grid
     /// </summary>
-    private readonly int _height;
+    public int Height;
     
     /// <summary>
     /// Information about all available Block types
@@ -41,8 +41,8 @@ public class BlockMapSimulator : IBlockMap
 
     public BlockMapSimulator(int width, int height, BlockRegistry blockRegistry)
     {
-        this._width = width;
-        this._height = height;
+        this.Width = width;
+        this.Height = height;
         this.Registry = blockRegistry;
 
         _blockGrid = new int[width * height];
@@ -71,17 +71,17 @@ public class BlockMapSimulator : IBlockMap
         List<BlockPlacement> explodedBlocks = new List<BlockPlacement>();
         HashSet<int> explodedBlocksIds = new HashSet<int>();
 
-        for (int iX = 0; iX < _width; iX++)
+        for (int iX = 0; iX < Width; iX++)
         {
-            for (int iY = 0; iY < _height; iY++)
+            for (int iY = 0; iY < Height; iY++)
             {
                 if (Math.Pow(iX - x, 2) + Math.Pow(iY - y, 2) <= Math.Pow(fRadius, 2))
                 {
-                    int id = _blockGrid[y * this._height + x];
+                    int id = _blockGrid[y * this.Width + x];
                     if (id >= 0)
                     {
                         explodedBlocksIds.Add(id);
-                        _blockGrid[y * this._height + x] = -1;
+                        _blockGrid[y * this.Width + x] = -1;
                     }
                 }
             }
@@ -123,7 +123,7 @@ public class BlockMapSimulator : IBlockMap
             {
                 if (block.IsFieldSet(iX, iY))
                 {
-                    _blockGrid[(y + iY) * _width + (x + iX)] = blockId;
+                    _blockGrid[(y + iY) * Width + (x + iX)] = blockId;
                 }
             }
         }
@@ -134,13 +134,16 @@ public class BlockMapSimulator : IBlockMap
     /// </summary>
     public bool CanPlaceBlock(Block block, BlockOrientation orientation, int x, int y)
     {
-        block = block.GetRotatedBlock(orientation);
+        if (x < 0 || y < 0 || x >= Width || y >= Height)
+            return false;
         
+        block = block.GetRotatedBlock(orientation);
+
         for (int iX = 0; iX < block.GetWidth(); iX++)
         {
             for (int iY = 0; iY < block.GetHeight(); iY++)
             {
-                if (block.IsFieldSet(iX, iY) && _blockGrid[y * this._height + x] > 0)
+                if (block.IsFieldSet(iX, iY) && _blockGrid[(y + iY) * Width + (x + iX)] > 0)
                 {
                     return false;
                 }

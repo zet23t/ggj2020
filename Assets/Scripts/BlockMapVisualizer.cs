@@ -14,6 +14,7 @@ public class BlockMapVisualizer : MonoBehaviour
 
     public BlockMaterialRegistry MaterialRegistry;
     public BlockRegistry BlockRegistry;
+    public BlockMapSimulator MapSimulator;
 
     public float RotateBackPerSecond = 180;
     public float MoveBackPerSecond = 2;
@@ -26,6 +27,11 @@ public class BlockMapVisualizer : MonoBehaviour
     void Start()
     {
         SpawnBlocks();
+    }
+
+    private void OnValidate()
+    {
+        MapSimulator = new BlockMapSimulator(Width, Height, BlockRegistry);
     }
 
     private void SpawnBlocks()
@@ -49,6 +55,7 @@ public class BlockMapVisualizer : MonoBehaviour
         var go = Instantiate(block.Prefab, transform.TransformPoint(position), Quaternion.identity, transform);
         var kblock = go.AddComponent<KinematicBlock>();
         kblock.Initialize(this, block, m, BlockMaterial);
+        MapSimulator.PlaceBlock(block, BlockOrientation.O0, (int)position.x - block.Width, (int)position.y - block.Height);
         return kblock;
     }
 
