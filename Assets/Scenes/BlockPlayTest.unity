@@ -1266,6 +1266,36 @@ PrefabInstance:
       propertyPath: scoreHandler
       value: 
       objectReference: {fileID: 5517704}
+    - target: {fileID: 1942782872085678750, guid: b1cf2d06196db4d83bdf208c88ad1248,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4045466963441985165, guid: b1cf2d06196db4d83bdf208c88ad1248,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7169106
+      objectReference: {fileID: 0}
+    - target: {fileID: 4045466963441985165, guid: b1cf2d06196db4d83bdf208c88ad1248,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6971652
+      objectReference: {fileID: 0}
+    - target: {fileID: 4045466963441985165, guid: b1cf2d06196db4d83bdf208c88ad1248,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -91.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4356262685980913074, guid: b1cf2d06196db4d83bdf208c88ad1248,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6910574926821253038, guid: b1cf2d06196db4d83bdf208c88ad1248,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 8751514867400965333, guid: b1cf2d06196db4d83bdf208c88ad1248,
         type: 3}
       propertyPath: WorldCamera
