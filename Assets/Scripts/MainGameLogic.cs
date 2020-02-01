@@ -7,6 +7,9 @@ public class MainGameLogic : MonoBehaviour
 {
     public BlockMapVisualizer blockMapVisualizer;
     public Animator trainAnimator;
+    public ScoreHandler scoreHandler;
+
+    public bool isGameOver = false;
     public float BlockPushInterval = 3.0f;
     public float BlockPushMinInterval = 0.5f;
     public float BlockPushSpeedRetainPercentage = 0.8f;
@@ -22,6 +25,10 @@ public class MainGameLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(isGameOver) {
+            return;
+        }
+        
         UpdateBlockPush();
     }
 
@@ -39,6 +46,8 @@ public class MainGameLogic : MonoBehaviour
             if(!blockMapVisualizer.ExplodeRandomBlock())
             {
                 Debug.Log("Game Over!");
+                isGameOver = true;
+                scoreHandler.FreezeTimer();
                 trainAnimator.SetBool("IsExploded", true);
             }
 
