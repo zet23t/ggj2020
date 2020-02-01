@@ -44,7 +44,7 @@ public class BlockMapVisualizer : MonoBehaviour
         BlockPlacement explodedBlock = null;
         while (explodedBlock == null)
         {
-            var possiblyExplodedBlocks = simulator.Explode(Random.Range(0, 100), Random.Range(0, 100), 0.0f);
+            var possiblyExplodedBlocks = simulator.Explode(Random.Range(0, Width-1), Random.Range(0, Height-1), 0.0f);
             if (possiblyExplodedBlocks.Count != 0)
             {
                 explodedBlock = possiblyExplodedBlocks[0];
