@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum Gesture
 {
     Nothing,
-    RotateRight,
     RotateLeft,
+    RotateRight,
     MirrorHorizontal,
     MirrorVertical
 }
@@ -24,10 +25,42 @@ public class GestureTracer
 
     public Gesture GetGesture()
     {
+        var byKey = DetectByKey();
+        if (byKey != Gesture.Nothing)
+        {
+            return byKey;
+        }
+
+        return DetectByTouch();
+    }
+
+    private Gesture DetectByKey()
+    {
+        var rotateClockwiseKeys = new List<KeyCode> {KeyCode.D, KeyCode.RightArrow};
+        var rotateAntiClockwiseKey = new List<KeyCode> {KeyCode.A, KeyCode.LeftArrow};
+
+        bool anyClockwiseKeyDown = rotateClockwiseKeys.Any(Input.GetKeyUp);
+        bool anyAntiClockwiseKeyDown = rotateAntiClockwiseKey.Any(Input.GetKeyUp);
+
+        if (anyClockwiseKeyDown)
+        {
+            return Gesture.RotateRight;
+        }
+        else if (anyAntiClockwiseKeyDown)
+        {
+            return Gesture.RotateLeft;
+        }
+
+        return Gesture.Nothing;
+    }
+
+    private Gesture DetectByTouch()
+    {
         if (points.Count < 5)
         {
             return Gesture.Nothing;
         }
+
         Vector2 centerOfMass = Vector3.zero;
         Vector2 min = new Vector2(float.MaxValue, float.MaxValue);
         Vector2 max = new Vector2(float.MinValue, float.MinValue);
@@ -37,6 +70,7 @@ public class GestureTracer
             max = Vector2.Max(max, points[i]);
             centerOfMass += points[i];
         }
+
         centerOfMass /= points.Count;
         Vector2 center = (min + max) * .5f;
         // is circle ?
@@ -55,10 +89,12 @@ public class GestureTracer
             {
                 continue;
             }
+
             if (diff > sampleDistance * .95f)
             {
                 break;
             }
+
             avgCenterDist += centerDist;
             circleCount += 1;
             Vector2 p2 = points[i + 1];
@@ -72,6 +108,7 @@ public class GestureTracer
             Debug.DrawLine(a, b);
             Debug.DrawLine(b, center, new Color(1, 0, 0, .25f));
         }
+
         if (circleCount > 0)
         {
             avgCenterDist /= circleCount;
@@ -80,11 +117,12 @@ public class GestureTracer
             {
                 if (circleWalkAngle > 270)
                 {
-                    return Gesture.RotateRight;
+                    return Gesture.RotateLeft;
                 }
+
                 if (circleWalkAngle < -270)
                 {
-                    return Gesture.RotateLeft;
+                    return Gesture.RotateRight;
                 }
             }
         }
@@ -117,6 +155,7 @@ public class GestureTracer
             var b = points[i];
             len += Vector3.Distance(a, b);
         }
+
         return len;
     }
 
@@ -126,6 +165,7 @@ public class GestureTracer
         {
             points.Add(point);
         }
+
         while (CalcTotalLength() > maxTraceDistance)
         {
             points.RemoveAt(0);
