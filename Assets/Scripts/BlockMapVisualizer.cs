@@ -95,7 +95,7 @@ public class BlockMapVisualizer : MonoBehaviour
     {
         Block oriented = block.GetOrientedBlock(out Vector2Int position);
         // TODO: simulator check
-        return position.x >= 0 && position.y >= 0 && position.x + oriented.Width < Width && position.y + oriented.Height < Height;
+        return position.x >= 0 && position.y >= oriented.Height && position.x + oriented.Width <= Width && position.y <= Height;
     }
 
     private void OnDrawGizmos()
@@ -112,8 +112,8 @@ public class BlockMapVisualizer : MonoBehaviour
         return transform.TransformPoint(pos);
     }
 
-    public bool IsFitting(KinematicBlock kinematicBlock)
+    public float GetBottom()
     {
-        return kinematicBlock.transform.position.y > 1;
+        return transform.position.y;
     }
 }
