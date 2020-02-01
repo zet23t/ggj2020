@@ -181,7 +181,7 @@ public class BlockMapSimulator : IBlockMap
         {
             for (int iX = 0; iX < Width; iX++)
             {
-                str += _blockGrid[iY * Width + iX] != -1 ? "X" : "Y";
+                str += _blockGrid[iY * Width + iX] != -1 ? "#" : "_";
             }
         
             str += "\n";
