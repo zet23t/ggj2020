@@ -65,11 +65,11 @@ public class KinematicBlock : MonoBehaviour
                 tracer.Sampling(projB);
                 switch (tracer.GetGesture())
                 {
-                    case Gesture.RotateRight:
+                    case Gesture.RotateLeft:
                         targetRotation = targetRotation * Quaternion.Euler(0,0,90);
                         tracer.Reset();
                         break;
-                    case Gesture.RotateLeft:
+                    case Gesture.RotateRight:
                         targetRotation = targetRotation * Quaternion.Euler(0,0,-90);
                         tracer.Reset();
                         break;
