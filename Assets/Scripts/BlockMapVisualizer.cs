@@ -135,18 +135,18 @@ public class BlockMapVisualizer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        DebugOutput.text = simulator.ToString();
         if (IsEditor)
         {
-            
+            HandleInput();
             return;
         }
         UpdateBlockPush();
 
-        DebugOutput.text = simulator.ToString();
         if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.R))
         {
             // Destroy existing blocks
-            foreach (var kinematicBlock in (KinematicBlock[]) FindObjectsOfType(typeof(KinematicBlock)))
+            foreach (var kinematicBlock in (KinematicBlock[])FindObjectsOfType(typeof(KinematicBlock)))
             {
                 Destroy(kinematicBlock.gameObject);
             }
@@ -155,6 +155,11 @@ public class BlockMapVisualizer : MonoBehaviour
             SpawnBlocks();
         }
 
+        HandleInput();
+    }
+
+    private void HandleInput()
+    {
         var touches = LeanTouch.GetFingers(true, false, 1);
         if (touches == null || touches.Count == 0)
         {
@@ -168,11 +173,11 @@ public class BlockMapVisualizer : MonoBehaviour
             {
                 var kb = hit.collider.GetComponent<KinematicBlock>();
                 var block = kb.GetOrientedBlock(out Vector2Int pos);
-                for (int x = 0; x < block.Width; x+=1)
+                for (int x = 0; x < block.Width; x += 1)
                 {
-                    for (int y = 0; y < block.Height; y+=1)
+                    for (int y = 0; y < block.Height; y += 1)
                     {
-                        if (block.IsFieldSet(x,y))
+                        if (block.IsFieldSet(x, y))
                         {
                             simulator.Explode(pos.x + x, pos.y - y, 0);
                             x += block.Width;
@@ -195,15 +200,8 @@ public class BlockMapVisualizer : MonoBehaviour
     public bool CanPlace(KinematicBlock block)
     {
         Block oriented = block.GetOrientedBlock(out Vector2Int position);
-        // TODO: simulator check
-        if (!(position.x >= 0 && position.y >= oriented.Height && position.x + oriented.Width <= Width &&
-              position.y <= Height))
-        {
-            return false;
-        }
 
-        var b = block.GetOrientedBlock(out Vector2Int pos);
-        return simulator.CanPlaceBlock(b, block.CurrentRotationToOrientation(), pos.x, pos.y);
+        return simulator.CanPlaceBlock(oriented, block.CurrentRotationToOrientation(), position.x, position.y);
     }
 
     private void OnDrawGizmos()
