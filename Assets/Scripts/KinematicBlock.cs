@@ -21,19 +21,19 @@ public class KinematicBlock : MonoBehaviour
             case BlockOrientation.O0:
                 return Quaternion.Euler(0,0,0);
             case BlockOrientation.O90:
-                return Quaternion.Euler(0,0,-90);
+                return Quaternion.Euler(0,0,-270);
             case BlockOrientation.O180:
                 return Quaternion.Euler(0,0,-180);
             case BlockOrientation.O270:
-                return Quaternion.Euler(0,0,-270);
+                return Quaternion.Euler(0,0,-90);
             case BlockOrientation.M0:
                 return Quaternion.Euler(0,180,0);
             case BlockOrientation.M90:
-                return Quaternion.Euler(0,180,90);
+                return Quaternion.Euler(0,180,270);
             case BlockOrientation.M180:
                 return Quaternion.Euler(0,180,180);
             case BlockOrientation.M270:
-                return Quaternion.Euler(0,180,270);
+                return Quaternion.Euler(0,180,90);
         }
         return default;
     }
@@ -64,8 +64,9 @@ public class KinematicBlock : MonoBehaviour
 
         BlockOrientation orientation = CurrentRotationToOrientation();
         // print(orientation);
-        block.Rotate(orientation);
-        return block;
+        Block copy = block.Clone();
+        copy.Rotate(orientation);
+        return copy;
     }
 
     public Vector2Int GetTopLeftPoint()
