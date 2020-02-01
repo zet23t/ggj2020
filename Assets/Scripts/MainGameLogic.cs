@@ -67,8 +67,11 @@ public class MainGameLogic : MonoBehaviour
         sfxCrowdShock.Play();
 
         isGameOver = true;
-        scoreHandler.FreezeTimer();
-        trainAnimator.SetBool("IsExploded", true);
+
+        if(scoreHandler != null) { // This is null in the main menu
+            scoreHandler.FreezeTimer();
+            trainAnimator.SetBool("IsExploded", true);
+        }
     }
 
 }
