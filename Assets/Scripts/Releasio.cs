@@ -33,5 +33,14 @@ public class Releasio : MonoBehaviour
 
             materialsExchanged = !materialsExchanged;
         }
+
+        if (materialsExchanged)
+        {
+            foreach (var renderer in savedMaterials.Keys)
+            {
+                float offset = Time.time * 0.5f;
+                renderer.material.mainTextureOffset = new Vector2(offset, 0);
+            }
+        }
     }
 }
