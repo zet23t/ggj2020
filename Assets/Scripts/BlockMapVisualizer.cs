@@ -95,7 +95,7 @@ public class BlockMapVisualizer : MonoBehaviour
     {
         Block oriented = block.GetOrientedBlock(out Vector2Int position);
         // TODO: simulator check
-        return true;
+        return position.x >= 0 && position.y >= 0 && position.x + oriented.Width < Width && position.y + oriented.Height < Height;
     }
 
     private void OnDrawGizmos()
