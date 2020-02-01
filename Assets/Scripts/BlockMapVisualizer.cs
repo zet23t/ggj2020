@@ -46,15 +46,14 @@ public class BlockMapVisualizer : MonoBehaviour
         SpawnBlocks();
     }
 
-    private void ExplodeRandomBlock()
+    private bool ExplodeRandomBlock()
     {
-        BlockPlacement explodedBlock = null;
         var amountOfTries = 0;
         while (true)
         {
             if (++amountOfTries > 50)
             {
-                return;
+                return false;
             }
             
             var possiblyExplodedBlocks = simulator.Explode(Random.Range(0, Width), Random.Range(0, Height), 1.0f);
@@ -67,7 +66,7 @@ public class BlockMapVisualizer : MonoBehaviour
                     currentKineticBlock?.PushOut();
                 }
 
-                return;
+                return true;
             }
         }
     }
@@ -119,7 +118,12 @@ public class BlockMapVisualizer : MonoBehaviour
 
         if (timeElaspedSinceLastTrigger > BlockPushInterval)
         {
-            ExplodeRandomBlock();
+            if(!ExplodeRandomBlock() && simulator.IsEmpty())
+            {
+                Debug.Log("Game Over!");
+                trainAnimator.SetBool("IsExploded", true);
+            }
+
             timeElaspedSinceLastTrigger = 0.0f;
 
             BlockPushInterval = Math.Max(BlockPushMinInterval, BlockPushInterval * BlockPushSpeedRetainPercentage);
