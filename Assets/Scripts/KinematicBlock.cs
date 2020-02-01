@@ -56,7 +56,7 @@ public class KinematicBlock : MonoBehaviour
         Quaternion targetRotation = Quaternion.identity;
         while (!leanFinger.Up)
         {
-
+if (Input.GetKeyDown(KeyCode.A)) print("A");
             Ray rayTouch = visualizer.WorldCamera.ScreenPointToRay(leanFinger.ScreenPosition);
             if (plane.Raycast(rayTouch, out float distancePlane) && projPlane.Raycast(rayTouch, out float distanceProjPlane))
             {
@@ -95,7 +95,7 @@ public class KinematicBlock : MonoBehaviour
 
             }
 
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
         SetCollidersEnabled(true);
 
@@ -110,6 +110,8 @@ public class KinematicBlock : MonoBehaviour
                 Vector3 snapPosition = Vector3.Lerp(position, visualizer.SnapPoint(position), damp);
 
                 body.MovePosition(snapPosition);
+                body.MoveRotation(Quaternion.RotateTowards(body.rotation, targetRotation, visualizer.RotateBackPerSecond * damp));
+
                 var dist = playPlane.GetDistanceToPoint(body.position);
                 yield return null;
             } while (Mathf.Abs(playPlane.GetDistanceToPoint(body.position)) > 0.05f);
