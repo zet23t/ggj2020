@@ -140,7 +140,11 @@ public class BlockMapVisualizer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DebugOutput.text = simulator.ToString();
+        if (DebugOutput != null)
+        {
+            DebugOutput.text = simulator.ToString();
+        }
+        
         if (IsEditor)
         {
             HandleInput();
