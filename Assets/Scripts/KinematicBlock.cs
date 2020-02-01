@@ -65,7 +65,7 @@ public class KinematicBlock : MonoBehaviour
         return block.GetRotatedBlock(orientation);
     }
 
-    private Vector2Int GetTopLeftPoint()
+    public Vector2Int GetTopLeftPoint()
     {
         Vector3 minPos = visualizer.SnapPoint(body.position);
         for (int x = 0; x < block.Width; x += 1)
@@ -195,6 +195,8 @@ public class KinematicBlock : MonoBehaviour
                 var dist = playPlane.GetDistanceToPoint(body.position);
                 yield return null;
             } while (Mathf.Abs(playPlane.GetDistanceToPoint(body.position)) > 0.05f);
+            visualizer.PlaceBlock(this);
+
             yield break;
         }
         body.isKinematic = false;
