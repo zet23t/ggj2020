@@ -169,12 +169,18 @@ public class BlockMapSimulator
         {
             for (int iY = 0; iY < block.Height; iY++)
             {
-                int target = (y + iY) * Width + (x + iX);
+                int iYGrid = (y + iY);
+                int iXGrid = (x + iX);
+                if (iYGrid >= Height || iXGrid >= Width)
+                {
+                    return false;
+                }
+                int target = iYGrid * Width + iXGrid;
                 if (target < 0 || target >= _blockGrid.Length)
                 {
                     return false;
                 }
-                if (block.IsFieldSet(iX, iY) && _blockGrid[(y + iY) * Width + (x + iX)] > 0)
+                if (block.IsFieldSet(iX, iY) && _blockGrid[iYGrid * Width + iXGrid] > 0)
                 {
                     return false;
                 }
