@@ -16,7 +16,7 @@ public class BlockMapVisualizer : MonoBehaviour
     public float RotateBackPerSecond = 180;
     public float MoveBackPerSecond = 2;
 
-    public Vector3 MovePlanePoint => transform.TransformPoint(new Vector3(0,0,-2f));
+    public Vector3 MovePlanePoint => transform.TransformPoint(new Vector3(0,0,-1.05f));
 
     // Start is called before the first frame update
     void Start()
