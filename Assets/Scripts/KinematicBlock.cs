@@ -19,21 +19,21 @@ public class KinematicBlock : MonoBehaviour
         switch (block)
         {
             case BlockOrientation.O0:
-                return Quaternion.Euler(0,0,0);
+                return Quaternion.Euler(0, 0, 0);
             case BlockOrientation.O90:
-                return Quaternion.Euler(0,0,-270);
+                return Quaternion.Euler(0, 0, -270);
             case BlockOrientation.O180:
-                return Quaternion.Euler(0,0,-180);
+                return Quaternion.Euler(0, 0, -180);
             case BlockOrientation.O270:
-                return Quaternion.Euler(0,0,-90);
+                return Quaternion.Euler(0, 0, -90);
             case BlockOrientation.M0:
-                return Quaternion.Euler(0,180,0);
+                return Quaternion.Euler(0, 180, 0);
             case BlockOrientation.M90:
-                return Quaternion.Euler(0,180,270);
+                return Quaternion.Euler(0, 180, 270);
             case BlockOrientation.M180:
-                return Quaternion.Euler(0,180,180);
+                return Quaternion.Euler(0, 180, 180);
             case BlockOrientation.M270:
-                return Quaternion.Euler(0,180,90);
+                return Quaternion.Euler(0, 180, 90);
         }
         return default;
     }
@@ -93,6 +93,18 @@ public class KinematicBlock : MonoBehaviour
         return p2;
     }
 
+    public KinematicBlock Clone()
+    {
+        var cp = Instantiate(gameObject, transform.position, transform.rotation, transform.parent);
+        var kb = cp.GetComponent<KinematicBlock>();
+        kb.body = kb.GetComponent<Rigidbody>();
+        kb.visualizer = visualizer;
+        kb.colliders = new List<Collider>(kb.GetComponents<BoxCollider>());
+        kb.block = block;
+        kb.orientation = orientation;
+        return kb;
+    }
+
     public void Initialize(BlockMapVisualizer visualizer, Block block, BlockMaterial m, PhysicMaterial blocksMaterial)
     {
         this.block = block;
@@ -121,14 +133,14 @@ public class KinematicBlock : MonoBehaviour
         StartCoroutine(HandleFinger(leanFinger, hit));
     }
 
-    public void PushOut()
+    public void PushOut(float forceMultiplier = 1)
     {
         if (!body.isKinematic)
         {
             return;
         }
         body.isKinematic = false;
-        body.AddForceAtPosition(Vector3.forward * visualizer.ActivateVeclocity, body.centerOfMass + Random.insideUnitSphere * .04f, ForceMode.VelocityChange);
+        body.AddForceAtPosition(Vector3.forward * visualizer.ActivateVeclocity * forceMultiplier, body.centerOfMass + Random.insideUnitSphere * .04f, ForceMode.VelocityChange);
         StartCoroutine(PushOutRoutine());
     }
 

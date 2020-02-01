@@ -37,7 +37,29 @@ public class BlockMapVisualizer : MonoBehaviour
     void Start()
     {
         simulator = new BlockMapSimulator(Width, Height, BlockRegistry);
-        SpawnBlocks();
+        if (!IsEditor)
+        {
+            SpawnBlocks();
+        }
+        else
+        {
+            int x = 0;
+            int y = 4;
+            foreach (var block in BlockRegistry.Blocks)
+            {
+                x += block.Width + 1;
+                if (x > Width)
+                {
+                    x = 0;
+                    y += 5;
+                }
+                var kblock = InstantiateBlock(block, x, y, MaterialRegistry.Materials[0], false);
+                var pos = kblock.transform.position;
+                pos.z = -.5f;
+                kblock.transform.position = pos;
+                kblock.PushOut(0f);
+            }
+        }
     }
 
     public bool ExplodeRandomBlock()
@@ -49,7 +71,7 @@ public class BlockMapVisualizer : MonoBehaviour
             {
                 return !simulator.IsEmpty();
             }
-            
+
             var possiblyExplodedBlocks = simulator.Explode(Random.Range(0, Width), Random.Range(0, Height), 1.0f);
             if (possiblyExplodedBlocks.Count != 0)
             {
@@ -68,7 +90,7 @@ public class BlockMapVisualizer : MonoBehaviour
     private void SpawnBlocks()
     {
         kinematicBlocks = new HashSet<KinematicBlock>();
-        
+
         for (int j = 0; j < 10; j += 4)
         {
             int x = 0;
@@ -87,19 +109,24 @@ public class BlockMapVisualizer : MonoBehaviour
         }
     }
 
-    private KinematicBlock InstantiateBlock(Block block, int x, int y, BlockMaterial m)
+    private KinematicBlock InstantiateBlock(Block block, int x, int y, BlockMaterial m, bool place = true)
     {
         Vector3 position = new Vector3(x, y, 0);
         var go = Instantiate(block.Prefab, transform.TransformPoint(position), Quaternion.identity, transform);
         var kblock = go.AddComponent<KinematicBlock>();
         kblock.Initialize(this, block, m, BlockMaterial);
         Vector2Int simPos = kblock.GetSimulatorPosition();
+        if (!place)
+        {
+            return kblock;
+        }
+
         if (!simulator.CanPlaceBlock(block, BlockOrientation.O0, simPos.x, simPos.y))
         {
             Destroy(go);
             return null;
         }
-        
+
         kblock.BlockID = simulator.PlaceBlock(block, BlockOrientation.O0, simPos.x, simPos.y);
 
         return kblock;
@@ -118,7 +145,7 @@ public class BlockMapVisualizer : MonoBehaviour
         if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.R))
         {
             // Destroy existing blocks
-            foreach (var kinematicBlock in (KinematicBlock[])FindObjectsOfType(typeof(KinematicBlock)))
+            foreach (var kinematicBlock in (KinematicBlock[]) FindObjectsOfType(typeof(KinematicBlock)))
             {
                 Destroy(kinematicBlock.gameObject);
             }
@@ -157,6 +184,10 @@ public class BlockMapVisualizer : MonoBehaviour
                         }
                     }
                 }
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    kb = kb.Clone();
+                }
                 kb.Activate(touches[0], hit);
             }
         }
@@ -166,7 +197,7 @@ public class BlockMapVisualizer : MonoBehaviour
     {
         Block oriented = block.GetOrientedBlock(out Vector2Int position);
         return position.x >= 0 && position.y >= oriented.Height && position.x + oriented.Width <= Width &&
-               position.y <= Height;
+            position.y <= Height;
     }
 
     public bool CanPlace(KinematicBlock block)
