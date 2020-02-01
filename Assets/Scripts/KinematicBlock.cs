@@ -69,6 +69,19 @@ public class KinematicBlock : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         SetCollidersEnabled(true);
+
+        if (visualizer.IsFitting(this))
+        {
+            Plane playPlane = new Plane(Vector3.forward, visualizer.PlayPlanePoint);
+            do {
+                float damp = Lean.Touch.LeanTouch.GetDampenFactor(visualizer.SnapBackDampening, Time.deltaTime);
+                var planePos = playPlane.ClosestPointOnPlane(body.position);
+                body.MovePosition(Vector3.Lerp(body.position, planePos, damp));
+                var dist = playPlane.GetDistanceToPoint(body.position);
+                yield return null;
+            } while (Mathf.Abs(playPlane.GetDistanceToPoint(body.position)) > 0.05f);
+            yield break;
+        }
         body.isKinematic = false;
     }
 

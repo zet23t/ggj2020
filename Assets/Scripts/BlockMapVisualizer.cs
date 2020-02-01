@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Lean.Touch;
 using UnityEngine;
@@ -15,8 +16,10 @@ public class BlockMapVisualizer : MonoBehaviour
 
     public float RotateBackPerSecond = 180;
     public float MoveBackPerSecond = 2;
+    public float SnapBackDampening = 100;
 
-    public Vector3 MovePlanePoint => transform.TransformPoint(new Vector3(0,0,-1.05f));
+    public Vector3 MovePlanePoint => transform.TransformPoint(new Vector3(0, 0, -1.05f));
+    public Vector3 PlayPlanePoint => transform.TransformPoint(new Vector3(0, 0, 0));
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +37,7 @@ public class BlockMapVisualizer : MonoBehaviour
             {
                 var block = BlockRegistry.Blocks[i];
                 x += block.Width;
-                var material = MaterialRegistry.Materials[Random.Range(0, MaterialRegistry.Materials.Length)];
+                var material = MaterialRegistry.Materials[UnityEngine.Random.Range(0, MaterialRegistry.Materials.Length)];
                 InstantiateBlock(block, new Vector3(x, block.Height + j, 0), material);
             }
         }
@@ -62,7 +65,7 @@ public class BlockMapVisualizer : MonoBehaviour
             // Re-Spawn blocks
             SpawnBlocks();
         }
-        
+
         var touches = LeanTouch.GetFingers(true, false, 1);
         if (touches == null || touches.Count == 0)
         {
@@ -84,5 +87,10 @@ public class BlockMapVisualizer : MonoBehaviour
     {
         Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.DrawWireCube(new Vector3(Width * .5f, Height * .5f, 0), new Vector3(Width, Height, 0));
+    }
+
+    public bool IsFitting(KinematicBlock kinematicBlock)
+    {
+        return kinematicBlock.transform.position.y > 1;
     }
 }
