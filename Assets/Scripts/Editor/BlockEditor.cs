@@ -34,7 +34,8 @@ public class BlockEditor : Editor {
         serializedObject.ApplyModifiedProperties();
 
         blockOrientation = (BlockOrientation) EditorGUILayout.EnumPopup("Orientation preview", blockOrientation);
-        Block rotblock = (target as Block).GetRotatedBlock(blockOrientation);
+        Block rotblock = (target as Block).Clone();
+        rotblock.Rotate(blockOrientation);
         GUI.enabled = false;
         width = rotblock.Width;
         height = rotblock.Height;

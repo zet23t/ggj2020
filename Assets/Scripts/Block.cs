@@ -14,19 +14,6 @@ public class Block : ScriptableObject {
     
     public GameObject Prefab;
 
-    private Dictionary<BlockOrientation, Block> _rotations = new Dictionary<BlockOrientation, Block>();
-
-
-    public int GetWidth()
-    {
-        return width;
-    }
-
-    public int GetHeight()
-    {
-        return height;
-    }
-    
     public bool IsFieldSet(int x, int y)
     {
         if (x < 0 || y < 0 || x >= width || y >= height)
@@ -36,21 +23,21 @@ public class Block : ScriptableObject {
         return fields[x + y * width];
     }
 
-    public Block GetRotatedBlock(BlockOrientation orientation)
+    public Block Clone()
     {
-        if (_rotations.TryGetValue(orientation, out Block blockR))
-        {
-            return blockR;
-        }
-        
-        blockR = CreateInstance<Block>();
-        blockR.fields = new bool[width * height];
-        blockR.width = width;
-        blockR.height = height;
-        blockR.Prefab = Prefab;
+        Block block = CreateInstance<Block>();
+        block.width = width;
+        block.height = height;
+        block.Prefab = Prefab;
+        block.fields = new bool[width * height];
+        Array.Copy(fields, block.fields, block.fields.Length);
+        return block;
+    }
 
+    public void Rotate(BlockOrientation orientation)
+    {
         int rotate90 = (int) orientation;
-        bool[] fieldsMirrored = new bool[width * height];
+        bool[] fieldsMirrored = new bool[fields.Length];
 
         //Mirror block
         if ((int) orientation > 3)
@@ -62,26 +49,29 @@ public class Block : ScriptableObject {
         }
         else
         {
-            fieldsMirrored = fields;
+            Array.Copy(fields, fieldsMirrored, fields.Length);
         }
 
         //Rotate block
         if (rotate90 != 0)
         {
-            int w = blockR.width;
-            blockR.width = blockR.height;
-            blockR.height = w;
+            int w = width;
+            width = height;
+            height = w;
             for (int i = 0; i < fields.Length; i++)
             {
-                blockR.fields[blockR.RotateIndex(i, blockR.height, blockR.width)] = fieldsMirrored[i];
+                fields[i] = fieldsMirrored[RotateIndex(i, width, height)];
             }
 
-            return blockR.GetRotatedBlock((BlockOrientation) (--rotate90));
+            if (--rotate90 != 0)
+            {
+                Rotate((BlockOrientation) (rotate90));
+            }
         }
-
-        blockR.fields = fieldsMirrored;
-        _rotations.Add(orientation, blockR);
-        return blockR;
+        else
+        {
+            fields = fieldsMirrored;
+        }
     }
 
     private int RotateIndex(int index, int widthLocal, int heightLocal)

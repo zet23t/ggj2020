@@ -118,7 +118,7 @@ public class BlockMapSimulator
     {
         y = InvertY(y);
         
-        block = block.GetRotatedBlock(orientation);
+        block.Rotate(orientation);
         
         if (!CanPlaceBlock(block, orientation, x, y, false))
         {
@@ -134,9 +134,9 @@ public class BlockMapSimulator
             Orientation = orientation
         });
         
-        for (int iX = 0; iX < block.GetWidth(); iX++)
+        for (int iX = 0; iX < block.Width; iX++)
         {
-            for (int iY = 0; iY < block.GetHeight(); iY++)
+            for (int iY = 0; iY < block.Height; iY++)
             {
                 if (block.IsFieldSet(iX, iY))
                 {
@@ -155,14 +155,11 @@ public class BlockMapSimulator
         if (invertYAxis)
             y = InvertY(y);
 
-        //if (x < 0 || y < 0 || x >= Width - 1 || y >= Height - 1)
-        //    return false;
+        block.Rotate(orientation);
 
-        block = block.GetRotatedBlock(orientation);
-
-        for (int iX = 0; iX < block.GetWidth(); iX++)
+        for (int iX = 0; iX < block.Width; iX++)
         {
-            for (int iY = 0; iY < block.GetHeight(); iY++)
+            for (int iY = 0; iY < block.Height; iY++)
             {
                 int target = (y + iY) * Width + (x + iX);
                 if (target < 0 || target >= _blockGrid.Length)

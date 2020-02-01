@@ -64,7 +64,8 @@ public class KinematicBlock : MonoBehaviour
 
         BlockOrientation orientation = CurrentRotationToOrientation();
         // print(orientation);
-        return block.GetRotatedBlock(orientation);
+        block.Rotate(orientation);
+        return block;
     }
 
     public Vector2Int GetTopLeftPoint()
