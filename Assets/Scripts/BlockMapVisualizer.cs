@@ -24,7 +24,7 @@ public class BlockMapVisualizer : MonoBehaviour
     public float SnapBackDampening = 100;
     private BlockMapSimulator simulator;
 
-    private KinematicBlock[] kinematicBlocks;
+    private HashSet<KinematicBlock> kinematicBlocks;
 
     public Vector3 MovePlanePoint => transform.TransformPoint(new Vector3(0, 0, -1.05f));
     public Vector3 PlayPlanePoint => transform.TransformPoint(new Vector3(0, 0, 0));
@@ -41,10 +41,6 @@ public class BlockMapVisualizer : MonoBehaviour
 
     private void ExplodeRandomBlock()
     {
-        print("triggered!");
-
-        kinematicBlocks = (KinematicBlock[]) FindObjectsOfType(typeof(KinematicBlock));
-
         BlockPlacement explodedBlock = null;
         while (explodedBlock == null)
         {
@@ -62,6 +58,8 @@ public class BlockMapVisualizer : MonoBehaviour
 
     private void SpawnBlocks()
     {
+        kinematicBlocks = new HashSet<KinematicBlock>();
+        
         for (int j = 0; j < 10; j += 4)
         {
             int x = 0;
@@ -72,7 +70,7 @@ public class BlockMapVisualizer : MonoBehaviour
                 x += block.Width;
                 var material =
                     MaterialRegistry.Materials[UnityEngine.Random.Range(0, MaterialRegistry.Materials.Length)];
-                InstantiateBlock(block, x, block.Height + j, material);
+                kinematicBlocks.Add(InstantiateBlock(block, x, block.Height + j, material));
             }
         }
     }
