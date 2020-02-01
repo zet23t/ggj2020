@@ -11,7 +11,7 @@ public class Releasio : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ) && Input.GetKeyDown(KeyCode.E))
         {
             Renderer[] allRenderers = (Renderer[]) FindObjectsOfType(typeof(Renderer));
 
