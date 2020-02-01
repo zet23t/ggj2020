@@ -1,15 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class ScoreHandler : MonoBehaviour
 {
     public TextMeshPro scoreText;
-    private long currentScore = 1000;
+    public long currentScore { get; private set; }
 
+    void Start()
+    {
+        currentScore = 1000;
+    }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         currentScore += 1;
