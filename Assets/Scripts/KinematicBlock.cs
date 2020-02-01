@@ -9,9 +9,18 @@ public class KinematicBlock : MonoBehaviour
     private Rigidbody body;
     private BlockMapVisualizer visualizer;
     private List<Collider> colliders = new List<Collider>();
+    private Block block;
+
+    public Block GetOrientedBlock(out Vector2Int position)
+    {
+        position = Vector2Int.RoundToInt(body.position);
+        
+        return block;
+    }
 
     public void Initialize(BlockMapVisualizer visualizer, Block block, BlockMaterial m, PhysicMaterial blocksMaterial)
     {
+        this.block = block;
         GetComponent<MeshRenderer>().sharedMaterial = m.MaterialPrefab;
         this.visualizer = visualizer;
         for (int x = 0; x < block.Width; x += 1)
@@ -56,7 +65,6 @@ public class KinematicBlock : MonoBehaviour
         Quaternion targetRotation = Quaternion.identity;
         while (!leanFinger.Up)
         {
-if (Input.GetKeyDown(KeyCode.A)) print("A");
             Ray rayTouch = visualizer.WorldCamera.ScreenPointToRay(leanFinger.ScreenPosition);
             if (plane.Raycast(rayTouch, out float distancePlane) && projPlane.Raycast(rayTouch, out float distanceProjPlane))
             {
@@ -66,11 +74,11 @@ if (Input.GetKeyDown(KeyCode.A)) print("A");
                 tracer.Sampling(projB);
                 switch (tracer.GetGesture())
                 {
-                    case Gesture.RotateRight:
+                    case Gesture.RotateLeft:
                         targetRotation = targetRotation * Quaternion.Euler(0,0,90);
                         tracer.Reset();
                         break;
-                    case Gesture.RotateLeft:
+                    case Gesture.RotateRight:
                         targetRotation = targetRotation * Quaternion.Euler(0,0,-90);
                         tracer.Reset();
                         break;

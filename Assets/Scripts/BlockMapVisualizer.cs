@@ -84,6 +84,13 @@ public class BlockMapVisualizer : MonoBehaviour
         }
     }
 
+    public bool CanPlace(KinematicBlock block)
+    {
+        Block oriented = block.GetOrientedBlock(out Vector2Int position);
+        // TODO: simulator check
+        return true;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.matrix = transform.localToWorldMatrix;
