@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Block", menuName = "GJ2020/Block", order = 0)]
@@ -13,6 +14,8 @@ public class Block : ScriptableObject {
     
     public GameObject Prefab;
 
+    private Dictionary<BlockOrientation, Block> _rotations = new Dictionary<BlockOrientation, Block>();
+    
     public int GetWidth()
     {
         return width;
@@ -34,7 +37,12 @@ public class Block : ScriptableObject {
 
     public Block GetRotatedBlock(BlockOrientation orientation)
     {
-        Block blockR = CreateInstance<Block>();
+        if (_rotations.TryGetValue(orientation, out Block blockR))
+        {
+            return blockR;
+        }
+        
+        blockR = CreateInstance<Block>();
         blockR.fields = new bool[width * height];
         blockR.width = width;
         blockR.height = height;
@@ -71,6 +79,7 @@ public class Block : ScriptableObject {
         }
 
         blockR.fields = fieldsMirrored;
+        _rotations.Add(orientation, blockR);
         return blockR;
     }
 
