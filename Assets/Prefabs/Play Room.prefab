@@ -1954,7 +1954,7 @@ MonoBehaviour:
   sfxCrowdShock: {fileID: 2017863542269624027}
   BlockPushInterval: 3
   BlockPushMinInterval: 0.5
-  BlockPushSpeedRetainPercentage: 0.2
+  BlockPushSpeedRetainPercentage: 0.9
 --- !u!82 &7410781556765402328
 AudioSource:
   m_ObjectHideFlags: 0
