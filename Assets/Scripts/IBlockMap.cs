@@ -24,7 +24,7 @@ public interface IBlockMap
     /// <summary>
     /// Checks if a block can be placed at a given position and orientation.
     /// </summary>
-    bool CanPlaceBlock(Block block, BlockOrientation orientation, int x, int y);
+    bool CanPlaceBlock(Block block, BlockOrientation orientation, int x, int y, bool invertYAxis);
     
     /// <summary>
     /// Returns a list with all blocks in the gamefield.
