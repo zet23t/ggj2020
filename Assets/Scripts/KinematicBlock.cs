@@ -25,14 +25,14 @@ public class KinematicBlock : MonoBehaviour
         {
             for (int y = 0; y < block.Height; y += 1)
             {
-                var testPos = visualizer.SnapPoint(transform.TransformPoint(-x -1f, -y - 1f, 0));
+                var testPos = visualizer.SnapPoint(transform.TransformPoint(-x - 1f, -y - 1f, 0));
                 minPos.x = Mathf.Min(testPos.x, minPos.x);
                 minPos.y = Mathf.Max(testPos.y, minPos.y);
             }
         }
         Vector3 space = visualizer.transform.InverseTransformPoint(minPos);
-        
-        return Vector2Int.RoundToInt(space);
+        var rounded = Vector2Int.RoundToInt(space);
+        return rounded;
     }
 
     public void Initialize(BlockMapVisualizer visualizer, Block block, BlockMaterial m, PhysicMaterial blocksMaterial)
@@ -117,14 +117,14 @@ public class KinematicBlock : MonoBehaviour
                 Vector3 snapPosition = Vector3.Lerp(nextPosition, visualizer.SnapPoint(nextPosition), factor * damp);
                 body.MovePosition(snapPosition);
                 body.MoveRotation(Quaternion.RotateTowards(body.rotation, targetRotation, visualizer.RotateBackPerSecond * Time.deltaTime * factor));
-
+                GetTopLeftPoint();
             }
 
             yield return null;
         }
         SetCollidersEnabled(true);
 
-        if (visualizer.IsFitting(this))
+        if (visualizer.CanPlace(this))
         {
             Plane playPlane = new Plane(Vector3.forward, visualizer.PlayPlanePoint);
             do
@@ -159,9 +159,25 @@ public class KinematicBlock : MonoBehaviour
         foreach (var collider in colliders) collider.enabled = b;
     }
 
-    private void OnDrawGizmosSelected() {
+    private void OnDrawGizmosSelected()
+    {
         Vector2Int p2d = GetTopLeftPoint();
         var pos = visualizer.transform.TransformPoint(new Vector3(p2d.x, p2d.y, 0));
         Gizmos.DrawWireSphere(new Vector3(pos.x, pos.y, 0), .125f);
+        Vector3 size = transform.TransformVector(Vector3.one);
+        size.x = Mathf.Abs(size.x);
+        size.y = Mathf.Abs(size.y);
+        for (int x = 0; x < block.Width; x += 1)
+        {
+            for (int y = 0; y < block.Height; y += 1)
+            {
+                if (!block.IsFieldSet(x, y))
+                {
+                    continue;
+                }
+                var p3d = new Vector3(pos.x + (x + .5f) * size.x, pos.y + (-1 - y + .5f) * size.y);
+                Gizmos.DrawWireCube(p3d, size);
+            }
+        }
     }
 }
