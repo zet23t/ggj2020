@@ -40,84 +40,49 @@ public class Block : ScriptableObject {
         blockR.height = height;
         blockR.Prefab = Prefab;
 
-        int iRotate = (int)orientation;
-        
+        int rotate90 = (int) orientation;
         bool[] fieldsMirrored = new bool[width * height];
 
-        //Mirror Block
-        if ((int) orientation >= 3)
+        //Mirror block
+        if ((int) orientation > 3)
         {
             for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    //Debug.Log($"Mirror: {width}:{height} - {y * width + x} -> {y * width + (width - x - 1)}");
-                    fieldsMirrored[y * width + x] = fields[y * width + (width - x - 1)];
-                }
-            }
-
-            iRotate -= 4;
+            for (int y = 0; y < height; y++)
+                fieldsMirrored[y * width + x] = fields[y * width + (width - x - 1)];
+            rotate90 -= 4;
         }
         else
         {
             fieldsMirrored = fields;
         }
 
-        // //Rotation works in 90°-Steps, determine how often we have to do this
-        //
-        // if((int)orientation > )
-        // switch (orientation)
-        // {
-        //     case BlockOrientation.O0:
-        //     case BlockOrientation.M0:
-        //         iRotate = 0;
-        //         break;
-        //     case BlockOrientation.O90:
-        //     case BlockOrientation.M90:
-        //         iRotate = 1;
-        //         break;
-        //     case BlockOrientation.O180:
-        //     case BlockOrientation.M180:
-        //         iRotate = 2;
-        //         break;
-        //     case BlockOrientation.O270:
-        //     case BlockOrientation.M270:
-        //         iRotate = 3;
-        //         break;
-        // }
-        
         //Rotate block
-        for (int i = 0; i < fields.Length; i++)
+        if (rotate90 != 0)
         {
-            Debug.Log($"Rotate Index: {i},{iRotate}->{blockR.RotateIndex(i, iRotate)}");
-            blockR.fields[blockR.RotateIndex(i, iRotate)] = fieldsMirrored[i];
+            int w = blockR.width;
+            blockR.width = blockR.height;
+            blockR.height = w;
+            for (int i = 0; i < fields.Length; i++)
+            {
+                blockR.fields[blockR.RotateIndex(i, blockR.height, blockR.width)] = fieldsMirrored[i];
+            }
+
+            return blockR.GetRotatedBlock((BlockOrientation) (--rotate90));
         }
 
+        blockR.fields = fieldsMirrored;
         return blockR;
     }
 
-    public int RotateIndex(int index, int rotation90)
+    private int RotateIndex(int index, int widthLocal, int heightLocal)
     {
-        if (rotation90 == 0)
-        {
-            return index;
-        }
-        
-        int x = 0;
-        int y = 0;
+        int x = index % widthLocal;
+        int y = index / widthLocal;
 
-        while (index > width)
-        {
-            y++;
-            index -= width;
-        }
-        y = index;
+        int newX = heightLocal - (y + 1);
+        int newIndex = heightLocal * x + newX;
 
-        int newX = height - y - 1;
-        int newY = x;
-        int newIndex = width * newY + newX;
-        
-        return RotateIndex(newIndex, --rotation90);
+        return newIndex;
     }
 
     public override string ToString()
