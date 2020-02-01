@@ -676,6 +676,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2363233303141783176, guid: b1cf2d06196db4d83bdf208c88ad1248,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cce027741f8729b46a9c2d833835cc36, type: 2}
+    - target: {fileID: 5794003341616825346, guid: b1cf2d06196db4d83bdf208c88ad1248,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a3f09acdb0907c4cad93d4754f4890b, type: 2}
     - target: {fileID: 8751514867400965333, guid: b1cf2d06196db4d83bdf208c88ad1248,
         type: 3}
       propertyPath: WorldCamera
