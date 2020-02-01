@@ -8,7 +8,7 @@ using UnityEngine;
 /// <summary>
 /// Simulates the 2D-Grid of our game.
 /// </summary>
-public class BlockMapSimulator : IBlockMap
+public class BlockMapSimulator
 {
     private int _idCounter;
 
