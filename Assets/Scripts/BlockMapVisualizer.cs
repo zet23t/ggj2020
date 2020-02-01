@@ -100,8 +100,8 @@ public class BlockMapVisualizer : MonoBehaviour
     public bool CanPlace(KinematicBlock block)
     {
         Block oriented = block.GetOrientedBlock(out Vector2Int position);
-        // TODO: simulator check
-        return position.x >= 0 && position.y >= oriented.Height && position.x + oriented.Width <= Width && position.y <= Height;
+        return MapSimulator.CanPlaceBlock(oriented, BlockOrientation.O0, position.x, position.y);
+        //return position.x >= 0 && position.y >= oriented.Height && position.x + oriented.Width <= Width && position.y <= Height;
     }
 
     private void OnDrawGizmos()
