@@ -984,6 +984,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrainTracks
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 094db136559089444a7245cf879e52c4,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -113181020801827196, guid: 094db136559089444a7245cf879e52c4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cce027741f8729b46a9c2d833835cc36, type: 2}
+    - target: {fileID: 1066910053003865102, guid: 094db136559089444a7245cf879e52c4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a3f09acdb0907c4cad93d4754f4890b, type: 2}
+    - target: {fileID: 2502203975881118265, guid: 094db136559089444a7245cf879e52c4,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695666576454475813, guid: 094db136559089444a7245cf879e52c4,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 094db136559089444a7245cf879e52c4, type: 3}
 --- !u!4 &2007680278548464406 stripped
