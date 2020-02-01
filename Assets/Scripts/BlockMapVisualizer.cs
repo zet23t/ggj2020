@@ -75,7 +75,7 @@ public class BlockMapVisualizer : MonoBehaviour
 
             for (int i = 0; i < BlockRegistry.Blocks.Length; i += 1)
             {
-                var block = BlockRegistry.Blocks[(i + j) % BlockRegistry.Blocks.Length];
+                var block = BlockRegistry.Blocks[(i + j) % BlockRegistry.Blocks.Length].Clone();
                 x += block.Width + 1;
                 var material = MaterialRegistry.Materials[UnityEngine.Random.Range(0, MaterialRegistry.Materials.Length)];
                 var blockKinematic = InstantiateBlock(block, x, block.Height + j, material);
@@ -83,7 +83,6 @@ public class BlockMapVisualizer : MonoBehaviour
                 {
                     kinematicBlocks.Add(blockKinematic);
                 }
-                
             }
         }
     }
@@ -100,7 +99,7 @@ public class BlockMapVisualizer : MonoBehaviour
             Destroy(go);
             return null;
         }
-
+        
         kblock.BlockID = simulator.PlaceBlock(block, BlockOrientation.O0, simPos.x, simPos.y);
 
         return kblock;

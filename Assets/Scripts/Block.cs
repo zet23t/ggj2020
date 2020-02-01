@@ -14,6 +14,18 @@ public class Block : ScriptableObject {
     
     public GameObject Prefab;
 
+    private bool[] originalFields;
+    private int originalWidth;
+    private int originalHeight;
+
+    private void OnValidate()
+    {
+        originalFields = new bool[fields.Length];
+        Array.Copy(fields, originalFields, fields.Length);
+        originalWidth = width;
+        originalHeight = height;
+    }
+
     public bool IsFieldSet(int x, int y)
     {
         if (x < 0 || y < 0 || x >= width || y >= height)
@@ -31,16 +43,24 @@ public class Block : ScriptableObject {
         block.Prefab = Prefab;
         block.fields = new bool[width * height];
         Array.Copy(fields, block.fields, block.fields.Length);
+        block.OnValidate();
         return block;
     }
 
     public void Rotate(BlockOrientation orientation)
     {
-        int rotate90 = (int) orientation;
+        Array.Copy(originalFields, fields, fields.Length);
+        width = originalWidth;
+        height = originalHeight;
+        Rotate((int)orientation);
+    }
+    
+    private void Rotate(int rotate90)
+    {
         bool[] fieldsMirrored = new bool[fields.Length];
 
         //Mirror block
-        if ((int) orientation > 3)
+        if (rotate90 > 3)
         {
             for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
@@ -62,10 +82,10 @@ public class Block : ScriptableObject {
             {
                 fields[i] = fieldsMirrored[RotateIndex(i, width, height)];
             }
-
+            
             if (--rotate90 != 0)
             {
-                Rotate((BlockOrientation) (rotate90));
+                Rotate(rotate90);
             }
         }
         else
@@ -92,7 +112,7 @@ public class Block : ScriptableObject {
         {
             for (int x = 0; x < width; x++)
             {
-                str += fields[y * width + x] ? "1" : "0";
+                str += fields[y * width + x] ? "#" : "_";
             }
 
             str += "\n";
