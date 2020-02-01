@@ -24,11 +24,6 @@ public class BlockMapVisualizer : MonoBehaviour
     public float MoveBackPerSecond = 2;
     public float SnapBackDampening = 100;
 
-    public float BlockPushInterval = 3.0f;
-    public float BlockPushMinInterval = 0.5f;
-    public float BlockPushSpeedRetainPercentage = 0.8f;
-
-    public Animator trainAnimator;
     private BlockMapSimulator simulator;
 
     private HashSet<KinematicBlock> kinematicBlocks;
@@ -37,24 +32,22 @@ public class BlockMapVisualizer : MonoBehaviour
     public Vector3 PlayPlanePoint => transform.TransformPoint(new Vector3(0, 0, 0));
 
     public Text DebugOutput;
-    private float timeElaspedSinceLastTrigger = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         simulator = new BlockMapSimulator(Width, Height, BlockRegistry);
-        trainAnimator.SetFloat("TrainSpeed", 1.0f  / BlockPushInterval);
         SpawnBlocks();
     }
 
-    private bool ExplodeRandomBlock()
+    public bool ExplodeRandomBlock()
     {
         var amountOfTries = 0;
         while (true)
         {
             if (++amountOfTries > 50)
             {
-                return false;
+                return !simulator.IsEmpty();
             }
             
             var possiblyExplodedBlocks = simulator.Explode(Random.Range(0, Width), Random.Range(0, Height), 1.0f);
@@ -113,25 +106,6 @@ public class BlockMapVisualizer : MonoBehaviour
         return kblock;
     }
 
-    private void UpdateBlockPush()
-    {
-        timeElaspedSinceLastTrigger += Time.deltaTime;
-
-        if (timeElaspedSinceLastTrigger > BlockPushInterval)
-        {
-            if(!ExplodeRandomBlock() && simulator.IsEmpty())
-            {
-                Debug.Log("Game Over!");
-                trainAnimator.SetBool("IsExploded", true);
-            }
-
-            timeElaspedSinceLastTrigger = 0.0f;
-
-            BlockPushInterval = Math.Max(BlockPushMinInterval, BlockPushInterval * BlockPushSpeedRetainPercentage);
-            trainAnimator.SetFloat("TrainSpeed", 1.0f  / BlockPushInterval);
-        }
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -141,7 +115,6 @@ public class BlockMapVisualizer : MonoBehaviour
             HandleInput();
             return;
         }
-        UpdateBlockPush();
 
         if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.R))
         {
