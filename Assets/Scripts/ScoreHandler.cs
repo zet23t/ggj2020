@@ -10,7 +10,7 @@ public class ScoreHandler : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         currentScore += 1;
         scoreText.text = "Points: \n" + currentScore;
