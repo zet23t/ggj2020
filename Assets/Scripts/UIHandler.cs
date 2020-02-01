@@ -18,7 +18,7 @@ public class UIHandler : MonoBehaviour
     public void LoadFirstLevel()
     {
         //LoadLevel(1);
-        SceneManager.LoadScene("Scenes/BlockPlayTest", LoadSceneMode.Single);
+        SceneManager.LoadScene("Scenes/MainGame", LoadSceneMode.Single);
     }
     
     public void LoadStartingScreen()
