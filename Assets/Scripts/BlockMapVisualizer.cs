@@ -75,8 +75,7 @@ public class BlockMapVisualizer : MonoBehaviour
                 var block = BlockRegistry.Blocks[(i + j) % BlockRegistry.Blocks.Length];
                 x += block.Width + 1;
                 var material = MaterialRegistry.Materials[UnityEngine.Random.Range(0, MaterialRegistry.Materials.Length)];
-                InstantiateBlock(block, x, block.Height + j, material);
-                
+                kinematicBlocks.Add(InstantiateBlock(block, x, block.Height + j, material));
             }
         }
     }
