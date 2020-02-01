@@ -25,13 +25,13 @@ public class KinematicBlock : MonoBehaviour
             case BlockOrientation.O270:
                 return Quaternion.Euler(0,0,-270);
             case BlockOrientation.M0:
-                return Quaternion.Euler(0,180,-0);
+                return Quaternion.Euler(0,180,0);
             case BlockOrientation.M90:
-                return Quaternion.Euler(0,180,-90);
+                return Quaternion.Euler(0,180,90);
             case BlockOrientation.M180:
-                return Quaternion.Euler(0,180,-180);
+                return Quaternion.Euler(0,180,180);
             case BlockOrientation.M270:
-                return Quaternion.Euler(0,180,-270);
+                return Quaternion.Euler(0,180,270);
         }
         return default;
     }
