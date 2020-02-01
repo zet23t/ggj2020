@@ -45,28 +45,30 @@ public class KinematicBlock : MonoBehaviour
 
     private IEnumerator HandleFinger(Lean.Touch.LeanFinger leanFinger, RaycastHit hit)
     {
-        //SetCollidersEnabled(false);
+        SetCollidersEnabled(false);
         Plane plane = new Plane(Vector3.forward, hit.point);
         Plane projPlane = new Plane(Vector3.forward, visualizer.MovePlanePoint);
         var localPos = transform.InverseTransformPoint(hit.point);
         body.isKinematic = true;
         while (!leanFinger.Up)
         {
-            Ray ray = visualizer.WorldCamera.ScreenPointToRay(leanFinger.ScreenPosition);
-            if (plane.Raycast(ray, out float distancePlane) && projPlane.Raycast(ray, out float distanceProjPlane))
+            Ray rayTouch = visualizer.WorldCamera.ScreenPointToRay(leanFinger.ScreenPosition);
+            if (plane.Raycast(rayTouch, out float distancePlane) && projPlane.Raycast(rayTouch, out float distanceProjPlane))
             {
-                var projA = ray.GetPoint(distancePlane);
-                var projB = ray.GetPoint(distanceProjPlane);
+                var projA = rayTouch.GetPoint(distancePlane);
+                var projB = rayTouch.GetPoint(distanceProjPlane);
                 var factor = Mathf.InverseLerp(0.5f, 1.5f, projB.y);
                 var proj = Vector3.Lerp(projA,projB, factor);
-                var currentAttach = transform.TransformPoint(localPos);
-                body.MovePosition(Vector3.MoveTowards(body.position, (proj - currentAttach) + body.position, visualizer.MoveBackPerSecond * Time.deltaTime));
+                var currentAttach = Vector3.Lerp(transform.TransformPoint(localPos), body.worldCenterOfMass, factor);
+                Vector3 nextPosition = Vector3.MoveTowards(body.position, (proj - currentAttach) + body.position, visualizer.MoveBackPerSecond * Time.deltaTime);
+                body.MovePosition(nextPosition);
                 body.MoveRotation(Quaternion.RotateTowards(body.rotation, Quaternion.identity, visualizer.RotateBackPerSecond * Time.deltaTime * factor));
+                
             }
 
             yield return new WaitForEndOfFrame();
         }
-        // SetCollidersEnabled(true);
+        SetCollidersEnabled(true);
         body.isKinematic = false;
     }
 
