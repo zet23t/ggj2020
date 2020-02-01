@@ -129,6 +129,11 @@ public class BlockMapVisualizer : MonoBehaviour
 
         kblock.BlockID = simulator.PlaceBlock(block, BlockOrientation.O0, simPos.x, simPos.y);
 
+        var goBackground =
+            Instantiate(block.Prefab, transform.TransformPoint(position - new Vector3(0, 0, -0.87f)),
+                Quaternion.identity, transform);
+        goBackground.GetComponent<MeshRenderer>().sharedMaterial = m.MaterialPrefab;
+
         return kblock;
     }
 

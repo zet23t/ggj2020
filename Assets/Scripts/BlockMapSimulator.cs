@@ -195,14 +195,6 @@ public class BlockMapSimulator
         return Height - y;
     }
 
-    /// <summary>
-    /// Simulates a single step in the simulation.
-    /// </summary>
-    public void Tick()
-    {
-        
-    }
-
     public override string ToString()
     {
         string str = "";
