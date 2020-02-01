@@ -4,6 +4,7 @@ using UnityEngine;
 public class ScoreHandler : MonoBehaviour
 {
     public TextMeshPro scoreText;
+    
     public long currentScore { get; private set; }
 
     void Start()

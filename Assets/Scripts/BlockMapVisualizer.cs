@@ -22,6 +22,12 @@ public class BlockMapVisualizer : MonoBehaviour
     public float RotateBackPerSecond = 180;
     public float MoveBackPerSecond = 2;
     public float SnapBackDampening = 100;
+
+    public float BlockPushInterval = 3.0f;
+    public float BlockPushMinInterval = 0.5f;
+    public float BlockPushSpeedRetainPercentage = 0.8f;
+
+    public Animator trainAnimator;
     private BlockMapSimulator simulator;
 
     private HashSet<KinematicBlock> kinematicBlocks;
@@ -36,6 +42,7 @@ public class BlockMapVisualizer : MonoBehaviour
     void Start()
     {
         simulator = new BlockMapSimulator(Width, Height, BlockRegistry);
+        trainAnimator.SetFloat("TrainSpeed", 1.0f  / BlockPushInterval);
         SpawnBlocks();
     }
 
@@ -106,17 +113,24 @@ public class BlockMapVisualizer : MonoBehaviour
         return kblock;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void UpdateBlockPush()
     {
         timeElaspedSinceLastTrigger += Time.deltaTime;
 
-        if (timeElaspedSinceLastTrigger > 3.0f)
+        if (timeElaspedSinceLastTrigger > BlockPushInterval)
         {
             ExplodeRandomBlock();
+            timeElaspedSinceLastTrigger = 0.0f;
 
-            timeElaspedSinceLastTrigger -= 3.0f;
+            BlockPushInterval = Math.Max(BlockPushMinInterval, BlockPushInterval * BlockPushSpeedRetainPercentage);
+            trainAnimator.SetFloat("TrainSpeed", 1.0f  / BlockPushInterval);
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        UpdateBlockPush();
 
         DebugOutput.text = simulator.ToString();
         if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.R))

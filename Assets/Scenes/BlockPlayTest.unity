@@ -674,6 +674,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83a38fc94d5c3d3429266524f2db4ad3, type: 3}
+--- !u!95 &462202739 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1746112303106017111, guid: b1cf2d06196db4d83bdf208c88ad1248,
+    type: 3}
+  m_PrefabInstance: {fileID: 8751514867922393445}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &800171313
 GameObject:
   m_ObjectHideFlags: 0
@@ -1373,6 +1379,16 @@ PrefabInstance:
       propertyPath: DebugOutput
       value: 
       objectReference: {fileID: 1185542980}
+    - target: {fileID: 8751514867400965333, guid: b1cf2d06196db4d83bdf208c88ad1248,
+        type: 3}
+      propertyPath: trainAnimator
+      value: 
+      objectReference: {fileID: 462202739}
+    - target: {fileID: 8751514867400965333, guid: b1cf2d06196db4d83bdf208c88ad1248,
+        type: 3}
+      propertyPath: BlockPushSpeedRetainPercentage
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8751514868745791556, guid: b1cf2d06196db4d83bdf208c88ad1248,
         type: 3}
       propertyPath: m_Name
