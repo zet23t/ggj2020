@@ -55,7 +55,7 @@ public class BlockMapVisualizer : MonoBehaviour
         var go = Instantiate(block.Prefab, transform.TransformPoint(position), Quaternion.identity, transform);
         var kblock = go.AddComponent<KinematicBlock>();
         kblock.Initialize(this, block, m, BlockMaterial);
-        MapSimulator.PlaceBlock(block, BlockOrientation.O0, (int)position.x - block.Width, (int)position.y - block.Height);
+        // MapSimulator.PlaceBlock(block, BlockOrientation.O0, (int)position.x - block.Width, (int)position.y - block.Height);
         return kblock;
     }
 
@@ -95,7 +95,7 @@ public class BlockMapVisualizer : MonoBehaviour
     {
         Block oriented = block.GetOrientedBlock(out Vector2Int position);
         // TODO: simulator check
-        return true;
+        return position.x >= 0 && position.y >= 0 && position.x + oriented.Width < Width && position.y + oriented.Height < Height;
     }
 
     private void OnDrawGizmos()
