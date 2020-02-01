@@ -25,7 +25,7 @@ public class MainGameLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isGameOver) {
+        if(isGameOver || blockMapVisualizer.IsEditor) {
             return;
         }
         

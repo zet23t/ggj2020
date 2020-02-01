@@ -46,14 +46,14 @@ public class KinematicBlock : MonoBehaviour
         var up = Vector2Int.RoundToInt(upV3);
         // print($"{right} - {up}");
         if (right.x == 1 && up.y == 1) return BlockOrientation.O0;
-        if (right.y == -1 && up.x == 1) return BlockOrientation.O90;
+        if (right.y == -1 && up.x == 1) return BlockOrientation.O270;
         if (right.x == -1 && up.y == -1) return BlockOrientation.O180;
-        if (right.y == 1 && up.x == -1) return BlockOrientation.O270;
+        if (right.y == 1 && up.x == -1) return BlockOrientation.O90;
 
         if (right.x == -1 && up.y == 1) return BlockOrientation.M0;
-        if (right.y == 1 && up.x == 1) return BlockOrientation.M90;
+        if (right.y == 1 && up.x == 1) return BlockOrientation.M270;
         if (right.x == 1 && up.y == -1) return BlockOrientation.M180;
-        if (right.y == -1 && up.x == -1) return BlockOrientation.M270;
+        if (right.y == -1 && up.x == -1) return BlockOrientation.M90;
 
         return BlockOrientation.M0;
     }

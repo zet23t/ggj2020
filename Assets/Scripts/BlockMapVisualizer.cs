@@ -173,7 +173,6 @@ public class BlockMapVisualizer : MonoBehaviour
     public bool CanPlace(KinematicBlock block)
     {
         Block oriented = block.GetOrientedBlock(out Vector2Int position);
-
         return simulator.CanPlaceBlock(oriented, block.CurrentRotationToOrientation(), position.x, position.y);
     }
 
