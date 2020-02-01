@@ -89,6 +89,14 @@ public class BlockMapVisualizer : MonoBehaviour
         Gizmos.DrawWireCube(new Vector3(Width * .5f, Height * .5f, 0), new Vector3(Width, Height, 0));
     }
 
+    public Vector3 SnapPoint(Vector3 pos)
+    {
+        pos = transform.InverseTransformPoint(pos);
+        pos.x = Mathf.Round(pos.x);
+        pos.y = Mathf.Round(pos.y);
+        return transform.TransformPoint(pos);
+    }
+
     public bool IsFitting(KinematicBlock kinematicBlock)
     {
         return kinematicBlock.transform.position.y > 1;

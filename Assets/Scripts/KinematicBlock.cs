@@ -45,6 +45,8 @@ public class KinematicBlock : MonoBehaviour
 
     private IEnumerator HandleFinger(Lean.Touch.LeanFinger leanFinger, RaycastHit hit)
     {
+        GestureTracer tracer = new GestureTracer(.1f);
+
         SetCollidersEnabled(false);
         Plane plane = new Plane(Vector3.forward, hit.point);
         Plane projPlane = new Plane(Vector3.forward, visualizer.MovePlanePoint);
@@ -52,16 +54,19 @@ public class KinematicBlock : MonoBehaviour
         body.isKinematic = true;
         while (!leanFinger.Up)
         {
+            tracer.Sampling(leanFinger.ScreenPosition);
             Ray rayTouch = visualizer.WorldCamera.ScreenPointToRay(leanFinger.ScreenPosition);
             if (plane.Raycast(rayTouch, out float distancePlane) && projPlane.Raycast(rayTouch, out float distanceProjPlane))
             {
+                float damp = Lean.Touch.LeanTouch.GetDampenFactor(visualizer.SnapBackDampening, Time.deltaTime);
                 var projA = rayTouch.GetPoint(distancePlane);
                 var projB = rayTouch.GetPoint(distanceProjPlane);
                 var factor = Mathf.InverseLerp(0.5f, 1.5f, projB.y);
                 var proj = Vector3.Lerp(projA,projB, factor);
                 var currentAttach = Vector3.Lerp(transform.TransformPoint(localPos), body.worldCenterOfMass, factor);
                 Vector3 nextPosition = Vector3.MoveTowards(body.position, (proj - currentAttach) + body.position, visualizer.MoveBackPerSecond * Time.deltaTime);
-                body.MovePosition(nextPosition);
+                Vector3 snapPosition = Vector3.Lerp(nextPosition, visualizer.SnapPoint(nextPosition), factor * damp);
+                body.MovePosition(snapPosition);
                 body.MoveRotation(Quaternion.RotateTowards(body.rotation, Quaternion.identity, visualizer.RotateBackPerSecond * Time.deltaTime * factor));
                 
             }
@@ -76,7 +81,10 @@ public class KinematicBlock : MonoBehaviour
             do {
                 float damp = Lean.Touch.LeanTouch.GetDampenFactor(visualizer.SnapBackDampening, Time.deltaTime);
                 var planePos = playPlane.ClosestPointOnPlane(body.position);
-                body.MovePosition(Vector3.Lerp(body.position, planePos, damp));
+                Vector3 position = Vector3.Lerp(body.position, planePos, damp);
+                Vector3 snapPosition = Vector3.Lerp(position, visualizer.SnapPoint(position), damp);
+
+                body.MovePosition(snapPosition);
                 var dist = playPlane.GetDistanceToPoint(body.position);
                 yield return null;
             } while (Mathf.Abs(playPlane.GetDistanceToPoint(body.position)) > 0.05f);
