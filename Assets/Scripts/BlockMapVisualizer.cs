@@ -83,7 +83,7 @@ public class BlockMapVisualizer : MonoBehaviour
         if (touches[0].Down)
         {
             var ray = WorldCamera.ScreenPointToRay(touches[0].ScreenPosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 20, -1) && hit.collider.GetComponent<KinematicBlock>())
+            if (Physics.Raycast(ray, out RaycastHit hit, 20, ~(1<<2)) && hit.collider.GetComponent<KinematicBlock>())
             {
                 var kb = hit.collider.GetComponent<KinematicBlock>();
                 kb.Activate(touches[0], hit);
