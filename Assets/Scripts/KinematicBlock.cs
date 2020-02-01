@@ -9,9 +9,18 @@ public class KinematicBlock : MonoBehaviour
     private Rigidbody body;
     private BlockMapVisualizer visualizer;
     private List<Collider> colliders = new List<Collider>();
+    private Block block;
+
+    public Block GetOrientedBlock(out Vector2Int position)
+    {
+        position = Vector2Int.RoundToInt(body.position);
+        
+        return block;
+    }
 
     public void Initialize(BlockMapVisualizer visualizer, Block block, BlockMaterial m, PhysicMaterial blocksMaterial)
     {
+        this.block = block;
         GetComponent<MeshRenderer>().sharedMaterial = m.MaterialPrefab;
         this.visualizer = visualizer;
         for (int x = 0; x < block.Width; x += 1)

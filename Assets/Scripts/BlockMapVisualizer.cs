@@ -84,6 +84,11 @@ public class BlockMapVisualizer : MonoBehaviour
         }
     }
 
+    public bool CanPlace(KinematicBlock block)
+    {
+        return true;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.matrix = transform.localToWorldMatrix;
