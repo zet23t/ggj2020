@@ -45,7 +45,7 @@ public class Block : ScriptableObject {
         bool[] fieldsMirrored = new bool[width * height];
 
         //Mirror Block
-        if ((int) orientation >= 3)
+        if ((int) orientation > 3)
         {
             for (int x = 0; x < width; x++)
             {
@@ -86,38 +86,48 @@ public class Block : ScriptableObject {
         //         break;
         // }
         
-        //Rotate block
-        for (int i = 0; i < fields.Length; i++)
+        for (int i = 0; i < iRotate; i++)
         {
-            Debug.Log($"Rotate Index: {i},{iRotate}->{blockR.RotateIndex(i, iRotate)}");
-            blockR.fields[blockR.RotateIndex(i, iRotate)] = fieldsMirrored[i];
+            
+        }
+
+        if (iRotate != 0)
+        {
+            int w = blockR.width;
+            blockR.width = blockR.height;
+            blockR.height = w;
+            
+            for (int i = 0; i < fields.Length; i++)
+            {
+                //Debug.Log($"Rotate Index: {i},{iRotate}->{blockR.RotateIndex(i, iRotate)}");
+                blockR.fields[blockR.RotateIndex(i, blockR.height, blockR.width)] = fieldsMirrored[i];
+            }
+            return blockR.GetRotatedBlock((BlockOrientation)(--iRotate));
+        }
+        else
+        {
+            blockR.fields = fieldsMirrored;
         }
 
         return blockR;
     }
 
-    public int RotateIndex(int index, int rotation90)
+    public int RotateIndex(int index, int widthLocal, int heightLocal)
     {
-        if (rotation90 == 0)
-        {
-            return index;
-        }
+        int indexDebug = index;
+
+        int x = index % widthLocal;
+        int y = index / widthLocal;
         
-        int x = 0;
-        int y = 0;
+        //Debug.Log($"");
 
-        while (index > width)
-        {
-            y++;
-            index -= width;
-        }
-        y = index;
-
-        int newX = height - y - 1;
+        int newX = heightLocal - (y + 1);
         int newY = x;
-        int newIndex = width * newY + newX;
+        int newIndex = heightLocal * newY + newX;
         
-        return RotateIndex(newIndex, --rotation90);
+        //Debug.Log($"INDEX={indexDebug} -> {x}:{y} | NEW-INDEX={newIndex} -> {newX}:{newY} | {widthLocal} ");
+        
+        return newIndex;
     }
 
     public override string ToString()
