@@ -50,7 +50,7 @@ public class BlockMapVisualizer : MonoBehaviour
                 return;
             }
             
-            var possiblyExplodedBlocks = simulator.Explode(Random.Range(0, Width-1), Random.Range(0, Height-1), 1.0f);
+            var possiblyExplodedBlocks = simulator.Explode(Random.Range(0, Width), Random.Range(0, Height), 1.0f);
             if (possiblyExplodedBlocks.Count != 0)
             {
                 foreach (var blockExploded in possiblyExplodedBlocks)
