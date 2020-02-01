@@ -501,6 +501,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: DigiClock
       objectReference: {fileID: 0}
+    - target: {fileID: 2085029396076273401, guid: 83a38fc94d5c3d3429266524f2db4ad3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 3421788997364908095, guid: 83a38fc94d5c3d3429266524f2db4ad3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4210065618890701269, guid: 83a38fc94d5c3d3429266524f2db4ad3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 4484959942821245674, guid: 83a38fc94d5c3d3429266524f2db4ad3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -555,6 +570,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6484883034743507913, guid: 83a38fc94d5c3d3429266524f2db4ad3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 8883195785765564045, guid: 83a38fc94d5c3d3429266524f2db4ad3,
         type: 3}
