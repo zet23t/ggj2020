@@ -114,7 +114,7 @@ public class BlockMapSimulator
     /// <summary>
     /// Places a block at the given position and orientation.
     /// </summary>
-    public void PlaceBlock(Block block, BlockOrientation orientation, int x, int y)
+    public int PlaceBlock(Block block, BlockOrientation orientation, int x, int y)
     {
         y = InvertY(y);
         
@@ -144,6 +144,7 @@ public class BlockMapSimulator
                 }
             }
         }
+        return blockId;
     }
 
     /// <summary>
