@@ -1571,7 +1571,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8751514868323111927
 Transform:
   m_ObjectHideFlags: 0
@@ -1950,10 +1950,11 @@ MonoBehaviour:
   blockMapVisualizer: {fileID: 8751514867400965333}
   trainAnimator: {fileID: 1746112303106017111}
   scoreHandler: {fileID: 0}
-  isGameOver: 0
+  bgMusic: {fileID: 7410781556765402328}
+  sfxCrowdShock: {fileID: 2017863542269624027}
   BlockPushInterval: 3
   BlockPushMinInterval: 0.5
-  BlockPushSpeedRetainPercentage: 0.8
+  BlockPushSpeedRetainPercentage: 0.2
 --- !u!82 &7410781556765402328
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1966,9 +1967,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f6a3c6a26b6929b4f94c47a97a608220, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.25
+  m_Volume: 0.02
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2061,8 +2062,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 9e776d88d4ecb914aae704963c4573dd, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.75
+  m_PlayOnAwake: 0
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
