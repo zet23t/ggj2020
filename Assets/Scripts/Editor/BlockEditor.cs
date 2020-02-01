@@ -3,6 +3,7 @@ using UnityEditor;
 
 [CustomEditor(typeof(Block))]
 public class BlockEditor : Editor {
+    static BlockOrientation blockOrientation;
     public override void OnInspectorGUI() {
         // EditorGUILayout.PropertyField()
         SerializedProperty widthProperty = serializedObject.FindProperty("width");
@@ -31,5 +32,22 @@ public class BlockEditor : Editor {
         }
         EditorGUI.indentLevel -= 1;
         serializedObject.ApplyModifiedProperties();
+
+        blockOrientation = (BlockOrientation) EditorGUILayout.EnumPopup("Orientation preview", blockOrientation);
+        Block rotblock = (target as Block).GetRotatedBlock(blockOrientation);
+        GUI.enabled = false;
+        width = rotblock.Width;
+        height = rotblock.Height;
+        for (int y = 0; y < height; y += 1)
+        {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PrefixLabel("Line "+y);
+            for (int x = 0; x < width; x += 1)
+            {
+                EditorGUILayout.Toggle(rotblock.IsFieldSet(x, y), GUILayout.Width(30));
+            }
+            EditorGUILayout.EndHorizontal();
+        }
+        GUI.enabled = true;
     }
 }
