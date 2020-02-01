@@ -12,6 +12,8 @@ public class KinematicBlock : MonoBehaviour
     private Block block;
     private BlockOrientation orientation;
 
+    public int BlockID;
+
     public static Quaternion OrientationToRotation(BlockOrientation block)
     {
         switch (block)

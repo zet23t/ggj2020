@@ -59,7 +59,7 @@ public class BlockMapVisualizer : MonoBehaviour
             Destroy(go);
             return null;
         }
-        simulator.PlaceBlock(block, BlockOrientation.O0, simPos.x, simPos.y);
+        kblock.BlockID = simulator.PlaceBlock(block, BlockOrientation.O0, simPos.x, simPos.y);
         
         return kblock;
     }

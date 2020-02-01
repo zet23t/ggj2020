@@ -19,7 +19,7 @@ public interface IBlockMap
     /// <summary>
     /// Places a block at the given position and orientation.
     /// </summary>
-    void PlaceBlock(Block block, BlockOrientation orientation, int x, int y);
+    int PlaceBlock(Block block, BlockOrientation orientation, int x, int y);
 
     /// <summary>
     /// Checks if a block can be placed at a given position and orientation.

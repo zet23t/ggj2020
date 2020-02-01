@@ -102,7 +102,7 @@ public class BlockMapSimulator : IBlockMap
     /// <summary>
     /// Places a block at the given position and orientation.
     /// </summary>
-    public void PlaceBlock(Block block, BlockOrientation orientation, int x, int y)
+    public int PlaceBlock(Block block, BlockOrientation orientation, int x, int y)
     {
         y = Height - y;
         
@@ -132,6 +132,8 @@ public class BlockMapSimulator : IBlockMap
                 }
             }
         }
+
+        return blockId;
     }
 
     /// <summary>
