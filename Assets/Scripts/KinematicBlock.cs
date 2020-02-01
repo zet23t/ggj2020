@@ -56,7 +56,6 @@ public class KinematicBlock : MonoBehaviour
         Quaternion targetRotation = Quaternion.identity;
         while (!leanFinger.Up)
         {
-if (Input.GetKeyDown(KeyCode.A)) print("A");
             Ray rayTouch = visualizer.WorldCamera.ScreenPointToRay(leanFinger.ScreenPosition);
             if (plane.Raycast(rayTouch, out float distancePlane) && projPlane.Raycast(rayTouch, out float distanceProjPlane))
             {
