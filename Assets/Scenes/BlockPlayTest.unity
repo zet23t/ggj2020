@@ -1171,8 +1171,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.04990776e+12, y: 4.232115e+21, z: 0.00087126275,
-    w: 4.078705e+22}
+  m_BoundingSphereOverride: {x: 0, y: 7e-45, z: 6.171e-42, w: 1.04e-43}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1433,6 +1432,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4591419634362555739, guid: b1cf2d06196db4d83bdf208c88ad1248,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4591419634362555739, guid: b1cf2d06196db4d83bdf208c88ad1248,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5838083831187583226, guid: b1cf2d06196db4d83bdf208c88ad1248,
         type: 3}
