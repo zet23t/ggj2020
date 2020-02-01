@@ -1571,7 +1571,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8751514868323111927
 Transform:
   m_ObjectHideFlags: 0
@@ -1601,7 +1601,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8751514868323111924}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1950,7 +1950,8 @@ MonoBehaviour:
   blockMapVisualizer: {fileID: 8751514867400965333}
   trainAnimator: {fileID: 1746112303106017111}
   scoreHandler: {fileID: 0}
-  isGameOver: 0
+  bgMusic: {fileID: 0}
+  sfxCrowdShock: {fileID: 0}
   BlockPushInterval: 3
   BlockPushMinInterval: 0.5
   BlockPushSpeedRetainPercentage: 0.8
