@@ -10,7 +10,7 @@ public class KinematicBlock : MonoBehaviour
     private BlockMapVisualizer visualizer;
     private List<Collider> colliders = new List<Collider>();
 
-    public void Initialize(BlockMapVisualizer visualizer,  Block block, BlockMaterial m)
+    public void Initialize(BlockMapVisualizer visualizer, Block block, BlockMaterial m)
     {
         GetComponent<MeshRenderer>().sharedMaterial = m.MaterialPrefab;
         this.visualizer = visualizer;
@@ -45,30 +45,44 @@ public class KinematicBlock : MonoBehaviour
 
     private IEnumerator HandleFinger(Lean.Touch.LeanFinger leanFinger, RaycastHit hit)
     {
-        GestureTracer tracer = new GestureTracer(.1f);
+        GestureTracer tracer = new GestureTracer(.1f, 4);
 
         SetCollidersEnabled(false);
         Plane plane = new Plane(Vector3.forward, hit.point);
         Plane projPlane = new Plane(Vector3.forward, visualizer.MovePlanePoint);
         var localPos = transform.InverseTransformPoint(hit.point);
         body.isKinematic = true;
+        Quaternion targetRotation = Quaternion.identity;
         while (!leanFinger.Up)
         {
-            tracer.Sampling(leanFinger.ScreenPosition);
+
             Ray rayTouch = visualizer.WorldCamera.ScreenPointToRay(leanFinger.ScreenPosition);
             if (plane.Raycast(rayTouch, out float distancePlane) && projPlane.Raycast(rayTouch, out float distanceProjPlane))
             {
                 float damp = Lean.Touch.LeanTouch.GetDampenFactor(visualizer.SnapBackDampening, Time.deltaTime);
                 var projA = rayTouch.GetPoint(distancePlane);
                 var projB = rayTouch.GetPoint(distanceProjPlane);
+                tracer.Sampling(projB);
+                switch (tracer.GetGesture())
+                {
+                    case Gesture.RotateRight:
+                        targetRotation = targetRotation * Quaternion.Euler(0,0,90);
+                        tracer.Reset();
+                        break;
+                    case Gesture.RotateLeft:
+                        targetRotation = targetRotation * Quaternion.Euler(0,0,-90);
+                        tracer.Reset();
+                        break;
+                }
+
                 var factor = Mathf.InverseLerp(0.5f, 1.5f, projB.y);
-                var proj = Vector3.Lerp(projA,projB, factor);
+                var proj = Vector3.Lerp(projA, projB, factor);
                 var currentAttach = Vector3.Lerp(transform.TransformPoint(localPos), body.worldCenterOfMass, factor);
                 Vector3 nextPosition = Vector3.MoveTowards(body.position, (proj - currentAttach) + body.position, visualizer.MoveBackPerSecond * Time.deltaTime);
                 Vector3 snapPosition = Vector3.Lerp(nextPosition, visualizer.SnapPoint(nextPosition), factor * damp);
                 body.MovePosition(snapPosition);
-                body.MoveRotation(Quaternion.RotateTowards(body.rotation, Quaternion.identity, visualizer.RotateBackPerSecond * Time.deltaTime * factor));
-                
+                body.MoveRotation(Quaternion.RotateTowards(body.rotation, targetRotation, visualizer.RotateBackPerSecond * Time.deltaTime * factor));
+
             }
 
             yield return new WaitForEndOfFrame();
@@ -78,7 +92,8 @@ public class KinematicBlock : MonoBehaviour
         if (visualizer.IsFitting(this))
         {
             Plane playPlane = new Plane(Vector3.forward, visualizer.PlayPlanePoint);
-            do {
+            do
+            {
                 float damp = Lean.Touch.LeanTouch.GetDampenFactor(visualizer.SnapBackDampening, Time.deltaTime);
                 var planePos = playPlane.ClosestPointOnPlane(body.position);
                 Vector3 position = Vector3.Lerp(body.position, planePos, damp);
