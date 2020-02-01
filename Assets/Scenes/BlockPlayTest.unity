@@ -657,6 +657,26 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 7511871700151504922, guid: 83a38fc94d5c3d3429266524f2db4ad3,
+        type: 3}
+      propertyPath: MinDistance
+      value: 1.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 7511871700151504922, guid: 83a38fc94d5c3d3429266524f2db4ad3,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.211
+      objectReference: {fileID: 0}
+    - target: {fileID: 7511871700151504922, guid: 83a38fc94d5c3d3429266524f2db4ad3,
+        type: 3}
+      propertyPath: Loop
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7511871700151504922, guid: 83a38fc94d5c3d3429266524f2db4ad3,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8883195785765564045, guid: 83a38fc94d5c3d3429266524f2db4ad3,
         type: 3}
       propertyPath: m_Mesh
@@ -1482,7 +1502,7 @@ PrefabInstance:
     - target: {fileID: 2017863542269624027, guid: b1cf2d06196db4d83bdf208c88ad1248,
         type: 3}
       propertyPath: m_Volume
-      value: 0.45
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2273290328437393449, guid: b1cf2d06196db4d83bdf208c88ad1248,
         type: 3}

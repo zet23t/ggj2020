@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ScoreHandler : MonoBehaviour
 {
+    private AudioSource sfxBleep;
     public TextMeshPro scoreText;
 
     public bool isFrozen = false;
@@ -14,6 +15,7 @@ public class ScoreHandler : MonoBehaviour
     void Start()
     {
         currentScore = 0;
+        sfxBleep = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -26,6 +28,10 @@ public class ScoreHandler : MonoBehaviour
         } else if(elapsedTime > 0.5f) {
             elapsedTime = 0.0f;
             scoreText.text = scoreText.text == "" ? currentScore.ToString() : "";
+            if(scoreText.text != "") {
+                sfxBleep.Play();
+                sfxBleep.volume = sfxBleep.volume * 0.9f;
+            }
         }
     }
 
