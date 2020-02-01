@@ -10,12 +10,59 @@ public class KinematicBlock : MonoBehaviour
     private BlockMapVisualizer visualizer;
     private List<Collider> colliders = new List<Collider>();
     private Block block;
+    private BlockOrientation orientation;
+
+    public static Quaternion OrientationToRotation(BlockOrientation block)
+    {
+        switch (block)
+        {
+            case BlockOrientation.O0:
+                return Quaternion.Euler(0,0,0);
+            case BlockOrientation.O90:
+                return Quaternion.Euler(0,0,-90);
+            case BlockOrientation.O180:
+                return Quaternion.Euler(0,0,-180);
+            case BlockOrientation.O270:
+                return Quaternion.Euler(0,0,-270);
+            case BlockOrientation.M0:
+                return Quaternion.Euler(0,180,-0);
+            case BlockOrientation.M90:
+                return Quaternion.Euler(0,180,-90);
+            case BlockOrientation.M180:
+                return Quaternion.Euler(0,180,-180);
+            case BlockOrientation.M270:
+                return Quaternion.Euler(0,180,-270);
+        }
+        return default;
+    }
+
+    public BlockOrientation CurrentRotationToOrientation()
+    {
+        var rightV3 = transform.TransformDirection(Vector3.right);
+        var upV3 = transform.TransformDirection(Vector3.up);
+        var right = Vector2Int.RoundToInt(rightV3);
+        var up = Vector2Int.RoundToInt(upV3);
+        // print($"{right} - {up}");
+        if (right.x == 1 && up.y == 1) return BlockOrientation.O0;
+        if (right.y == -1 && up.x == 1) return BlockOrientation.O90;
+        if (right.x == -1 && up.y == -1) return BlockOrientation.O180;
+        if (right.y == 1 && up.x == -1) return BlockOrientation.O270;
+
+        if (right.x == -1 && up.y == 1) return BlockOrientation.M0;
+        if (right.y == 1 && up.x == 1) return BlockOrientation.M90;
+        if (right.x == 1 && up.y == -1) return BlockOrientation.M180;
+        if (right.y == -1 && up.x == -1) return BlockOrientation.M270;
+
+        return BlockOrientation.M0;
+    }
 
     public Block GetOrientedBlock(out Vector2Int position)
     {
         position = GetTopLeftPoint();
 
-        return block;
+        BlockOrientation orientation = CurrentRotationToOrientation();
+        // print(orientation);
+        return block.GetRotatedBlock(orientation);
     }
 
     private Vector2Int GetTopLeftPoint()
@@ -83,7 +130,7 @@ public class KinematicBlock : MonoBehaviour
         Plane projPlane = new Plane(Vector3.forward, visualizer.MovePlanePoint);
         var localPos = transform.InverseTransformPoint(hit.point);
         body.isKinematic = true;
-        Quaternion targetRotation = Quaternion.identity;
+        Quaternion targetRotation = OrientationToRotation(CurrentRotationToOrientation());
         while (!leanFinger.Up)
         {
             Ray rayTouch = visualizer.WorldCamera.ScreenPointToRay(leanFinger.ScreenPosition);
@@ -96,19 +143,19 @@ public class KinematicBlock : MonoBehaviour
                 switch (tracer.GetGesture())
                 {
                     case Gesture.RotateLeft:
-                        targetRotation = targetRotation * Quaternion.Euler(0, 0, 90);
+                        targetRotation = Quaternion.Euler(0, 0, 90) * targetRotation;
                         tracer.Reset();
                         break;
                     case Gesture.RotateRight:
-                        targetRotation = targetRotation * Quaternion.Euler(0, 0, -90);
+                        targetRotation = Quaternion.Euler(0, 0, -90) * targetRotation;
                         tracer.Reset();
                         break;
                     case Gesture.MirrorHorizontal:
-                        targetRotation = targetRotation * Quaternion.Euler(0, 180, 0);
+                        targetRotation = Quaternion.Euler(0, 180, 0) * targetRotation;
                         tracer.Reset();
                         break;
                     case Gesture.MirrorVertical:
-                        targetRotation = targetRotation * Quaternion.Euler(180, 0, 0);
+                        targetRotation = Quaternion.Euler(180, 0, 0) * targetRotation;
                         tracer.Reset();
                         break;
 
@@ -169,7 +216,7 @@ public class KinematicBlock : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Vector2Int p2d = GetTopLeftPoint();
+        var block = GetOrientedBlock(out Vector2Int p2d);
         var pos = visualizer.transform.TransformPoint(new Vector3(p2d.x, p2d.y, 0));
         Gizmos.DrawWireSphere(new Vector3(pos.x, pos.y, 0), .125f);
         Vector3 size = transform.TransformVector(Vector3.one);
