@@ -14,6 +14,6 @@ public class ScoreHandler : MonoBehaviour
     void FixedUpdate()
     {
         currentScore += 1;
-        scoreText.text = "Points: \n" + currentScore;
+        scoreText.text = currentScore + "";
     }
 }
