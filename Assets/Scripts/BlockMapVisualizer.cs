@@ -66,11 +66,11 @@ public class BlockMapVisualizer : MonoBehaviour
 
             for (int i = 0; i < BlockRegistry.Blocks.Length; i += 1)
             {
-                var block = BlockRegistry.Blocks[i];
-                x += block.Width;
-                var material =
-                    MaterialRegistry.Materials[UnityEngine.Random.Range(0, MaterialRegistry.Materials.Length)];
-                kinematicBlocks.Add(InstantiateBlock(block, x, block.Height + j, material));
+                var block = BlockRegistry.Blocks[(i + j) % BlockRegistry.Blocks.Length];
+                x += block.Width + 1;
+                var material = MaterialRegistry.Materials[UnityEngine.Random.Range(0, MaterialRegistry.Materials.Length)];
+                InstantiateBlock(block, x, block.Height + j, material);
+                
             }
         }
     }
@@ -130,8 +130,19 @@ public class BlockMapVisualizer : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit, 20, ~(1 << 2)) && hit.collider.GetComponent<KinematicBlock>())
             {
                 var kb = hit.collider.GetComponent<KinematicBlock>();
-                Vector2Int pos = kb.GetTopLeftPoint();
-                simulator.Explode(pos.x, pos.y, 0);
+                var block = kb.GetOrientedBlock(out Vector2Int pos);
+                for (int x = 0; x < block.Width; x+=1)
+                {
+                    for (int y = 0; y < block.Height; y+=1)
+                    {
+                        if (block.IsFieldSet(x,y))
+                        {
+                            simulator.Explode(pos.x + x, pos.y - y, 0);
+                            x += block.Width;
+                            break;
+                        }
+                    }
+                }
                 kb.Activate(touches[0], hit);
             }
         }
