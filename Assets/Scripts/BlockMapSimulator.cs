@@ -138,6 +138,10 @@ public class BlockMapSimulator : IBlockMap
             return false;
         
         block = block.GetRotatedBlock(orientation);
+        if (x < 0 || y < 0 || x >= Width - block.Width || y >= Height - block.Height)
+        {
+            return false;
+        }
 
         for (int iX = 0; iX < block.GetWidth(); iX++)
         {
@@ -159,5 +163,21 @@ public class BlockMapSimulator : IBlockMap
     public void Tick()
     {
         
+    }
+
+    public override string ToString()
+    {
+        string str = "";
+        for (int iY = 0; iY < Height; iY++)
+        {
+            for (int iX = 0; iX < Width; iX++)
+            {
+                str += _blockGrid[iY * Width + iX] != -1 ? "X" : "Y";
+            }
+        
+            str += "\n";
+        }
+
+        return str;
     }
 }

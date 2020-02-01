@@ -7,7 +7,7 @@ public class Releasio : MonoBehaviour
 {
     public Material ReleasioMaterial;
     private bool materialsExchanged = false;
-    private Dictionary<Renderer, Material> savedMaterials = new Dictionary<Renderer, Material>();
+    private readonly Dictionary<Renderer, Material> savedMaterials = new Dictionary<Renderer, Material>();
 
     void Update()
     {

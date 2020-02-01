@@ -25,13 +25,13 @@ public class KinematicBlock : MonoBehaviour
             case BlockOrientation.O270:
                 return Quaternion.Euler(0,0,-270);
             case BlockOrientation.M0:
-                return Quaternion.Euler(0,180,-0);
+                return Quaternion.Euler(0,180,0);
             case BlockOrientation.M90:
-                return Quaternion.Euler(0,180,-90);
+                return Quaternion.Euler(0,180,90);
             case BlockOrientation.M180:
-                return Quaternion.Euler(0,180,-180);
+                return Quaternion.Euler(0,180,180);
             case BlockOrientation.M270:
-                return Quaternion.Euler(0,180,-270);
+                return Quaternion.Euler(0,180,270);
         }
         return default;
     }
@@ -65,7 +65,7 @@ public class KinematicBlock : MonoBehaviour
         return block.GetRotatedBlock(orientation);
     }
 
-    private Vector2Int GetTopLeftPoint()
+    public Vector2Int GetTopLeftPoint()
     {
         Vector3 minPos = visualizer.SnapPoint(body.position);
         for (int x = 0; x < block.Width; x += 1)
@@ -195,6 +195,8 @@ public class KinematicBlock : MonoBehaviour
                 var dist = playPlane.GetDistanceToPoint(body.position);
                 yield return null;
             } while (Mathf.Abs(playPlane.GetDistanceToPoint(body.position)) > 0.05f);
+            visualizer.PlaceBlock(this);
+
             yield break;
         }
         body.isKinematic = false;
