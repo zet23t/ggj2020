@@ -60,13 +60,17 @@ public class KinematicBlock : MonoBehaviour
 
     public void Activate(Lean.Touch.LeanFinger leanFinger, RaycastHit hit)
     {
+        StartCoroutine(HandleFinger(leanFinger, hit));
+    }
+
+    public void PushOut()
+    {
         if (!body.isKinematic)
         {
-            StartCoroutine(HandleFinger(leanFinger, hit));
             return;
         }
         body.isKinematic = false;
-        body.AddForceAtPosition(Vector3.forward * visualizer.ActivateVeclocity, transform.position + Random.insideUnitSphere * .04f, ForceMode.VelocityChange);
+        body.AddForceAtPosition(Vector3.forward * visualizer.ActivateVeclocity, body.centerOfMass + Random.insideUnitSphere * .04f, ForceMode.VelocityChange);
         StartCoroutine(PushOutRoutine());
     }
 
@@ -115,9 +119,13 @@ public class KinematicBlock : MonoBehaviour
                 var currentAttach = Vector3.Lerp(transform.TransformPoint(localPos), body.worldCenterOfMass, factor);
                 Vector3 nextPosition = Vector3.MoveTowards(body.position, (proj - currentAttach) + body.position, visualizer.MoveBackPerSecond * Time.deltaTime);
                 Vector3 snapPosition = Vector3.Lerp(nextPosition, visualizer.SnapPoint(nextPosition), factor * damp);
+                Quaternion rot = Quaternion.RotateTowards(body.rotation, targetRotation, visualizer.RotateBackPerSecond * Time.deltaTime * factor);
+                if (!visualizer.CanPlace(this))
+                {
+                    snapPosition += Random.onUnitSphere * .05f;
+                }
                 body.MovePosition(snapPosition);
-                body.MoveRotation(Quaternion.RotateTowards(body.rotation, targetRotation, visualizer.RotateBackPerSecond * Time.deltaTime * factor));
-                GetTopLeftPoint();
+                body.MoveRotation(rot);
             }
 
             yield return null;

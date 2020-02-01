@@ -91,6 +91,12 @@ public class BlockMapVisualizer : MonoBehaviour
         }
     }
 
+    public bool InsideBox(KinematicBlock block)
+    {
+        Block oriented = block.GetOrientedBlock(out Vector2Int position);
+        return position.x >= 0 && position.y >= oriented.Height && position.x + oriented.Width <= Width && position.y <= Height;
+    }
+
     public bool CanPlace(KinematicBlock block)
     {
         Block oriented = block.GetOrientedBlock(out Vector2Int position);
