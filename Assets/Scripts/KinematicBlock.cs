@@ -82,6 +82,12 @@ public class KinematicBlock : MonoBehaviour
         return rounded;
     }
 
+    public Vector2Int GetSimulatorPosition()
+    {
+        return new Vector2Int((int) transform.localPosition.x - block.Width,
+            (int) transform.localPosition.y);
+    }
+
     public void Initialize(BlockMapVisualizer visualizer, Block block, BlockMaterial m, PhysicMaterial blocksMaterial)
     {
         this.block = block;

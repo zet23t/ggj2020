@@ -26,7 +26,7 @@ public class BlockMapSimulator : IBlockMap
     /// Information about all available Block types
     /// </summary>
     public BlockRegistry Registry;
-
+    
     /// <summary>
     /// A two-dimensional grid that represents the game field.
     /// The block id refers to a BlockPlacement-Object from <see cref="_blocks"/>.
@@ -108,7 +108,7 @@ public class BlockMapSimulator : IBlockMap
         
         block = block.GetRotatedBlock(orientation);
         
-        if (!CanPlaceBlock(block, orientation, x, y))
+        if (!CanPlaceBlock(block, orientation, x, y, false))
         {
             throw new InvalidOperationException("No block can be placed here! Use CanPlaceBlock() first!");
         }
@@ -137,9 +137,10 @@ public class BlockMapSimulator : IBlockMap
     /// <summary>
     /// Checks if a block can be placed at a given position and orientation.
     /// </summary>
-    public bool CanPlaceBlock(Block block, BlockOrientation orientation, int x, int y)
+    public bool CanPlaceBlock(Block block, BlockOrientation orientation, int x, int y, bool invertYAxis = true)
     {
-        y = Height - y;
+        if(invertYAxis)
+            y = Height - y;
         
         //if (x < 0 || y < 0 || x >= Width - 1 || y >= Height - 1)
         //    return false;

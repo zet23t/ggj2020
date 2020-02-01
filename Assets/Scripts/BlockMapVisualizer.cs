@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Lean.Touch;
+﻿using Lean.Touch;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,6 +42,7 @@ public class BlockMapVisualizer : MonoBehaviour
                 x += block.Width;
                 var material = MaterialRegistry.Materials[UnityEngine.Random.Range(0, MaterialRegistry.Materials.Length)];
                 InstantiateBlock(block, x, block.Height + j, material);
+                
             }
         }
     }
@@ -55,14 +53,14 @@ public class BlockMapVisualizer : MonoBehaviour
         var go = Instantiate(block.Prefab, transform.TransformPoint(position), Quaternion.identity, transform);
         var kblock = go.AddComponent<KinematicBlock>();
         kblock.Initialize(this, block, m, BlockMaterial);
-        if (!simulator.CanPlaceBlock(block, BlockOrientation.O0, x, y))
+        Vector2Int simPos = kblock.GetSimulatorPosition();
+        if (!simulator.CanPlaceBlock(block, BlockOrientation.O0, simPos.x, simPos.y))
         {
             Destroy(go);
             return null;
         }
-        simulator.PlaceBlock(block, BlockOrientation.O0, x, y);
-
-        // MapSimulator.PlaceBlock(block, BlockOrientation.O0, (int)position.x - block.Width, (int)position.y - block.Height);
+        simulator.PlaceBlock(block, BlockOrientation.O0, simPos.x, simPos.y);
+        
         return kblock;
     }
 
