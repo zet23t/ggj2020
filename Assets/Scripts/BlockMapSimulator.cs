@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 /// <summary>
 /// Simulates the 2D-Grid of our game.
@@ -68,6 +69,8 @@ public class BlockMapSimulator : IBlockMap
     /// removed from the game field and returned in a list.
     public List<BlockPlacement> Explode(int x, int y, float fRadius)
     {
+        y = Height - y;
+        
         List<BlockPlacement> explodedBlocks = new List<BlockPlacement>();
         HashSet<int> explodedBlocksIds = new HashSet<int>();
 
@@ -101,6 +104,8 @@ public class BlockMapSimulator : IBlockMap
     /// </summary>
     public void PlaceBlock(Block block, BlockOrientation orientation, int x, int y)
     {
+        y = Height - y;
+        
         block = block.GetRotatedBlock(orientation);
         
         if (!CanPlaceBlock(block, orientation, x, y))
@@ -134,8 +139,10 @@ public class BlockMapSimulator : IBlockMap
     /// </summary>
     public bool CanPlaceBlock(Block block, BlockOrientation orientation, int x, int y)
     {
-        if (x < 0 || y < 0 || x >= Width || y >= Height)
-            return false;
+        y = Height - y;
+        
+        //if (x < 0 || y < 0 || x >= Width - 1 || y >= Height - 1)
+        //    return false;
         
         block = block.GetRotatedBlock(orientation);
 
@@ -143,6 +150,11 @@ public class BlockMapSimulator : IBlockMap
         {
             for (int iY = 0; iY < block.GetHeight(); iY++)
             {
+                int target = (y + iY) * Width + (x + iX);
+                if (target < 0 || target >= _blockGrid.Length)
+                {
+                    return false;
+                }
                 if (block.IsFieldSet(iX, iY) && _blockGrid[(y + iY) * Width + (x + iX)] > 0)
                 {
                     return false;
