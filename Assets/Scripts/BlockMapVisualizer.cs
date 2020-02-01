@@ -43,23 +43,26 @@ public class BlockMapVisualizer : MonoBehaviour
     {
         BlockPlacement explodedBlock = null;
         var amountOfTries = 0;
-        while (explodedBlock == null)
+        while (true)
         {
             if (++amountOfTries > 50)
             {
-                break;
+                return;
             }
             
-            var possiblyExplodedBlocks = simulator.Explode(Random.Range(0, Width-1), Random.Range(0, Height-1), 0.0f);
+            var possiblyExplodedBlocks = simulator.Explode(Random.Range(0, Width-1), Random.Range(0, Height-1), 1.0f);
             if (possiblyExplodedBlocks.Count != 0)
             {
-                explodedBlock = possiblyExplodedBlocks[0];
+                foreach (var blockExploded in possiblyExplodedBlocks)
+                {
+                    var currentKineticBlock = kinematicBlocks.FirstOrDefault(block => block.BlockID == blockExploded.BlockId);
+
+                    currentKineticBlock?.PushOut();
+                }
+
+                return;
             }
         }
-
-        var currentKineticBlock = kinematicBlocks.First(block => block.BlockID == explodedBlock.BlockId);
-
-        currentKineticBlock.PushOut();
     }
 
     private void SpawnBlocks()
@@ -75,7 +78,12 @@ public class BlockMapVisualizer : MonoBehaviour
                 var block = BlockRegistry.Blocks[(i + j) % BlockRegistry.Blocks.Length];
                 x += block.Width + 1;
                 var material = MaterialRegistry.Materials[UnityEngine.Random.Range(0, MaterialRegistry.Materials.Length)];
-                kinematicBlocks.Add(InstantiateBlock(block, x, block.Height + j, material));
+                var blockKinematic = InstantiateBlock(block, x, block.Height + j, material);
+                if (blockKinematic)
+                {
+                    kinematicBlocks.Add(blockKinematic);
+                }
+                
             }
         }
     }
@@ -110,7 +118,7 @@ public class BlockMapVisualizer : MonoBehaviour
             timeElaspedSinceLastTrigger -= 3.0f;
         }
 
-        //DebugOutput.text = simulator.ToString();
+        DebugOutput.text = simulator.ToString();
         if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.R))
         {
             // Destroy existing blocks
@@ -196,6 +204,6 @@ public class BlockMapVisualizer : MonoBehaviour
     public void PlaceBlock(KinematicBlock kinematicBlock)
     {
         var orientation = kinematicBlock.GetOrientedBlock(out Vector2Int pos);
-        simulator.PlaceBlock(orientation, kinematicBlock.CurrentRotationToOrientation(), pos.x, pos.y);
+        kinematicBlock.BlockID = simulator.PlaceBlock(orientation, kinematicBlock.CurrentRotationToOrientation(), pos.x, pos.y);
     }
 }
