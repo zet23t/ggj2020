@@ -160,4 +160,20 @@ public class BlockMapSimulator : IBlockMap
     {
         
     }
+
+    public override string ToString()
+    {
+        string str = "";
+        for (int iY = 0; iY < Height; iY++)
+        {
+            for (int iX = 0; iX < Width; iX++)
+            {
+                str += _blockGrid[iY * Width + iX] != -1 ? "X" : "Y";
+            }
+        
+            str += "\n";
+        }
+
+        return str;
+    }
 }
