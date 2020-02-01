@@ -123,7 +123,7 @@ public class BlockMapSimulator : IBlockMap
             {
                 if (block.IsFieldSet(iX, iY))
                 {
-                    _blockGrid[(y + iY) * this._height + (x + iX)] = blockId;
+                    _blockGrid[(y + iY) * _width + (x + iX)] = blockId;
                 }
             }
         }

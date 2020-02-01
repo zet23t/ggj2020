@@ -35,7 +35,7 @@ public class Block : ScriptableObject {
     public Block GetRotatedBlock(BlockOrientation orientation)
     {
         Block blockR = CreateInstance<Block>();
-        blockR.fields = new bool[width * height];
+        blockR.fields = fields;
         blockR.width = width;
         blockR.height = height;
         blockR.Prefab = Prefab;
@@ -80,6 +80,8 @@ public class Block : ScriptableObject {
         //Rotate block
         for (int i = 0; i < iRotate; i++)
         {
+            blockR.width = height;
+            blockR.height = width;
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
@@ -92,5 +94,21 @@ public class Block : ScriptableObject {
         }
 
         return blockR;
+    }
+
+    public override string ToString()
+    {
+        string str = "";
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                str += fields[y * width + x] ? "1" : "0";
+            }
+
+            str += "\n";
+        }
+
+        return str;
     }
 }
