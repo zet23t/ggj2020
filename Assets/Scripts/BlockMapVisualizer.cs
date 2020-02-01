@@ -14,7 +14,6 @@ public class BlockMapVisualizer : MonoBehaviour
 
     public BlockMaterialRegistry MaterialRegistry;
     public BlockRegistry BlockRegistry;
-    public BlockMapSimulator MapSimulator;
 
     public float RotateBackPerSecond = 180;
     public float MoveBackPerSecond = 2;
@@ -29,11 +28,6 @@ public class BlockMapVisualizer : MonoBehaviour
     {
         simulator = new BlockMapSimulator(Width, Height, BlockRegistry);
         SpawnBlocks();
-    }
-
-    private void OnValidate()
-    {
-        MapSimulator = new BlockMapSimulator(Width, Height, BlockRegistry);
     }
 
     private void SpawnBlocks()

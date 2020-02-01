@@ -145,10 +145,6 @@ public class BlockMapSimulator : IBlockMap
         //    return false;
         
         block = block.GetRotatedBlock(orientation);
-        if (x < 0 || y < 0 || x >= Width - block.Width || y >= Height - block.Height)
-        {
-            return false;
-        }
 
         for (int iX = 0; iX < block.GetWidth(); iX++)
         {
