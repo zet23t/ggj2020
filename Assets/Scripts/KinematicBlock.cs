@@ -10,7 +10,7 @@ public class KinematicBlock : MonoBehaviour
     private BlockMapVisualizer visualizer;
     private List<Collider> colliders = new List<Collider>();
 
-    public void Initialize(BlockMapVisualizer visualizer, Block block, BlockMaterial m)
+    public void Initialize(BlockMapVisualizer visualizer, Block block, BlockMaterial m, PhysicMaterial blocksMaterial)
     {
         GetComponent<MeshRenderer>().sharedMaterial = m.MaterialPrefab;
         this.visualizer = visualizer;
@@ -22,8 +22,9 @@ public class KinematicBlock : MonoBehaviour
                 {
                     var box = gameObject.AddComponent<BoxCollider>();
                     box.center = new Vector3(x + .5f - block.Width, -y - .5f, 0);
-                    box.size = Vector3.one * 0.98f;
+                    box.size = Vector3.one * 0.95f;
                     colliders.Add(box);
+                    box.sharedMaterial = blocksMaterial;
                 }
             }
         }
@@ -45,7 +46,7 @@ public class KinematicBlock : MonoBehaviour
 
     private IEnumerator HandleFinger(Lean.Touch.LeanFinger leanFinger, RaycastHit hit)
     {
-        GestureTracer tracer = new GestureTracer(.1f, 4);
+        GestureTracer tracer = new GestureTracer(.1f, 6);
 
         SetCollidersEnabled(false);
         Plane plane = new Plane(Vector3.forward, hit.point);
@@ -73,6 +74,15 @@ public class KinematicBlock : MonoBehaviour
                         targetRotation = targetRotation * Quaternion.Euler(0,0,-90);
                         tracer.Reset();
                         break;
+                    case Gesture.MirrorHorizontal:
+                        targetRotation = targetRotation * Quaternion.Euler(0,180,0);
+                        tracer.Reset();
+                        break;
+                    case Gesture.MirrorVertical:
+                        targetRotation = targetRotation * Quaternion.Euler(180,0,0);
+                        tracer.Reset();
+                        break;
+
                 }
 
                 var factor = Mathf.InverseLerp(0.5f, 1.5f, projB.y);

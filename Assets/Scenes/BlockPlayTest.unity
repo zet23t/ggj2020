@@ -266,10 +266,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5bfa7ad426e6246ab862067640cd1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BlockMaterial: {fileID: 13400000, guid: 948c9dec6d5b28c4c8a5a83b2cccd614, type: 2}
   WorldCamera: {fileID: 124470882}
-  Width: 8
-  Height: 8
-  ActivateVeclocity: -2
+  Width: 12
+  Height: 12
+  ActivateVeclocity: -3
   MaterialRegistry: {fileID: 11400000, guid: a6ca048d598d5dc4c865bb7e1b6d125e, type: 2}
   BlockRegistry: {fileID: 11400000, guid: a2d362aa0f2c0b24b8c1128699490f2e, type: 2}
   RotateBackPerSecond: 1800
@@ -757,7 +758,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436744732}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 1ebe0620a096cd3488139e51a53973da, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -942,7 +943,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1709242352}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 1ebe0620a096cd3488139e51a53973da, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1137,7 +1138,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969467628}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 1ebe0620a096cd3488139e51a53973da, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

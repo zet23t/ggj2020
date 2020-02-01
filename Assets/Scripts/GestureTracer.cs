@@ -7,7 +7,7 @@ public enum Gesture
     RotateRight,
     RotateLeft,
     MirrorHorizontal,
-    MirrotVertical
+    MirrorVertical
 }
 
 public class GestureTracer
@@ -87,6 +87,17 @@ public class GestureTracer
                     return Gesture.RotateLeft;
                 }
             }
+        }
+        float width = max.x - min.x;
+        float height = max.y - min.y;
+        float totalLength = CalcTotalLength();
+        if (width > height * 3 && totalLength > width * 3)
+        {
+            return Gesture.MirrorHorizontal;
+        }
+        if (width * 3 < height && totalLength > height * 3)
+        {
+            return Gesture.MirrorVertical;
         }
 
         return Gesture.Nothing;

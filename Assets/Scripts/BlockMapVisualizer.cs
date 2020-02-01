@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class BlockMapVisualizer : MonoBehaviour
 {
+    public PhysicMaterial BlockMaterial;
     public Camera WorldCamera;
     public int Width;
     public int Height;
@@ -47,7 +48,7 @@ public class BlockMapVisualizer : MonoBehaviour
     {
         var go = Instantiate(block.Prefab, transform.TransformPoint(position), Quaternion.identity, transform);
         var kblock = go.AddComponent<KinematicBlock>();
-        kblock.Initialize(this, block, m);
+        kblock.Initialize(this, block, m, BlockMaterial);
         return kblock;
     }
 
