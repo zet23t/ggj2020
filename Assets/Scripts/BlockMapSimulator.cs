@@ -65,6 +65,14 @@ public class BlockMapSimulator
     }
 
     /// <summary>
+    /// Returns true if the gamefield is empty
+    /// </summary>
+    public bool IsEmpty()
+    {
+        return _blocks.Values.ToList().Count == 0;
+    }
+
+    /// <summary>
     /// Lets an explosion occur on the given position withhin a given radius. All Blocks withhin thatradius will be
     /// removed from the game field and returned in a list.
     public List<BlockPlacement> Explode(int x, int y, float fRadius)
