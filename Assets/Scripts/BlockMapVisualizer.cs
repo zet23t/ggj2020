@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Lean.Touch;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BlockMapVisualizer : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class BlockMapVisualizer : MonoBehaviour
 
     public Vector3 MovePlanePoint => transform.TransformPoint(new Vector3(0, 0, -1.05f));
     public Vector3 PlayPlanePoint => transform.TransformPoint(new Vector3(0, 0, 0));
+
+    public Text DebugOutput;
 
     // Start is called before the first frame update
     void Start()
@@ -66,6 +69,7 @@ public class BlockMapVisualizer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        DebugOutput.text = simulator.ToString();
         if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ) && Input.GetKeyDown(KeyCode.R))
         {
             // Destroy existing blocks
