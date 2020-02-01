@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Lean.Touch;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BlockMapVisualizer : MonoBehaviour
 {
