@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class BlockMapVisualizer : MonoBehaviour
 {
     public bool IsEditor;
+    public LevelPattern LevelPatternSaveAsset;
     public PhysicMaterial BlockMaterial;
     public Camera WorldCamera;
     public int Width;
@@ -47,10 +48,19 @@ public class BlockMapVisualizer : MonoBehaviour
 
         if (!IsEditor)
         {
-            levelGenerator.GenerateLevel();
+            if (LevelPatternSaveAsset)
+            {
+                LoadFromLevelPatternAsset();
+            }
+            else
+            {
+                levelGenerator.GenerateLevel();
+            }
         }
         else
         {
+            if (LevelPatternSaveAsset)
+                LoadFromLevelPatternAsset();
             int x = 0;
             int y = 4;
             foreach (var block in BlockRegistry.Blocks)
@@ -68,6 +78,19 @@ public class BlockMapVisualizer : MonoBehaviour
                 kblock.PushOut(0f);
             }
         }
+    }
+
+    private void LoadFromLevelPatternAsset()
+    {
+        // don't write into level pattern save asset while loading
+        var editor = IsEditor;
+        IsEditor = false;
+        foreach (var placement in LevelPatternSaveAsset.Placements)
+        {
+            InstantiateBlock(placement.Block, placement.Orientation, placement.Position.x, placement.Position.y,
+                MaterialRegistry.Materials[0]);
+        }
+        IsEditor = editor;
     }
 
     public bool ExplodeRandomBlock()
@@ -92,12 +115,18 @@ public class BlockMapVisualizer : MonoBehaviour
 
     private KinematicBlock InstantiateBlock(Block block, BlockOrientation orientation, int x, int y, BlockMaterial m, bool place = true)
     {
-        Debug.Log("InstantiateBlock [" + x + ", " + y + "]");
         Vector3 position = new Vector3(x, y, 0);
         Vector3 worldSpacePos = transform.TransformPoint(position);
-        var go = Instantiate(block.Prefab, worldSpacePos, Quaternion.identity, transform);
+        var go = Instantiate(block.Prefab, worldSpacePos, KinematicBlock.OrientationToRotation(orientation), transform);
         var kblock = go.AddComponent<KinematicBlock>();
         kblock.Initialize(this, block, m, BlockMaterial);
+        Vector2Int simPos = kblock.GetTopLeftPoint();
+        var localpos = go.transform.localPosition;
+        localpos.x += x - simPos.x;
+        localpos.y += y - simPos.y;
+        go.transform.localPosition = localpos;
+        Debug.DrawLine(Vector3.zero, worldSpacePos);
+        Debug.Log($"InstantiateBlock [{x}, {y}] => {worldSpacePos} => {simPos}");
         if (!place)
         {
             return kblock;
@@ -112,8 +141,8 @@ public class BlockMapVisualizer : MonoBehaviour
         PlaceBlock(kblock, true);
 
         var goBackground =
-            Instantiate(block.Prefab, worldSpacePos - new Vector3(0, 0, -0.17f),
-                Quaternion.identity, transform);
+            Instantiate(block.Prefab, go.transform.position - new Vector3(0, 0, -0.17f),
+                go.transform.rotation, transform);
         goBackground.GetComponent<MeshRenderer>().sharedMaterial = m.MaterialPrefab;
 
         return kblock;
@@ -184,9 +213,19 @@ public class BlockMapVisualizer : MonoBehaviour
                             }
                         }
                     }
+                    kinematicBlocks.Remove(kb);
+                    if (LevelPatternSaveAsset && IsEditor)
+                    {
+                        // just reset and readd to avoid "problems"
+                        LevelPatternSaveAsset.RemoveAll();
+                        foreach(var kblock in kinematicBlocks)
+                        {
+                            var b = kblock.GetOrientedBlock(out Vector2Int posi);
+                            LevelPatternSaveAsset.Add(b, kblock.CurrentRotationToOrientation(), posi);
+                        }
+                    }
                 }
                 kb.Activate(touches[0], hit);
-                kinematicBlocks.Remove(kb);
             }
         }
     }
@@ -204,9 +243,12 @@ public class BlockMapVisualizer : MonoBehaviour
 
         sfxPlaceBlock.Play();
 
+        BlockOrientation orientation = kinematicBlock.CurrentRotationToOrientation();
+        if (LevelPatternSaveAsset && IsEditor)
+            LevelPatternSaveAsset.Add(block, orientation, pos);
         pos.y = Height - pos.y;
         Debug.Log("Place @ " + pos.x + ", " + pos.y);
-        kinematicBlock.BlockID = simulator.PlaceBlock(block, kinematicBlock.CurrentRotationToOrientation(), pos.x, pos.y, initial);
+        kinematicBlock.BlockID = simulator.PlaceBlock(block, orientation, pos.x, pos.y, initial);
         kinematicBlocks.Add(kinematicBlock);
     }
 

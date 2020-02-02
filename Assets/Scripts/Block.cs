@@ -11,7 +11,12 @@ public class Block : ScriptableObject {
 
     public int Width => width;
     public int Height => height;
-    
+
+    public bool IsClone => isClone;
+
+    private Block original;
+    public Block Original => original ? original : this;
+
     public GameObject Prefab;
 
     private bool[] originalFields;
@@ -39,6 +44,7 @@ public class Block : ScriptableObject {
     public Block Clone()
     {
         Block block = CreateInstance<Block>();
+        block.original = Original;
         block.isClone = true;
         block.width = width;
         block.height = height;
