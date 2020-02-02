@@ -24,6 +24,9 @@ public class MainGameLogic : MonoBehaviour
     void Start()
     {
         UpdateTrainAnimSpeed();
+        
+        blockMapVisualizer.ExplodeRandomBlock();
+        camShakeAnimator.SetBool("IsShaking", true);
 
         blockMapVisualizer.Simulator.SetScoreHandler(scoreHandler);
     }

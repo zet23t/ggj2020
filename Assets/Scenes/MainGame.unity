@@ -5731,16 +5731,6 @@ PrefabInstance:
       objectReference: {fileID: 5517704}
     - target: {fileID: 1503781465408559147, guid: b1cf2d06196db4d83bdf208c88ad1248,
         type: 3}
-      propertyPath: BlockPushInterval
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1503781465408559147, guid: b1cf2d06196db4d83bdf208c88ad1248,
-        type: 3}
-      propertyPath: BlockPushSpeedRetainPercentage
-      value: 0.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 1503781465408559147, guid: b1cf2d06196db4d83bdf208c88ad1248,
-        type: 3}
       propertyPath: camShakeAnimator
       value: 
       objectReference: {fileID: 694906770}
