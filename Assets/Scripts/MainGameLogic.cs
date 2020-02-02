@@ -12,6 +12,7 @@ public class MainGameLogic : MonoBehaviour
 
     public AudioSource bgMusic;
     public AudioSource sfxCrowdShock;
+    public AudioSource sfxExplosion;
 
     public float BlockPushInterval = 3.0f;
     public float BlockPushMinInterval = 0.5f;
@@ -58,14 +59,21 @@ public class MainGameLogic : MonoBehaviour
             timeElaspedSinceLastTrigger = 0.0f;
 
             BlockPushInterval = Math.Max(BlockPushMinInterval, BlockPushInterval * BlockPushSpeedRetainPercentage);
-            UpdateTrainAnimSpeed();
-            camShakeAnimator.SetBool("IsShaking", true);
+            UpdateTrainAtEnd();
         }
+    }
+
+    private void UpdateTrainAtEnd()
+    {
+        UpdateTrainAnimSpeed();
+        camShakeAnimator.SetBool("IsShaking", true);
+        sfxExplosion.Play();
     }
 
     private void OnGameOver()
     {
         Debug.Log("Game Over!");
+        UpdateTrainAtEnd();
 
         bgMusic.Stop();
         sfxCrowdShock.Play();
