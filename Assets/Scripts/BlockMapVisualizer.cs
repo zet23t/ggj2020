@@ -39,7 +39,7 @@ public class BlockMapVisualizer : MonoBehaviour
     void Start()
     {
         simulator = new BlockMapSimulator(Width, Height, BlockRegistry);
-        levelGenerator = new BlockLevelGenerator(BlockRegistry, MaterialRegistry, InstantiateBlock, CanPlaceBlock);
+        levelGenerator = new BlockLevelGenerator(BlockRegistry, MaterialRegistry, InstantiateBlock, simulator.CanPlaceBlock);
 
         if (!IsEditor)
         {
@@ -91,18 +91,16 @@ public class BlockMapVisualizer : MonoBehaviour
         }
     }
 
-    private bool CanPlaceBlock(Block block, BlockOrientation orientation, int x, int y)
-    {
-        return simulator.CanPlaceBlock(block, orientation, x, y);
-    }
-
     private KinematicBlock InstantiateBlock(Block block, BlockOrientation orientation, int x, int y, BlockMaterial m, bool place = true)
     {
+        Debug.Log("InstantiateBlock [" + x + ", " + y + "]");
+        
         Vector3 position = new Vector3(x, y, 0);
         var go = Instantiate(block.Prefab, transform.TransformPoint(position), Quaternion.identity, transform);
         var kblock = go.AddComponent<KinematicBlock>();
         kblock.Initialize(this, block, m, BlockMaterial);
         Vector2Int simPos = kblock.GetSimulatorPosition();
+        Debug.Log("SimPos: [" + simPos.x + "," + simPos.y + "]");
         if (!place)
         {
             return kblock;

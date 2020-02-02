@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 using CreateBlockFunctionType = System.Func<Block, BlockOrientation, int, int, BlockMaterial, bool, KinematicBlock>;
 using TestBlockFunctionType = System.Func<Block, BlockOrientation, int, int, bool>;
@@ -33,8 +34,12 @@ public class BlockLevelGenerator
     private HashSet<KinematicBlock> GenerateCircle()
     {
         var kinematicBlocks = new HashSet<KinematicBlock>();
-        int sizeX = 10;
-        int sizeY = 10;
+        int sizeX = 3;
+        int sizeY = 3;
+
+        // Get midpoint
+        var gridSize = new Vector2(sizeX, sizeY);
+        var midpoint = gridSize * 0.5f;
 
         for(int y = 0; y<sizeY; ++y)
         {

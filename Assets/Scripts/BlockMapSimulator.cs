@@ -10,6 +10,9 @@ using UnityEngine;
 /// </summary>
 public class BlockMapSimulator
 {
+    public static int BLOCK_ID_EMPTY = -1;
+    public static int BLOCK_ID_EXPLODED = -2;
+
     private int _idCounter;
 
     /// <summary>
@@ -30,7 +33,7 @@ public class BlockMapSimulator
     /// <summary>
     /// A two-dimensional grid that represents the game field.
     /// The block id refers to a BlockPlacement-Object from <see cref="_blocks"/>.
-    /// If the block id equals -1, there is no block at that position.
+    /// If the block id equals BLOCK_ID_EMPTY, there is no block at that position.
     /// </summary>
     private readonly int[] _blockGrid;
     
@@ -52,7 +55,7 @@ public class BlockMapSimulator
 
         for (int i = 0; i < _blockGrid.Length; i++)
         {
-            _blockGrid[i] = -1;
+            _blockGrid[i] = BLOCK_ID_EMPTY;
         }
     }
 
@@ -94,7 +97,7 @@ public class BlockMapSimulator
                     {
                         explodedBlocksIds.Add(id);
                     }
-                    _blockGrid[iY * this.Width + iX] = -2;
+                    _blockGrid[iY * this.Width + iX] = BLOCK_ID_EXPLODED;
                 }
             }
         }
@@ -105,7 +108,7 @@ public class BlockMapSimulator
                 int id = _blockGrid[iY * this.Width + iX];
                 if (explodedBlocksIds.Contains(id))
                 {
-                    _blockGrid[iY * this.Width + iX] = -1;
+                    _blockGrid[iY * this.Width + iX] = BLOCK_ID_EMPTY;
                 }
             }
         }
@@ -124,11 +127,11 @@ public class BlockMapSimulator
     /// </summary>
     public int PlaceBlock(Block block, BlockOrientation orientation, int x, int y)
     {
-        y = InvertY(y);
+        //y = InvertY(y);
         
         block.Rotate(orientation);
         
-        if (!CanPlaceBlock(block, orientation, x, y, false))
+        if (!CanPlaceBlock(block, orientation, x, y))
         {
             throw new InvalidOperationException("No block can be placed here! Use CanPlaceBlock() first!");
         }
@@ -148,6 +151,7 @@ public class BlockMapSimulator
             {
                 if (block.IsFieldSet(iX, iY))
                 {
+                    Debug.Log("Place Block [" + x + ", " + y + "] + [" + iX + ", " + iY + "] @ " + ((y + iY) * Width + (x + iX)));
                     _blockGrid[(y + iY) * Width + (x + iX)] = blockId;
                 }
             }
@@ -158,11 +162,8 @@ public class BlockMapSimulator
     /// <summary>
     /// Checks if a block can be placed at a given position and orientation.
     /// </summary>
-    public bool CanPlaceBlock(Block block, BlockOrientation orientation, int x, int y, bool invertYAxis = true)
+    public bool CanPlaceBlock(Block block, BlockOrientation orientation, int x, int y)
     {
-        if (invertYAxis)
-            y = InvertY(y);
-
         block.Rotate(orientation);
 
         for (int iX = 0; iX < block.Width; iX++)
@@ -203,8 +204,10 @@ public class BlockMapSimulator
             for (int iX = 0; iX < Width; iX++)
             {
                 int v = _blockGrid[iY * Width + iX];
-                if (v == -2) str += "XX";
-                else str += v != -1 ? v.ToString("D2") : "__";
+                //if (v == BLOCK_ID_EXPLODED) str += "XX";
+                //else str += v != BLOCK_ID_EMPTY ? (v % 100).ToString("D2") : "__";
+                bool res = CanPlaceBlock(Registry.Blocks[0], BlockOrientation.O0, iX, iY);
+                str += res ? "#" : "_";
             }
         
             str += "\n";

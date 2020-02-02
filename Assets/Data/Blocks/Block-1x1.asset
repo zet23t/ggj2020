@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 027b8bb846d6685409b754b24235fcf0, type: 3}
-  m_Name: BlockRegistry
+  m_Script: {fileID: 11500000, guid: ab55f7a0388d3ca4fb12f400d650c9ed, type: 3}
+  m_Name: Block-1x1
   m_EditorClassIdentifier: 
-  Blocks:
-  - {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
+  width: 1
+  height: 1
+  fields: 01
+  Prefab: {fileID: -927199367670048503, guid: 5c9da1aabf6761e4fb8b015373d6b2fa, type: 3}

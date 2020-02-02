@@ -848,7 +848,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1680684624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1002,6 +1002,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 236315297338664377, guid: bc4fa2a37f3a248b4863828dec2bda08,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 1.8590001
+      objectReference: {fileID: 0}
+    - target: {fileID: 236315297338664377, guid: bc4fa2a37f3a248b4863828dec2bda08,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -1.7500001
+      objectReference: {fileID: 0}
+    - target: {fileID: 236315297338664377, guid: bc4fa2a37f3a248b4863828dec2bda08,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.517
+      objectReference: {fileID: 0}
     - target: {fileID: 236315297389328904, guid: bc4fa2a37f3a248b4863828dec2bda08,
         type: 3}
       propertyPath: m_Name
@@ -1264,6 +1279,11 @@ PrefabInstance:
       propertyPath: scoreHandler
       value: 
       objectReference: {fileID: 5517704}
+    - target: {fileID: 1503781465408559147, guid: b1cf2d06196db4d83bdf208c88ad1248,
+        type: 3}
+      propertyPath: BlockPushInterval
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1942782872085678750, guid: b1cf2d06196db4d83bdf208c88ad1248,
         type: 3}
       propertyPath: m_StaticEditorFlags

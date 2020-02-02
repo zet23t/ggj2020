@@ -89,7 +89,7 @@ public class KinematicBlock : MonoBehaviour
     public Vector2Int GetSimulatorPosition()
     {
         var p2 = GetTopLeftPoint();
-        p2.x = p2.x - block.Width * 0;
+        p2.x = p2.x + block.Width;
         return p2;
     }
 
