@@ -378,6 +378,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 94402054}
+  isFrozen: 0
+  elapsedTime: 0
 --- !u!1 &95518677
 GameObject:
   m_ObjectHideFlags: 0
