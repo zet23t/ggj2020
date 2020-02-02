@@ -30,8 +30,10 @@ public class MainGameLogic : MonoBehaviour
         {
             blockMapVisualizer.ExplodeRandomBlock();
 
-            if(camShakeAnimator != null)
+            if (camShakeAnimator != null)
+            {
                 camShakeAnimator.SetBool("IsShaking", true);
+            }
         }
 
         blockMapVisualizer.Simulator.SetScoreHandler(scoreHandler);
@@ -83,6 +85,8 @@ public class MainGameLogic : MonoBehaviour
             camShakeAnimator.SetBool("IsShaking", true);
 
         sfxExplosion.Play();
+        
+        Handheld.Vibrate();
     }
 
     private void OnGameOver()
