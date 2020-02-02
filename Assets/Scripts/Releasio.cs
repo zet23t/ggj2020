@@ -13,6 +13,8 @@ public class Releasio : MonoBehaviour
     {
         if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.E))
         {
+            GetComponent<AudioSource>()?.Play();
+            
             Renderer[] allRenderers = (Renderer[]) FindObjectsOfType(typeof(Renderer));
 
             foreach (var renderer in allRenderers)
