@@ -16,168 +16,52 @@ MonoBehaviour:
   BlockMaterialRegistry: {fileID: 11400000, guid: a6ca048d598d5dc4c865bb7e1b6d125e,
     type: 2}
   Placements:
-  - Block: {fileID: 11400000, guid: 3fcde68e73b67d1489cfcf2eb157cd04, type: 2}
-    Position: {x: 1, y: 11}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: 3fcde68e73b67d1489cfcf2eb157cd04, type: 2}
-    Position: {x: 5, y: 11}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: 3fcde68e73b67d1489cfcf2eb157cd04, type: 2}
-    Position: {x: 9, y: 11}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 8, y: 9}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 4, y: 9}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: 3fcde68e73b67d1489cfcf2eb157cd04, type: 2}
-    Position: {x: 1, y: 9}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: 05c06070397ff754f84f8d5bad8eee1d, type: 2}
-    Position: {x: 5, y: 8}
-    Orientation: 3
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 4, y: 8}
-    Orientation: 3
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: 05c06070397ff754f84f8d5bad8eee1d, type: 2}
-    Position: {x: 2, y: 6}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 7, y: 4}
-    Orientation: 3
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: 5e65d1765c3a52f4bbbab599037112b6, type: 2}
-    Position: {x: 6, y: 7}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 5, y: 5}
-    Orientation: 3
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: 3fcde68e73b67d1489cfcf2eb157cd04, type: 2}
-    Position: {x: 9, y: 9}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: 05c06070397ff754f84f8d5bad8eee1d, type: 2}
-    Position: {x: 10, y: 6}
-    Orientation: 2
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: baa2d3e491d5f78428d0e84bdfafbf5f, type: 2}
-    Position: {x: 8, y: 5}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: baa2d3e491d5f78428d0e84bdfafbf5f, type: 2}
-    Position: {x: 3, y: 5}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: 5e65d1765c3a52f4bbbab599037112b6, type: 2}
-    Position: {x: 2, y: 3}
-    Orientation: 1
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 5, y: 4}
-    Orientation: 4
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 8, y: 7}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 4, y: 6}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
+  - Block: {fileID: 11400000, guid: 42a168f62cad4e640aef4931295f9823, type: 2}
     Position: {x: 4, y: 7}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
+    Orientation: 4
+    Material: {fileID: 11400000, guid: 3eb847c1b2b4ae44989746ef1c753fc2, type: 2}
   - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 8, y: 6}
+    Position: {x: 6, y: 5}
     Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
+    Material: {fileID: 11400000, guid: 44b1f3bbfd1e58e4992f2970d498d119, type: 2}
   - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
+    Position: {x: 7, y: 5}
+    Orientation: 0
+    Material: {fileID: 11400000, guid: 44b1f3bbfd1e58e4992f2970d498d119, type: 2}
+  - Block: {fileID: 11400000, guid: 5e65d1765c3a52f4bbbab599037112b6, type: 2}
+    Position: {x: 5, y: 5}
+    Orientation: 0
+    Material: {fileID: 11400000, guid: 44b1f3bbfd1e58e4992f2970d498d119, type: 2}
+  - Block: {fileID: 11400000, guid: 5e65d1765c3a52f4bbbab599037112b6, type: 2}
+    Position: {x: 7, y: 5}
+    Orientation: 4
+    Material: {fileID: 11400000, guid: 44b1f3bbfd1e58e4992f2970d498d119, type: 2}
+  - Block: {fileID: 11400000, guid: 9470ee1dafa84cb4dad8271297bae34f, type: 2}
+    Position: {x: 5, y: 9}
+    Orientation: 4
+    Material: {fileID: 11400000, guid: 3eb847c1b2b4ae44989746ef1c753fc2, type: 2}
+  - Block: {fileID: 11400000, guid: 9470ee1dafa84cb4dad8271297bae34f, type: 2}
     Position: {x: 7, y: 9}
     Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 5, y: 9}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: 05c06070397ff754f84f8d5bad8eee1d, type: 2}
-    Position: {x: 0, y: 1}
-    Orientation: 7
-    Material: {fileID: 11400000, guid: 10d37b2b3a098cf4db237a43bd70bad6, type: 2}
-  - Block: {fileID: 11400000, guid: 05c06070397ff754f84f8d5bad8eee1d, type: 2}
-    Position: {x: 4, y: 1}
-    Orientation: 7
-    Material: {fileID: 11400000, guid: 10d37b2b3a098cf4db237a43bd70bad6, type: 2}
-  - Block: {fileID: 11400000, guid: 05c06070397ff754f84f8d5bad8eee1d, type: 2}
-    Position: {x: 8, y: 1}
-    Orientation: 7
-    Material: {fileID: 11400000, guid: 10d37b2b3a098cf4db237a43bd70bad6, type: 2}
-  - Block: {fileID: 11400000, guid: 5e65d1765c3a52f4bbbab599037112b6, type: 2}
-    Position: {x: 8, y: 3}
-    Orientation: 7
-    Material: {fileID: 11400000, guid: ec8717e2df2fbd64e8cb0596c270dca0, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 3, y: 3}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: de210f9d75d1b6f40b2dc96c42df89f4, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 9, y: 3}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: de210f9d75d1b6f40b2dc96c42df89f4, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 9, y: 6}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: de210f9d75d1b6f40b2dc96c42df89f4, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 9, y: 7}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: de210f9d75d1b6f40b2dc96c42df89f4, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 7, y: 7}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: de210f9d75d1b6f40b2dc96c42df89f4, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 7, y: 6}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: de210f9d75d1b6f40b2dc96c42df89f4, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 5, y: 6}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: de210f9d75d1b6f40b2dc96c42df89f4, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 5, y: 7}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: de210f9d75d1b6f40b2dc96c42df89f4, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 3, y: 7}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: de210f9d75d1b6f40b2dc96c42df89f4, type: 2}
-  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 3, y: 6}
-    Orientation: 0
-    Material: {fileID: 11400000, guid: de210f9d75d1b6f40b2dc96c42df89f4, type: 2}
+    Material: {fileID: 11400000, guid: 3eb847c1b2b4ae44989746ef1c753fc2, type: 2}
   - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
     Position: {x: 6, y: 4}
     Orientation: 0
     Material: {fileID: 11400000, guid: 44b1f3bbfd1e58e4992f2970d498d119, type: 2}
-  - Block: {fileID: 11400000, guid: baa2d3e491d5f78428d0e84bdfafbf5f, type: 2}
-    Position: {x: 5, y: 3}
+  - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
+    Position: {x: 7, y: 4}
     Orientation: 0
     Material: {fileID: 11400000, guid: 44b1f3bbfd1e58e4992f2970d498d119, type: 2}
+  - Block: {fileID: 11400000, guid: baa2d3e491d5f78428d0e84bdfafbf5f, type: 2}
+    Position: {x: 6, y: 7}
+    Orientation: 0
+    Material: {fileID: 11400000, guid: 3eb847c1b2b4ae44989746ef1c753fc2, type: 2}
+  - Block: {fileID: 11400000, guid: 42a168f62cad4e640aef4931295f9823, type: 2}
+    Position: {x: 8, y: 7}
+    Orientation: 0
+    Material: {fileID: 11400000, guid: 3eb847c1b2b4ae44989746ef1c753fc2, type: 2}
   - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 7, y: 3}
+    Position: {x: 6, y: 2}
     Orientation: 0
     Material: {fileID: 11400000, guid: 44b1f3bbfd1e58e4992f2970d498d119, type: 2}
   - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}

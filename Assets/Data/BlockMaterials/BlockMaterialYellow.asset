@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b06a916504c37be48a32afeec8e34dd2, type: 3}
   m_Name: BlockMaterialYellow
   m_EditorClassIdentifier: 
-  MaterialPrefab: {fileID: 2100000, guid: afa148df6d52f094aaea6be58c4a7d9b, type: 2}
+  MaterialPrefab: {fileID: 2100000, guid: 58bc5c7786481644f8a9a5df2acc8016, type: 2}
