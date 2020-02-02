@@ -43,7 +43,7 @@ public class BlockMapVisualizer : MonoBehaviour
     void Start()
     {
         simulator = new BlockMapSimulator(Width, Height, BlockRegistry);
-        levelGenerator = new BlockLevelGenerator(BlockRegistry, MaterialRegistry, InstantiateBlock, simulator.CanPlaceBlock);
+        levelGenerator = new BlockLevelGenerator(BlockRegistry, MaterialRegistry, InstantiateBlock, CanPlace);
 
         if (!IsEditor)
         {
@@ -83,7 +83,7 @@ public class BlockMapVisualizer : MonoBehaviour
         foreach (var blockExploded in possiblyExplodedBlocks)
         {
             var currentKineticBlock = kinematicBlocks.FirstOrDefault(b => b.BlockID == blockExploded.BlockId);
-            currentKineticBlock?.PushOut();
+            currentKineticBlock.PushOut();
             kinematicBlocks.Remove(currentKineticBlock);
         }
 
@@ -215,6 +215,12 @@ public class BlockMapVisualizer : MonoBehaviour
         return simulator.Explode(x, Height - y, rad);
     }
 
+    private bool CanPlace(Block b, BlockOrientation orientation, int x, int y)
+    {
+        y = Height - y;
+        return simulator.CanPlaceBlock(b, orientation, x, y);
+    }
+
     public bool CanPlace(KinematicBlock block)
     {
         Block oriented = block.GetOrientedBlock(out Vector2Int position);
@@ -239,7 +245,7 @@ public class BlockMapVisualizer : MonoBehaviour
             {
                 int index = x + y * width;
                 if (grid[index] < 0) continue;
-                Gizmos.color = Color.HSVToRGB((grid[index] * .2f) % 1f, 1, 1);
+                Gizmos.color = Color.HSVToRGB((grid[index] * .05f) % 1f, 1, 1);
                 Gizmos.DrawCube(new Vector3(x + .5f, height - 1 - y + .5f, -.5f), Vector3.one);
             }
 

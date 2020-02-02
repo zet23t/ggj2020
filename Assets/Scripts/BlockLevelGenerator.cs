@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using CreateBlockFunctionType = System.Func<Block, BlockOrientation, int, int, BlockMaterial, bool, KinematicBlock>;
+using Random = UnityEngine.Random;
 using TestBlockFunctionType = System.Func<Block, BlockOrientation, int, int, bool>;
 
 public class BlockLevelGenerator
@@ -15,7 +16,7 @@ public class BlockLevelGenerator
     private TestBlockFunctionType TestBlockCb;
 
     public BlockLevelGenerator(
-        BlockRegistry BlockRegistry, BlockMaterialRegistry MaterialRegistry, 
+        BlockRegistry BlockRegistry, BlockMaterialRegistry MaterialRegistry,
         CreateBlockFunctionType CreateBlockCb, TestBlockFunctionType TestBlockCb)
     {
         this.BlockRegistry = BlockRegistry;
@@ -41,22 +42,24 @@ public class BlockLevelGenerator
         var gridSize = new Vector2(sizeX, sizeY);
         var midpoint = gridSize * 0.5f;
 
-        for(int y = 0; y<sizeY; ++y)
+        List<Block> blocksBySize = new List<Block>(BlockRegistry.Blocks);
+        blocksBySize.Sort((b1, b2) => -(b1.Width * b1.Height).CompareTo(b2.Width * b2.Height));
+        foreach (var block in blocksBySize)
         {
-            for(int x = 0; x<sizeX; ++x)
+            for (int i = 0; i < 50; i += 1)
             {
-                var block = GetRandomBlock();
-                BlockOrientation orientation = BlockOrientation.O0;
-                if(TestBlockCb(block, orientation, x, y))
+                int x = Random.Range(0, sizeX);
+                int y = Random.Range(0, sizeY);
+                BlockOrientation orientation = (BlockOrientation) (Random.Range(0, 8) * 0);
+                var blockCopy = block.Clone();
+                var blockKine = CreateBlockCb(blockCopy, orientation, x, y, GetRandomMaterial(), true);
+                if (blockKine)
                 {
-                    var blockKine = CreateBlockCb(block, orientation, x, y, GetRandomMaterial(), true);
-                    if(blockKine) {
-                        kinematicBlocks.Add(blockKine);
-                    }
+                    kinematicBlocks.Add(blockKine);
                 }
+
             }
         }
-
 
         return kinematicBlocks;
     }

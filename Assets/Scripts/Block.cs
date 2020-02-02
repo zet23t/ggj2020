@@ -17,6 +17,7 @@ public class Block : ScriptableObject {
     private bool[] originalFields;
     private int originalWidth;
     private int originalHeight;
+    private bool isClone;
 
     private void OnValidate()
     {
@@ -38,6 +39,7 @@ public class Block : ScriptableObject {
     public Block Clone()
     {
         Block block = CreateInstance<Block>();
+        block.isClone = true;
         block.width = width;
         block.height = height;
         block.Prefab = Prefab;
@@ -49,12 +51,21 @@ public class Block : ScriptableObject {
 
     public void Rotate(BlockOrientation orientation)
     {
+        CheckModifyable();
         Array.Copy(originalFields, fields, fields.Length);
         width = originalWidth;
         height = originalHeight;
         Rotate((int)orientation);
     }
-    
+
+    private void CheckModifyable()
+    {
+        if (!isClone)
+        {
+            throw new Exception("Don't modify an original!");
+        }
+    }
+
     private void Rotate(int rotate90)
     {
         bool[] fieldsMirrored = new bool[fields.Length];

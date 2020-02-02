@@ -99,12 +99,13 @@ public class BlockMapSimulator
             {
                 if (Math.Pow(iX - x, 2) + Math.Pow(iY - y, 2) <= Math.Pow(fRadius, 2))
                 {
-                    int id = _blockGrid[iY * this.Width + iX];
+                    int index = iY * this.Width + iX;
+                    int id = _blockGrid[index];
                     if (id >= 0)
                     {
                         explodedBlocksIds.Add(id);
                     }
-                    _blockGrid[iY * this.Width + iX] = BLOCK_ID_EXPLODED;
+                    _blockGrid[index] = BLOCK_ID_EXPLODED;
                 }
             }
         }
@@ -112,10 +113,11 @@ public class BlockMapSimulator
         {
             for (int iY = 0; iY < Height; iY++)
             {
-                int id = _blockGrid[iY * this.Width + iX];
+                int index = iY * this.Width + iX;
+                int id = _blockGrid[index];
                 if (explodedBlocksIds.Contains(id))
                 {
-                    _blockGrid[iY * this.Width + iX] = BLOCK_ID_EMPTY;
+                    _blockGrid[index] = BLOCK_ID_EMPTY;
                 }
             }
         }
