@@ -14,9 +14,12 @@ public class ScoreHandler : MonoBehaviour
 
     public int currentScore;
 
+    public int BlockScore;
+
     void Start()
     {
         currentScore = 0;
+        BlockScore = 0;
         sfxBleep = GetComponent<AudioSource>();
     }
 
@@ -25,7 +28,7 @@ public class ScoreHandler : MonoBehaviour
         elapsedTime += Time.deltaTime;
 
         if(!isFrozen) {
-            currentScore = (int)(elapsedTime * 100);
+            currentScore = (int)(elapsedTime * 100) + BlockScore;
             scoreText.text = currentScore.ToString();
         } else if(elapsedTime > 0.65f) {
             elapsedTime = 0.0f;
