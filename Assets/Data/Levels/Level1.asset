@@ -16,10 +16,6 @@ MonoBehaviour:
   BlockMaterialRegistry: {fileID: 11400000, guid: a6ca048d598d5dc4c865bb7e1b6d125e,
     type: 2}
   Placements:
-  - Block: {fileID: 11400000, guid: 42a168f62cad4e640aef4931295f9823, type: 2}
-    Position: {x: 4, y: 7}
-    Orientation: 4
-    Material: {fileID: 11400000, guid: 3eb847c1b2b4ae44989746ef1c753fc2, type: 2}
   - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
     Position: {x: 6, y: 5}
     Orientation: 0
@@ -68,3 +64,7 @@ MonoBehaviour:
     Position: {x: 7, y: 2}
     Orientation: 0
     Material: {fileID: 11400000, guid: 44b1f3bbfd1e58e4992f2970d498d119, type: 2}
+  - Block: {fileID: 11400000, guid: 42a168f62cad4e640aef4931295f9823, type: 2}
+    Position: {x: 4, y: 7}
+    Orientation: 4
+    Material: {fileID: 11400000, guid: 3eb847c1b2b4ae44989746ef1c753fc2, type: 2}
