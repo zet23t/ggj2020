@@ -14,7 +14,7 @@ public class Releasio : MonoBehaviour
         if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKeyDown(KeyCode.E))
         {
             GetComponent<AudioSource>()?.Play();
-            
+
             Renderer[] allRenderers = (Renderer[]) FindObjectsOfType(typeof(Renderer));
 
             foreach (var renderer in allRenderers)
@@ -42,6 +42,9 @@ public class Releasio : MonoBehaviour
             {
                 float offset = Time.time * 0.5f;
                 renderer.material.mainTextureOffset = new Vector2(offset, 0);
+                renderer.material.SetVector("_EmissionColor", new Vector4(1.0f, 0.0f, 0.0f) * 
+                    (Mathf.Sin(Time.realtimeSinceStartup) + 1) * 4
+                );
             }
         }
     }
