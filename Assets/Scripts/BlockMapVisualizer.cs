@@ -96,7 +96,9 @@ public class BlockMapVisualizer : MonoBehaviour
         Debug.Log("InstantiateBlock [" + x + ", " + y + "]");
         
         Vector3 position = new Vector3(x, y, 0);
-        var go = Instantiate(block.Prefab, transform.TransformPoint(position), Quaternion.identity, transform);
+        Vector3 worldSpacePos = position * 0.25f; //visualizer.transform.InverseTransformPoint(minPos);
+
+        var go = Instantiate(block.Prefab, worldSpacePos, Quaternion.identity, transform);
         var kblock = go.AddComponent<KinematicBlock>();
         kblock.Initialize(this, block, m, BlockMaterial);
         Vector2Int simPos = kblock.GetSimulatorPosition();
@@ -115,7 +117,7 @@ public class BlockMapVisualizer : MonoBehaviour
         kblock.BlockID = simulator.PlaceBlock(block, orientation, simPos.x, simPos.y);
 
         var goBackground =
-            Instantiate(block.Prefab, transform.TransformPoint(position - new Vector3(0, 0, -0.87f)),
+            Instantiate(block.Prefab, worldSpacePos - new Vector3(0, 0, -0.87f),
                 Quaternion.identity, transform);
         goBackground.GetComponent<MeshRenderer>().sharedMaterial = m.MaterialPrefab;
 
@@ -222,6 +224,11 @@ public class BlockMapVisualizer : MonoBehaviour
     public void PlaceBlock(KinematicBlock kinematicBlock)
     {
         var block = kinematicBlock.GetOrientedBlock(out Vector2Int pos);
+
+        var worldPos = new Vector3(pos.x, pos.y, 0);
+        kinematicBlock.GetComponent<Rigidbody>().position = worldPos * 0.25f;
+        
+        Debug.Log("Place @ " + pos.x + ", " + pos.y);
         kinematicBlock.BlockID = simulator.PlaceBlock(block, kinematicBlock.CurrentRotationToOrientation(), pos.x, pos.y);
     }
 }

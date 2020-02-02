@@ -61,6 +61,7 @@ public class KinematicBlock : MonoBehaviour
     public Block GetOrientedBlock(out Vector2Int position)
     {
         position = GetTopLeftPoint();
+        Debug.Log(position);
 
         BlockOrientation orientation = CurrentRotationToOrientation();
         // print(orientation);
@@ -81,16 +82,20 @@ public class KinematicBlock : MonoBehaviour
                 minPos.y = Mathf.Max(testPos.y, minPos.y);
             }
         }
-        Vector3 space = visualizer.transform.InverseTransformPoint(minPos);
+        Vector3 space = minPos * 4; //visualizer.transform.InverseTransformPoint(minPos);
         var rounded = Vector2Int.RoundToInt(space);
         return rounded;
     }
 
     public Vector2Int GetSimulatorPosition()
     {
+        return new Vector2Int((int) transform.localPosition.x - block.Width,
+        (int) transform.localPosition.y);
+        /*
         var p2 = GetTopLeftPoint();
         p2.x = p2.x + block.Width;
         return p2;
+        */
     }
 
     public KinematicBlock Clone()

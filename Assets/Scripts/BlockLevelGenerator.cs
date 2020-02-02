@@ -34,8 +34,8 @@ public class BlockLevelGenerator
     private HashSet<KinematicBlock> GenerateCircle()
     {
         var kinematicBlocks = new HashSet<KinematicBlock>();
-        int sizeX = 3;
-        int sizeY = 3;
+        int sizeX = 4;
+        int sizeY = 4;
 
         // Get midpoint
         var gridSize = new Vector2(sizeX, sizeY);

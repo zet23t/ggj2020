@@ -172,7 +172,7 @@ public class BlockMapSimulator
             {
                 int iYGrid = (y + iY);
                 int iXGrid = (x + iX);
-                if (iYGrid >= Height || iXGrid >= Width)
+                if (iYGrid >= Height || iXGrid >= Width || iXGrid < 0 || iYGrid < 0)
                 {
                     return false;
                 }
@@ -199,18 +199,23 @@ public class BlockMapSimulator
     public override string ToString()
     {
         string str = "";
-        for (int iY = 0; iY < Height; iY++)
+        for (int iY = Height-1; iY >= 0; iY--)
         {
             for (int iX = 0; iX < Width; iX++)
             {
                 int v = _blockGrid[iY * Width + iX];
-                //if (v == BLOCK_ID_EXPLODED) str += "XX";
-                //else str += v != BLOCK_ID_EMPTY ? (v % 100).ToString("D2") : "__";
-                bool res = CanPlaceBlock(Registry.Blocks[0], BlockOrientation.O0, iX, iY);
-                str += res ? "#" : "_";
+                
+                bool isExploded = v == BLOCK_ID_EXPLODED;
+                bool isEmpty = v == BLOCK_ID_EMPTY;
+                bool canPlace = CanPlaceBlock(Registry.Blocks[0], BlockOrientation.O0, iX, iY);
+
+                str += canPlace ? "P" : "_";
+                str += isExploded ? "X" : "_";
+                str += isEmpty ? "E" : "_";
+                str += "   ";
             }
         
-            str += "\n";
+            str += "\n\n";
         }
 
         return str;
