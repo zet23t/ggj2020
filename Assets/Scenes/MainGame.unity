@@ -6248,6 +6248,11 @@ PrefabInstance:
       propertyPath: camShakeAnimator
       value: 
       objectReference: {fileID: 694906770}
+    - target: {fileID: 1503781465408559147, guid: b1cf2d06196db4d83bdf208c88ad1248,
+        type: 3}
+      propertyPath: BlockPushInterval
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 1942782872085678750, guid: b1cf2d06196db4d83bdf208c88ad1248,
         type: 3}
       propertyPath: m_StaticEditorFlags

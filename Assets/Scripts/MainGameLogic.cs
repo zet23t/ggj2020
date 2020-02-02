@@ -29,7 +29,7 @@ public class MainGameLogic : MonoBehaviour
         if (!blockMapVisualizer.IsEditor)
         {
             blockMapVisualizer.ExplodeRandomBlock();
-            
+
             if(camShakeAnimator != null)
                 camShakeAnimator.SetBool("IsShaking", true);
         }
@@ -40,6 +40,10 @@ public class MainGameLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKey(KeyCode.S)) {
+            BlockPushSpeedRetainPercentage = 0.8f;
+        }
+
         if(isGameOver || blockMapVisualizer.IsEditor) {
             return;
         }
