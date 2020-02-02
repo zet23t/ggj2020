@@ -40,7 +40,7 @@ public class BlockMapSimulator
     /// <summary>
     /// 
     /// </summary>
-    private readonly bool[] _blockGridBackground;
+    private readonly BlockPoint[] _blockGridBackground;
 
     /// <summary>
     /// A Dicitonary with all Blocks in the game field.
@@ -58,14 +58,14 @@ public class BlockMapSimulator
         this.Registry = blockRegistry;
 
         _blockGrid = new int[width * height];
-        _blockGridBackground = new bool[width * height];
+        _blockGridBackground = new BlockPoint[width * height];
         _blocks = new Dictionary<int, BlockPlacement>();
         _idCounter = 0;
 
         for (int i = 0; i < _blockGrid.Length; i++)
         {
             _blockGrid[i] = BLOCK_ID_EMPTY;
-            _blockGridBackground[i] = false;
+            _blockGridBackground[i] = new BlockPoint() {Valid = false};
         }
     }
 
@@ -137,7 +137,7 @@ public class BlockMapSimulator
     /// <summary>
     /// Places a block at the given position and orientation.
     /// </summary>
-    public int PlaceBlock(Block block, BlockOrientation orientation, int x, int y, bool initial = false)
+    public int PlaceBlock(Block block, BlockOrientation orientation, Color color, int x, int y, bool initial = false)
     {
         block.Rotate(orientation);
         
@@ -165,15 +165,23 @@ public class BlockMapSimulator
                     _blockGrid[(y + iY) * Width + (x + iX)] = blockId;
                     if (initial)
                     {
-                        _blockGridBackground[(y + iY) * Width + (x + iX)] = true;
+                        _blockGridBackground[(y + iY) * Width + (x + iX)] =
+                            new BlockPoint() {Valid = true, Color = color};
                     }
                     else
                     {
-                        bool isValidField = _blockGridBackground[y * Width + x];
+                        BlockPoint bp = _blockGridBackground[y * Width + x];
 
-                        if (isValidField)
+                        if (bp.Valid)
                         {
-                            _points += 200;
+                            if (bp.Color == color)
+                            {
+                                _points += 200;
+                            }
+                            else
+                            {
+                                _points += 50;
+                            }
                         }
                         else
                         {

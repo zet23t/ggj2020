@@ -206,7 +206,8 @@ public class BlockMapVisualizer : MonoBehaviour
 
         pos.y = Height - pos.y;
         Debug.Log("Place @ " + pos.x + ", " + pos.y);
-        kinematicBlock.BlockID = simulator.PlaceBlock(block, kinematicBlock.CurrentRotationToOrientation(), pos.x, pos.y, initial);
+        kinematicBlock.BlockID = simulator.PlaceBlock(block, kinematicBlock.CurrentRotationToOrientation(),
+            kinematicBlock.GetComponent<MeshRenderer>().sharedMaterial.color, pos.x, pos.y, initial);
         kinematicBlocks.Add(kinematicBlock);
     }
 

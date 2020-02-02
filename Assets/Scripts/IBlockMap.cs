@@ -13,3 +13,9 @@ public class BlockPlacement
     public Block Block;
     public BlockOrientation Orientation;
 }
+
+public class BlockPoint
+{
+    public bool Valid;
+    public Color Color;
+}
