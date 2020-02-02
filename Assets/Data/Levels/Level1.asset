@@ -17,26 +17,20 @@ MonoBehaviour:
     type: 2}
   Placements:
   - Block: {fileID: 11400000, guid: baa2d3e491d5f78428d0e84bdfafbf5f, type: 2}
-    Position: {x: 0, y: 2}
-    Orientation: 0
-  - Block: {fileID: 11400000, guid: 5e65d1765c3a52f4bbbab599037112b6, type: 2}
-    Position: {x: 4, y: 7}
+    Position: {x: 4, y: 9}
     Orientation: 0
   - Block: {fileID: 11400000, guid: 3fcde68e73b67d1489cfcf2eb157cd04, type: 2}
-    Position: {x: 0, y: 7}
+    Position: {x: 8, y: 4}
     Orientation: 0
-  - Block: {fileID: 11400000, guid: 5e65d1765c3a52f4bbbab599037112b6, type: 2}
-    Position: {x: 5, y: 7}
-    Orientation: 2
-  - Block: {fileID: 11400000, guid: 5e65d1765c3a52f4bbbab599037112b6, type: 2}
-    Position: {x: 8, y: 7}
+  - Block: {fileID: 11400000, guid: 3fcde68e73b67d1489cfcf2eb157cd04, type: 2}
+    Position: {x: 2, y: 11}
     Orientation: 0
   - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 10, y: 5}
+    Position: {x: 5, y: 10}
     Orientation: 0
   - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 10, y: 6}
+    Position: {x: 6, y: 9}
     Orientation: 0
   - Block: {fileID: 11400000, guid: dd765973cc1027743b14d4be86e01117, type: 2}
-    Position: {x: 10, y: 7}
+    Position: {x: 6, y: 8}
     Orientation: 0

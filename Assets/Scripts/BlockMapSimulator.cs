@@ -162,7 +162,7 @@ public class BlockMapSimulator
                 {
                     Debug.Log("Place Block [" + x + ", " + y + "] + [" + iX + ", " + iY + "] @ " + ((y + iY) * Width + (x + iX)));
                     _blockGrid[(y + iY) * Width + (x + iX)] = blockId;
-                    if (initial)
+                    if (initial || !scoreHandler)
                     {
                         _blockGridBackground[(y + iY) * Width + (x + iX)] =
                             new BlockPoint() {Valid = true, Color = color};

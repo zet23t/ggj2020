@@ -380,6 +380,8 @@ MonoBehaviour:
   scoreText: {fileID: 94402054}
   isFrozen: 0
   elapsedTime: 0
+  currentScore: 0
+  BlockScore: 0
 --- !u!1 &95518677
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,6 +794,18 @@ LightProbeGroup:
   - {x: -1.8306342, y: 0.9999998, z: -2.217689}
   - {x: -0.17411476, y: 1.831444, z: -2.217689}
   m_Dering: 1
+--- !u!114 &990223649 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8883195787518479444, guid: 83a38fc94d5c3d3429266524f2db4ad3,
+    type: 3}
+  m_PrefabInstance: {fileID: 400710154}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46abb6c3d6a7c4e749be60e0a91c685a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1185542978
 GameObject:
   m_ObjectHideFlags: 0
@@ -1361,6 +1375,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1503781465408559147, guid: b1cf2d06196db4d83bdf208c88ad1248,
+        type: 3}
+      propertyPath: scoreHandler
+      value: 
+      objectReference: {fileID: 990223649}
     - target: {fileID: 2273290328437393449, guid: b1cf2d06196db4d83bdf208c88ad1248,
         type: 3}
       propertyPath: m_StaticEditorFlags
