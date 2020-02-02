@@ -141,7 +141,7 @@ public class BlockMapVisualizer : MonoBehaviour
         PlaceBlock(kblock, true);
 
         var goBackground =
-            Instantiate(block.Prefab, go.transform.position - new Vector3(0, 0, -0.17f),
+            Instantiate(block.Prefab, go.transform.position - new Vector3(0, 0, -0.25f),
                 go.transform.rotation, transform);
         goBackground.GetComponent<MeshRenderer>().sharedMaterial = m.MaterialPrefab;
 

@@ -5561,6 +5561,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1.9
       objectReference: {fileID: 0}
+    - target: {fileID: 236315297338664382, guid: bc4fa2a37f3a248b4863828dec2bda08,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 236315297338664382, guid: bc4fa2a37f3a248b4863828dec2bda08,
+        type: 3}
+      propertyPath: fastApproximateAntialiasing.fastMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 236315297389328904, guid: bc4fa2a37f3a248b4863828dec2bda08,
         type: 3}
       propertyPath: m_Name
