@@ -74,7 +74,21 @@ public class MainGameLogic : MonoBehaviour
             trainAnimator.SetBool("IsExploded", true);
         }
 
-        PlayerPrefs.SetInt("Highscore", scoreHandler.currentScore);
-        PlayerPrefs.Save();
+        HandleHighscore();
+    }
+
+    private void HandleHighscore()
+    {
+        var previousHighscore = 0;
+        if (PlayerPrefs.HasKey("Highscore"))
+        {
+            previousHighscore = PlayerPrefs.GetInt("Highscore");
+        }
+
+        if (scoreHandler.currentScore > previousHighscore)
+        {
+            PlayerPrefs.SetInt("Highscore", scoreHandler.currentScore);
+            PlayerPrefs.Save();
+        }
     }
 }
