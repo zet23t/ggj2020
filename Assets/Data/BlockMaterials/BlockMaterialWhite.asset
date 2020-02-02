@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b06a916504c37be48a32afeec8e34dd2, type: 3}
-  m_Name: BlockMaterialBlue
+  m_Name: BlockMaterialWhite
   m_EditorClassIdentifier: 
-  MaterialPrefab: {fileID: 2100000, guid: 88feb61e13a634c41b1acb0f12eac98d, type: 2}
+  MaterialPrefab: {fileID: 2100000, guid: b9ffed2bf2d1c24488799603319e8f0e, type: 2}
