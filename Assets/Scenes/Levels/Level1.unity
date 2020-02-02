@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.49641287, b: 0.5748173, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028355, g: 0.22571374, b: 0.30692255, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -150,9 +150,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5bfa7ad426e6246ab862067640cd1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsEditor: 0
+  LevelPatternSaveAsset: {fileID: 0}
+  BlockMaterial: {fileID: 0}
+  WorldCamera: {fileID: 0}
   Width: 8
   Height: 8
+  ActivateVeclocity: 1
+  MaterialRegistry: {fileID: 0}
   BlockRegistry: {fileID: 11400000, guid: a2d362aa0f2c0b24b8c1128699490f2e, type: 2}
+  RotateBackPerSecond: 180
+  MoveBackPerSecond: 2
+  SnapBackDampening: 100
+  DebugOutput: {fileID: 0}
+  sfxPlaceBlock: {fileID: 0}
+  LevelRegistry: {fileID: 0}
 --- !u!4 &1401850272
 Transform:
   m_ObjectHideFlags: 0
