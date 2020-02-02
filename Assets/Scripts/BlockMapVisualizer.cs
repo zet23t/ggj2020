@@ -103,7 +103,7 @@ public class BlockMapVisualizer : MonoBehaviour
         var go = Instantiate(block.Prefab, worldSpacePos, Quaternion.identity, transform);
         var kblock = go.AddComponent<KinematicBlock>();
         kblock.Initialize(this, block, m, BlockMaterial);
-        Vector2Int simPos = kblock.GetSimulatorPosition();
+        Vector2Int simPos = kblock.GetTopLeftPoint();
         Debug.Log("SimPos: [" + simPos.x + "," + simPos.y + "]");
         if (!place)
         {

@@ -82,22 +82,9 @@ public class KinematicBlock : MonoBehaviour
                 minPos.y = Mathf.Max(testPos.y, minPos.y);
             }
         }
-        Vector3 space = minPos * 4; //visualizer.transform.InverseTransformPoint(minPos);
+        Vector3 space = visualizer.transform.InverseTransformPoint(minPos);
         var rounded = Vector2Int.RoundToInt(space);
         return rounded;
-    }
-
-    public Vector2Int GetSimulatorPosition()
-    {
-        /*
-        return new Vector2Int((int) transform.localPosition.x - block.Width,
-        (int) transform.localPosition.y);
-        */
-        var p2 = GetTopLeftPoint();
-        p2.x = p2.x + block.Width;
-        //p2.y = p2.y + block.Height;
-        return p2;
-        
     }
 
     public KinematicBlock Clone()
