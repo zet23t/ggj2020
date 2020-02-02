@@ -33,13 +33,17 @@ public class BlockMapVisualizer : MonoBehaviour
 
     public Text DebugOutput;
 
+    private BlockLevelGenerator levelGenerator;
+
     // Start is called before the first frame update
     void Start()
     {
         simulator = new BlockMapSimulator(Width, Height, BlockRegistry);
+        levelGenerator = new BlockLevelGenerator(BlockRegistry, MaterialRegistry, InstantiateBlock, CanPlaceBlock);
+
         if (!IsEditor)
         {
-            SpawnBlocks();
+            kinematicBlocks = levelGenerator.GenerateLevel();
         }
         else
         {
@@ -53,7 +57,7 @@ public class BlockMapVisualizer : MonoBehaviour
                     x = 0;
                     y += 5;
                 }
-                var kblock = InstantiateBlock(block, x, y, MaterialRegistry.Materials[0], false);
+                var kblock = InstantiateBlock(block, BlockOrientation.O0, x, y, MaterialRegistry.Materials[0], false);
                 var pos = kblock.transform.position;
                 pos.z = -.5f;
                 kblock.transform.position = pos;
@@ -87,29 +91,12 @@ public class BlockMapVisualizer : MonoBehaviour
         }
     }
 
-    private void SpawnBlocks()
+    private bool CanPlaceBlock(Block block, BlockOrientation orientation, int x, int y)
     {
-        kinematicBlocks = new HashSet<KinematicBlock>();
-
-        for (int j = 0; j < 10; j += 4)
-        {
-            int x = 0;
-
-            for (int i = 0; i < BlockRegistry.Blocks.Length; i += 1)
-            {
-                var block = BlockRegistry.Blocks[(i + j) % BlockRegistry.Blocks.Length].Clone();
-                x += block.Width + 1;
-                var material = MaterialRegistry.Materials[UnityEngine.Random.Range(0, MaterialRegistry.Materials.Length)];
-                var blockKinematic = InstantiateBlock(block, x, block.Height + j, material);
-                if (blockKinematic)
-                {
-                    kinematicBlocks.Add(blockKinematic);
-                }
-            }
-        }
+        return simulator.CanPlaceBlock(block, orientation, x, y);
     }
 
-    private KinematicBlock InstantiateBlock(Block block, int x, int y, BlockMaterial m, bool place = true)
+    private KinematicBlock InstantiateBlock(Block block, BlockOrientation orientation, int x, int y, BlockMaterial m, bool place = true)
     {
         Vector3 position = new Vector3(x, y, 0);
         var go = Instantiate(block.Prefab, transform.TransformPoint(position), Quaternion.identity, transform);
@@ -121,13 +108,13 @@ public class BlockMapVisualizer : MonoBehaviour
             return kblock;
         }
 
-        if (!simulator.CanPlaceBlock(block, BlockOrientation.O0, simPos.x, simPos.y))
+        if (!simulator.CanPlaceBlock(block, orientation, simPos.x, simPos.y))
         {
             Destroy(go);
             return null;
         }
 
-        kblock.BlockID = simulator.PlaceBlock(block, BlockOrientation.O0, simPos.x, simPos.y);
+        kblock.BlockID = simulator.PlaceBlock(block, orientation, simPos.x, simPos.y);
 
         var goBackground =
             Instantiate(block.Prefab, transform.TransformPoint(position - new Vector3(0, 0, -0.87f)),
@@ -160,7 +147,7 @@ public class BlockMapVisualizer : MonoBehaviour
             }
 
             // Re-Spawn blocks
-            SpawnBlocks();
+            kinematicBlocks = levelGenerator.GenerateLevel();
         }
 
         HandleInput();
