@@ -26,10 +26,13 @@ public class MainGameLogic : MonoBehaviour
     {
         UpdateTrainAnimSpeed();
         
-        blockMapVisualizer.ExplodeRandomBlock();
-        
-        if(camShakeAnimator != null)
-            camShakeAnimator.SetBool("IsShaking", true);
+        if (!blockMapVisualizer.IsEditor)
+        {
+            blockMapVisualizer.ExplodeRandomBlock();
+            
+            if(camShakeAnimator != null)
+                camShakeAnimator.SetBool("IsShaking", true);
+        }
 
         blockMapVisualizer.Simulator.SetScoreHandler(scoreHandler);
     }

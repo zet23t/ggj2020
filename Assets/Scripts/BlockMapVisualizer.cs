@@ -40,6 +40,8 @@ public class BlockMapVisualizer : MonoBehaviour
 
     private BlockLevelGenerator levelGenerator;
 
+    public LevelRegistry LevelRegistry;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -48,6 +50,12 @@ public class BlockMapVisualizer : MonoBehaviour
 
         if (!IsEditor)
         {
+            if (LevelRegistry)
+            {
+                LevelPatternSaveAsset = LevelRegistry.Patterns[Random.Range(0, LevelRegistry.Patterns.Length)];
+            }
+            if (LevelPatternSaveAsset)
+                LoadFromLevelPatternAsset();
             if (LevelPatternSaveAsset)
             {
                 LoadFromLevelPatternAsset();
@@ -59,8 +67,6 @@ public class BlockMapVisualizer : MonoBehaviour
         }
         else
         {
-            if (LevelPatternSaveAsset)
-                LoadFromLevelPatternAsset();
             int x = 0;
             int y = 4;
             foreach (var block in BlockRegistry.Blocks)
