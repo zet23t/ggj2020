@@ -20,3 +20,7 @@ Torben Binder
  - Rider
  - Visual Studio Code
  - fritz-kola
+
+
+## Screenshots
+![](RepositoryResources/Credits.png)  
