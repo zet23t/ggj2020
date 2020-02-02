@@ -168,6 +168,7 @@ public class KinematicBlock : MonoBehaviour
                 var projA = rayTouch.GetPoint(distancePlane);
                 var projB = rayTouch.GetPoint(distanceProjPlane);
                 tracer.Sampling(projB);
+                
                 switch (tracer.GetGesture())
                 {
                     case Gesture.RotateLeft:

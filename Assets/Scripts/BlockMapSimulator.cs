@@ -209,9 +209,9 @@ public class BlockMapSimulator
                 bool isEmpty = v == BLOCK_ID_EMPTY;
                 bool canPlace = CanPlaceBlock(Registry.Blocks[0], BlockOrientation.O0, iX, iY);
 
-                str += canPlace ? "P" : "_";
-                str += isExploded ? "X" : "_";
-                str += isEmpty ? "E" : "_";
+                str += canPlace ? "_" : "P";
+                str += isExploded ? "_" : "X";
+                str += isEmpty ? "_" : "F";
                 str += "   ";
             }
         
