@@ -73,8 +73,7 @@ public class MainGameLogic : MonoBehaviour
             scoreHandler.AddSimulatorPoints(blockMapVisualizer.Simulator);
             trainAnimator.SetBool("IsExploded", true);
         }
-    }
-        
+
         PlayerPrefs.SetInt("Highscore", scoreHandler.currentScore);
         PlayerPrefs.Save();
     }
