@@ -27,7 +27,9 @@ public class MainGameLogic : MonoBehaviour
         UpdateTrainAnimSpeed();
         
         blockMapVisualizer.ExplodeRandomBlock();
-        camShakeAnimator.SetBool("IsShaking", true);
+        
+        if(camShakeAnimator != null)
+            camShakeAnimator.SetBool("IsShaking", true);
 
         blockMapVisualizer.Simulator.SetScoreHandler(scoreHandler);
     }
@@ -69,7 +71,10 @@ public class MainGameLogic : MonoBehaviour
     private void UpdateTrainAtEnd()
     {
         UpdateTrainAnimSpeed();
-        camShakeAnimator.SetBool("IsShaking", true);
+
+        if(camShakeAnimator != null)
+            camShakeAnimator.SetBool("IsShaking", true);
+
         sfxExplosion.Play();
     }
 
