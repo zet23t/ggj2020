@@ -10,22 +10,24 @@ public class LevelPattern : ScriptableObject {
         public Block Block;
         public Vector2Int Position;
         public BlockOrientation Orientation;
+        public BlockMaterial Material;
 
-        public Placement(Block block, Vector2Int position, BlockOrientation orientation)
+        public Placement(Block block, Vector2Int position, BlockOrientation orientation, BlockMaterial material)
         {
             Block = block;
             Position = position;
             Orientation = orientation;
+            Material = material;
         }
     }
     public BlockRegistry BlockRegistry;
     public BlockMaterialRegistry BlockMaterialRegistry;
     public List<Placement> Placements;
 
-    public void Add(Block block, BlockOrientation orientation, Vector2Int position)
+    public void Add(Block block, BlockOrientation orientation, BlockMaterial material, Vector2Int position)
     {
         block = block.Original;
-        Placements.Add(new Placement(block, position, orientation));
+        Placements.Add(new Placement(block, position, orientation, material));
         SetDirtyReally();
     }
 
