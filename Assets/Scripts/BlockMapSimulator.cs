@@ -36,7 +36,12 @@ public class BlockMapSimulator
     /// If the block id equals BLOCK_ID_EMPTY, there is no block at that position.
     /// </summary>
     private readonly int[] _blockGrid;
-    
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private readonly bool[] _blockGridBackground;
+
     /// <summary>
     /// A Dicitonary with all Blocks in the game field.
     /// The index is an unique ID of the Block.
@@ -52,12 +57,14 @@ public class BlockMapSimulator
         this.Registry = blockRegistry;
 
         _blockGrid = new int[width * height];
+        _blockGridBackground = new bool[width * height];
         _blocks = new Dictionary<int, BlockPlacement>();
         _idCounter = 0;
 
         for (int i = 0; i < _blockGrid.Length; i++)
         {
             _blockGrid[i] = BLOCK_ID_EMPTY;
+            _blockGridBackground[i] = false;
         }
     }
 
@@ -121,10 +128,35 @@ public class BlockMapSimulator
         return explodedBlocks;
     }
 
+    public int GetPoints()
+    {
+        int points = 0;
+        
+        for (int y = 0; y < Height; y++)
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                bool isValidField = _blockGridBackground[y * Width + x];
+                bool isBlocked = _blockGrid[y * Width + x] >= 0;
+
+                if (isValidField && isBlocked)
+                {
+                    points += 200;
+                }
+                else
+                {
+                    points -= 250;
+                }
+            }
+        }
+
+        return points;
+    }
+
     /// <summary>
     /// Places a block at the given position and orientation.
     /// </summary>
-    public int PlaceBlock(Block block, BlockOrientation orientation, int x, int y)
+    public int PlaceBlock(Block block, BlockOrientation orientation, int x, int y, bool initial = false)
     {
         block.Rotate(orientation);
         
@@ -150,6 +182,10 @@ public class BlockMapSimulator
                 {
                     Debug.Log("Place Block [" + x + ", " + y + "] + [" + iX + ", " + iY + "] @ " + ((y + iY) * Width + (x + iX)));
                     _blockGrid[(y + iY) * Width + (x + iX)] = blockId;
+                    if (initial)
+                    {
+                        _blockGridBackground[(y + iY) * Width + (x + iX)] = true;
+                    }
                 }
             }
         }

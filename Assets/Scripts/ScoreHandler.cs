@@ -42,6 +42,11 @@ public class ScoreHandler : MonoBehaviour
         }
     }
 
+    public void AddSimulatorPoints(BlockMapSimulator simulator)
+    {
+        currentScore += simulator.GetPoints();
+    }
+
     public void FreezeTimer()
     {
         isFrozen = true;

@@ -70,6 +70,7 @@ public class MainGameLogic : MonoBehaviour
 
         if(scoreHandler != null) { // This is null in the main menu
             scoreHandler.FreezeTimer();
+            scoreHandler.AddSimulatorPoints(blockMapVisualizer.Simulator);
             trainAnimator.SetBool("IsExploded", true);
         }
     }

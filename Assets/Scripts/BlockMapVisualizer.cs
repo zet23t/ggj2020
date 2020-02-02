@@ -31,6 +31,8 @@ public class BlockMapVisualizer : MonoBehaviour
     public Vector3 MovePlanePoint => transform.TransformPoint(new Vector3(0, 0, -1.05f));
     public Vector3 PlayPlanePoint => transform.TransformPoint(new Vector3(0, 0, 0));
 
+    public BlockMapSimulator Simulator => simulator;
+
     public Text DebugOutput;
 
     public AudioSource sfxPlaceBlock;
@@ -107,7 +109,7 @@ public class BlockMapVisualizer : MonoBehaviour
             return null;
         }
 
-        PlaceBlock(kblock);
+        PlaceBlock(kblock, true);
 
         var goBackground =
             Instantiate(block.Prefab, worldSpacePos - new Vector3(0, 0, -0.17f),
@@ -196,7 +198,7 @@ public class BlockMapVisualizer : MonoBehaviour
             position.y <= Height;
     }
 
-    public void PlaceBlock(KinematicBlock kinematicBlock)
+    public void PlaceBlock(KinematicBlock kinematicBlock, bool initial = false)
     {
         var block = kinematicBlock.GetOrientedBlock(out Vector2Int pos);
 
@@ -204,7 +206,7 @@ public class BlockMapVisualizer : MonoBehaviour
 
         pos.y = Height - pos.y;
         Debug.Log("Place @ " + pos.x + ", " + pos.y);
-        kinematicBlock.BlockID = simulator.PlaceBlock(block, kinematicBlock.CurrentRotationToOrientation(), pos.x, pos.y);
+        kinematicBlock.BlockID = simulator.PlaceBlock(block, kinematicBlock.CurrentRotationToOrientation(), pos.x, pos.y, initial);
         kinematicBlocks.Add(kinematicBlock);
     }
 
