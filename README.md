@@ -8,6 +8,7 @@ Torben Binder
 
 
 ## Links
+[Playable @torbilicious.de](https://torbilicious.de/bad-blockz/index.html)  
 [Game @igjam.eu](https://igjam.eu/jams/global-game-jam-2020/735)  
 [Game @globalgamejam.org](https://globalgamejam.org/2020/games/bad-blockz-2)  
 [Sources @github.com](https://github.com/zet23t/ggj2020)  
