@@ -72,6 +72,8 @@ public class MainGameLogic : MonoBehaviour
             scoreHandler.FreezeTimer();
             trainAnimator.SetBool("IsExploded", true);
         }
+        
+        PlayerPrefs.SetInt("Highscore", scoreHandler.currentScore);
+        PlayerPrefs.Save();
     }
-
 }
