@@ -48,6 +48,7 @@ public class BlockMapSimulator
     /// </summary>
     private readonly Dictionary<int, BlockPlacement> _blocks;
 
+    private int _points;
     public int[] BlockGrid => _blockGrid;
 
     public BlockMapSimulator(int width, int height, BlockRegistry blockRegistry)
@@ -130,27 +131,7 @@ public class BlockMapSimulator
 
     public int GetPoints()
     {
-        int points = 0;
-        
-        for (int y = 0; y < Height; y++)
-        {
-            for (int x = 0; x < Width; x++)
-            {
-                bool isValidField = _blockGridBackground[y * Width + x];
-                bool isBlocked = _blockGrid[y * Width + x] >= 0;
-
-                if (isValidField && isBlocked)
-                {
-                    points += 200;
-                }
-                else
-                {
-                    points -= 250;
-                }
-            }
-        }
-
-        return points;
+        return _points;
     }
 
     /// <summary>
@@ -185,6 +166,19 @@ public class BlockMapSimulator
                     if (initial)
                     {
                         _blockGridBackground[(y + iY) * Width + (x + iX)] = true;
+                    }
+                    else
+                    {
+                        bool isValidField = _blockGridBackground[y * Width + x];
+
+                        if (isValidField)
+                        {
+                            _points += 200;
+                        }
+                        else
+                        {
+                            _points -= 400;
+                        }
                     }
                 }
             }
