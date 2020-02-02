@@ -61,8 +61,6 @@ public class KinematicBlock : MonoBehaviour
     public Block GetOrientedBlock(out Vector2Int position)
     {
         position = GetTopLeftPoint();
-        Debug.Log(position);
-
         BlockOrientation orientation = CurrentRotationToOrientation();
         // print(orientation);
         Block copy = block.Clone();
@@ -240,6 +238,7 @@ public class KinematicBlock : MonoBehaviour
         var pos = visualizer.transform.TransformPoint(new Vector3(p2d.x, p2d.y, 0));
         Gizmos.DrawWireSphere(new Vector3(pos.x, pos.y, 0), .125f);
         Vector3 size = transform.TransformVector(Vector3.one);
+        size.z *= 1.2f;
         size.x = Mathf.Abs(size.x);
         size.y = Mathf.Abs(size.y);
         for (int x = 0; x < block.Width; x += 1)

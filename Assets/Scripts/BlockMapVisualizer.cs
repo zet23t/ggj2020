@@ -71,52 +71,49 @@ public class BlockMapVisualizer : MonoBehaviour
     public bool ExplodeRandomBlock()
     {
         var amountOfTries = 0;
-        while (true)
-        {
-            if (++amountOfTries > 50)
-            {
-                return !simulator.IsEmpty();
-            }
+        return true;
+        // while (true)
+        // {
+        //     if (++amountOfTries > 50)
+        //     {
+        //         return !simulator.IsEmpty();
+        //     }
 
-            var possiblyExplodedBlocks = simulator.Explode(Random.Range(0, Width), Random.Range(0, Height), 1.0f);
-            if (possiblyExplodedBlocks.Count != 0)
-            {
-                foreach (var blockExploded in possiblyExplodedBlocks)
-                {
-                    var currentKineticBlock = kinematicBlocks.FirstOrDefault(block => block.BlockID == blockExploded.BlockId);
+        //     var possiblyExplodedBlocks = simulator.Explode(Random.Range(0, Width), Random.Range(0, Height), 1.0f);
+        //     if (possiblyExplodedBlocks.Count != 0)
+        //     {
+        //         foreach (var blockExploded in possiblyExplodedBlocks)
+        //         {
+        //             var currentKineticBlock = kinematicBlocks.FirstOrDefault(block => block.BlockID == blockExploded.BlockId);
 
-                    currentKineticBlock?.PushOut();
-                }
+        //             currentKineticBlock?.PushOut();
+        //         }
 
-                return true;
-            }
-        }
+        //         return true;
+        //     }
+        // }
     }
 
     private KinematicBlock InstantiateBlock(Block block, BlockOrientation orientation, int x, int y, BlockMaterial m, bool place = true)
     {
         Debug.Log("InstantiateBlock [" + x + ", " + y + "]");
-        
-        Vector3 position = new Vector3(x + block.Width, y, 0);
-        Vector3 worldSpacePos = position * 0.25f; //visualizer.transform.InverseTransformPoint(minPos);
-
+        Vector3 position = new Vector3(x, y, 0);
+        Vector3 worldSpacePos = transform.TransformPoint(position);
         var go = Instantiate(block.Prefab, worldSpacePos, Quaternion.identity, transform);
         var kblock = go.AddComponent<KinematicBlock>();
         kblock.Initialize(this, block, m, BlockMaterial);
-        Vector2Int simPos = kblock.GetTopLeftPoint();
-        Debug.Log("SimPos: [" + simPos.x + "," + simPos.y + "]");
         if (!place)
         {
             return kblock;
         }
 
-        if (!simulator.CanPlaceBlock(block, orientation, simPos.x, simPos.y))
+        if (!CanPlace(kblock))
         {
             Destroy(go);
             return null;
         }
 
-        kblock.BlockID = simulator.PlaceBlock(block, orientation, simPos.x, simPos.y);
+        PlaceBlock(kblock);
 
         var goBackground =
             Instantiate(block.Prefab, worldSpacePos - new Vector3(0, 0, -0.17f),
@@ -129,10 +126,11 @@ public class BlockMapVisualizer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (DebugOutput != null)
-        {
-            DebugOutput.text = simulator.ToString();
-        }
+        // DebugText = simulator.ToString();
+        // if (DebugOutput != null)
+        // {
+        //     DebugOutput.text = simulator.ToString();
+        // }
         
         if (IsEditor)
         {
@@ -176,7 +174,7 @@ public class BlockMapVisualizer : MonoBehaviour
                     {
                         if (block.IsFieldSet(x, y))
                         {
-                            simulator.Explode(pos.x + x, pos.y - y, 0);
+                            Explode(pos.x +x, pos.y - y);
                             x += block.Width;
                             break;
                         }
@@ -198,9 +196,26 @@ public class BlockMapVisualizer : MonoBehaviour
             position.y <= Height;
     }
 
+    public void PlaceBlock(KinematicBlock kinematicBlock)
+    {
+        var block = kinematicBlock.GetOrientedBlock(out Vector2Int pos);
+
+        sfxPlaceBlock.Play();
+
+        pos.y = Height - pos.y;
+        Debug.Log("Place @ " + pos.x + ", " + pos.y);
+        kinematicBlock.BlockID = simulator.PlaceBlock(block, kinematicBlock.CurrentRotationToOrientation(), pos.x, pos.y);
+    }
+
+    public void Explode(int x, int y, float rad = 0f)
+    {
+        simulator.Explode(x, Height - y, rad);
+    }
+
     public bool CanPlace(KinematicBlock block)
     {
         Block oriented = block.GetOrientedBlock(out Vector2Int position);
+        position.y = Height - position.y;
         return simulator.CanPlaceBlock(oriented, block.CurrentRotationToOrientation(), position.x, position.y);
     }
 
@@ -208,6 +223,24 @@ public class BlockMapVisualizer : MonoBehaviour
     {
         Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.DrawWireCube(new Vector3(Width * .5f, Height * .5f, 0), new Vector3(Width, Height, 0));
+        if (simulator == null)
+        {
+            return;
+        }
+        int[]grid = simulator.BlockGrid;
+        int width = simulator.Width;
+        int height = simulator.Height;
+        for (int y = 0; y < height; y+=1)
+        {
+            for (int x = 0; x < height; x+=1)
+            {
+                int index = x + y * width;
+                if (grid[index] < 0) continue;
+                Gizmos.color = Color.HSVToRGB((grid[index] * .2f) % 1f, 1, 1);
+                Gizmos.DrawCube(new Vector3(x + .5f, height - 1 - y + .5f, -.5f), Vector3.one);
+            }
+
+        }
     }
 
     public Vector3 SnapPoint(Vector3 pos)
@@ -221,15 +254,5 @@ public class BlockMapVisualizer : MonoBehaviour
     public float GetBottom()
     {
         return transform.position.y;
-    }
-
-    public void PlaceBlock(KinematicBlock kinematicBlock)
-    {
-        var block = kinematicBlock.GetOrientedBlock(out Vector2Int pos);
-
-        sfxPlaceBlock.Play();
-
-        Debug.Log("Place @ " + pos.x + ", " + pos.y);
-        kinematicBlock.BlockID = simulator.PlaceBlock(block, kinematicBlock.CurrentRotationToOrientation(), pos.x, pos.y);
     }
 }

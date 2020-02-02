@@ -43,6 +43,8 @@ public class BlockMapSimulator
     /// </summary>
     private readonly Dictionary<int, BlockPlacement> _blocks;
 
+    public int[] BlockGrid => _blockGrid;
+
     public BlockMapSimulator(int width, int height, BlockRegistry blockRegistry)
     {
         this.Width = width;
@@ -80,9 +82,6 @@ public class BlockMapSimulator
     /// removed from the game field and returned in a list.
     public List<BlockPlacement> Explode(int x, int y, float fRadius)
     {
-        y = InvertY(y);
-        
-        
         List<BlockPlacement> explodedBlocks = new List<BlockPlacement>();
         HashSet<int> explodedBlocksIds = new HashSet<int>();
 
@@ -127,11 +126,9 @@ public class BlockMapSimulator
     /// </summary>
     public int PlaceBlock(Block block, BlockOrientation orientation, int x, int y)
     {
-        //y = InvertY(y);
-        
         block.Rotate(orientation);
         
-        if (!CanPlaceBlock(block, orientation, x, y))
+        if (!CanPlaceBlock(block, x, y))
         {
             throw new InvalidOperationException("No block can be placed here! Use CanPlaceBlock() first!");
         }
@@ -158,14 +155,18 @@ public class BlockMapSimulator
         }
         return blockId;
     }
+    
+    public bool CanPlaceBlock(Block block, BlockOrientation orientation, int x, int y)
+    {
+        block.Rotate(orientation);
+        return CanPlaceBlock(block, x, y);
+    }
 
     /// <summary>
     /// Checks if a block can be placed at a given position and orientation.
     /// </summary>
-    public bool CanPlaceBlock(Block block, BlockOrientation orientation, int x, int y)
+    private bool CanPlaceBlock(Block block, int x, int y)
     {
-        block.Rotate(orientation);
-
         for (int iX = 0; iX < block.Width; iX++)
         {
             for (int iY = 0; iY < block.Height; iY++)
@@ -176,24 +177,13 @@ public class BlockMapSimulator
                 {
                     return false;
                 }
-                int target = iYGrid * Width + iXGrid;
-                if (target < 0 || target >= _blockGrid.Length)
-                {
-                    return false;
-                }
                 if (block.IsFieldSet(iX, iY) && _blockGrid[iYGrid * Width + iXGrid] > 0)
                 {
                     return false;
                 }
             }
         }
-
         return true;
-    }
-
-    private int InvertY(int y)
-    {
-        return Height - y;
     }
 
     public override string ToString()
@@ -208,14 +198,15 @@ public class BlockMapSimulator
                 bool isExploded = v == BLOCK_ID_EXPLODED;
                 bool isEmpty = v == BLOCK_ID_EMPTY;
                 bool canPlace = CanPlaceBlock(Registry.Blocks[0], BlockOrientation.O0, iX, iY);
-
-                str += canPlace ? "_" : "P";
+                str += v < 0 ? "00" : v.ToString("D2");
+                str += ";";
+                // str += canPlace ? "_" : "P";
                 //str += isExploded ? "_" : "X";
                 //str += isEmpty ? "_" : "F";
-                str += "   ";
+                // str += "   ";
             }
         
-            str += "\n\n";
+            str += "\n";
         }
 
         return str;
