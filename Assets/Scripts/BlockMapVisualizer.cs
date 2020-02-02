@@ -33,6 +33,8 @@ public class BlockMapVisualizer : MonoBehaviour
 
     public Text DebugOutput;
 
+    public AudioSource sfxPlaceBlock;
+
     private BlockLevelGenerator levelGenerator;
 
     // Start is called before the first frame update
@@ -225,9 +227,8 @@ public class BlockMapVisualizer : MonoBehaviour
     {
         var block = kinematicBlock.GetOrientedBlock(out Vector2Int pos);
 
-        var worldPos = new Vector3(pos.x, pos.y, 0);
-        //kinematicBlock.GetComponent<Rigidbody>().position = worldPos * 0.25f;
-        
+        sfxPlaceBlock.Play();
+
         Debug.Log("Place @ " + pos.x + ", " + pos.y);
         kinematicBlock.BlockID = simulator.PlaceBlock(block, kinematicBlock.CurrentRotationToOrientation(), pos.x, pos.y);
     }
