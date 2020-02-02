@@ -248,7 +248,8 @@ public class BlockMapVisualizer : MonoBehaviour
             LevelPatternSaveAsset.Add(block, orientation, pos);
         pos.y = Height - pos.y;
         Debug.Log("Place @ " + pos.x + ", " + pos.y);
-        kinematicBlock.BlockID = simulator.PlaceBlock(block, orientation, pos.x, pos.y, initial);
+        var color = kinematicBlock.GetComponent<MeshRenderer>().sharedMaterial.color;
+        kinematicBlock.BlockID = simulator.PlaceBlock(block, orientation, color, pos.x, pos.y, initial);
         kinematicBlocks.Add(kinematicBlock);
     }
 

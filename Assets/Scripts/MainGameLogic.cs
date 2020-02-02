@@ -7,6 +7,7 @@ public class MainGameLogic : MonoBehaviour
 {
     public BlockMapVisualizer blockMapVisualizer;
     public Animator trainAnimator;
+    public Animator camShakeAnimator;
     public ScoreHandler scoreHandler;
 
     public AudioSource bgMusic;
@@ -23,6 +24,8 @@ public class MainGameLogic : MonoBehaviour
     void Start()
     {
         UpdateTrainAnimSpeed();
+
+        blockMapVisualizer.Simulator.SetScoreHandler(scoreHandler);
     }
 
     // Update is called once per frame
@@ -56,6 +59,7 @@ public class MainGameLogic : MonoBehaviour
 
             BlockPushInterval = Math.Max(BlockPushMinInterval, BlockPushInterval * BlockPushSpeedRetainPercentage);
             UpdateTrainAnimSpeed();
+            camShakeAnimator.SetBool("IsShaking", true);
         }
     }
 
