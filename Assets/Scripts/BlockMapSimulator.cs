@@ -175,16 +175,16 @@ public class BlockMapSimulator
                         {
                             if (bp.Color == color)
                             {
-                                scoreHandler.BlockScore += 200;
+                                scoreHandler.BlockScore += 20;
                             }
                             else
                             {
-                                scoreHandler.BlockScore += 50;
+                                scoreHandler.BlockScore += 5;
                             }
                         }
                         else
                         {
-                            scoreHandler.BlockScore -= 400;
+                            scoreHandler.BlockScore -= 40;
                         }
                     }
                 }
