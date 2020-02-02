@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LevelRegistry
   m_EditorClassIdentifier: 
   Patterns:
+  - {fileID: 0}
   - {fileID: 11400000, guid: 0d21d013c34363a42826351b9d155090, type: 2}
   - {fileID: 11400000, guid: 4f9a273c346dd644a90196b2a9846cea, type: 2}
   - {fileID: 11400000, guid: d934c4f539d88f1418d7a3181f9b350b, type: 2}
