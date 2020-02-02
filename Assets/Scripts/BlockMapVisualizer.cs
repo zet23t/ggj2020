@@ -226,7 +226,7 @@ public class BlockMapVisualizer : MonoBehaviour
         var block = kinematicBlock.GetOrientedBlock(out Vector2Int pos);
 
         var worldPos = new Vector3(pos.x, pos.y, 0);
-        kinematicBlock.GetComponent<Rigidbody>().position = worldPos * 0.25f;
+        //kinematicBlock.GetComponent<Rigidbody>().position = worldPos * 0.25f;
         
         Debug.Log("Place @ " + pos.x + ", " + pos.y);
         kinematicBlock.BlockID = simulator.PlaceBlock(block, kinematicBlock.CurrentRotationToOrientation(), pos.x, pos.y);
