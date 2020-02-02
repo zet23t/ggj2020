@@ -95,7 +95,7 @@ public class BlockMapVisualizer : MonoBehaviour
     {
         Debug.Log("InstantiateBlock [" + x + ", " + y + "]");
         
-        Vector3 position = new Vector3(x, y, 0);
+        Vector3 position = new Vector3(x + block.Width, y, 0);
         Vector3 worldSpacePos = position * 0.25f; //visualizer.transform.InverseTransformPoint(minPos);
 
         var go = Instantiate(block.Prefab, worldSpacePos, Quaternion.identity, transform);
@@ -117,7 +117,7 @@ public class BlockMapVisualizer : MonoBehaviour
         kblock.BlockID = simulator.PlaceBlock(block, orientation, simPos.x, simPos.y);
 
         var goBackground =
-            Instantiate(block.Prefab, worldSpacePos - new Vector3(0, 0, -0.87f),
+            Instantiate(block.Prefab, worldSpacePos - new Vector3(0, 0, -0.17f),
                 Quaternion.identity, transform);
         goBackground.GetComponent<MeshRenderer>().sharedMaterial = m.MaterialPrefab;
 

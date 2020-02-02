@@ -210,8 +210,8 @@ public class BlockMapSimulator
                 bool canPlace = CanPlaceBlock(Registry.Blocks[0], BlockOrientation.O0, iX, iY);
 
                 str += canPlace ? "_" : "P";
-                str += isExploded ? "_" : "X";
-                str += isEmpty ? "_" : "F";
+                //str += isExploded ? "_" : "X";
+                //str += isEmpty ? "_" : "F";
                 str += "   ";
             }
         
