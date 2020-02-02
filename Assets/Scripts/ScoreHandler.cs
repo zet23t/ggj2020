@@ -28,7 +28,7 @@ public class ScoreHandler : MonoBehaviour
         elapsedTime += Time.deltaTime;
 
         if(!isFrozen) {
-            currentScore = (int)(elapsedTime * 100) + BlockScore;
+            currentScore = (int)(elapsedTime * 4) + BlockScore;
             scoreText.text = currentScore.ToString();
         } else if(elapsedTime > 0.65f) {
             elapsedTime = 0.0f;
