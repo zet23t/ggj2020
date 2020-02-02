@@ -38,9 +38,11 @@ public class GestureTracer
     {
         var rotateClockwiseKeys = new List<KeyCode> {KeyCode.D, KeyCode.RightArrow};
         var rotateAntiClockwiseKey = new List<KeyCode> {KeyCode.A, KeyCode.LeftArrow};
+        var mirrorKey = new List<KeyCode> {KeyCode.Space};
 
         bool anyClockwiseKeyDown = rotateClockwiseKeys.Any(Input.GetKeyUp);
         bool anyAntiClockwiseKeyDown = rotateAntiClockwiseKey.Any(Input.GetKeyUp);
+        bool anyMirrorKeyDown = mirrorKey.Any(Input.GetKeyUp);
 
         if (anyClockwiseKeyDown)
         {
@@ -49,6 +51,10 @@ public class GestureTracer
         else if (anyAntiClockwiseKeyDown)
         {
             return Gesture.RotateLeft;
+        }
+        else if (anyMirrorKeyDown)
+        {
+            return Gesture.MirrorHorizontal;
         }
 
         return Gesture.Nothing;
