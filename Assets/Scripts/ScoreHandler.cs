@@ -12,7 +12,7 @@ public class ScoreHandler : MonoBehaviour
     
     public double elapsedTime = 0;
 
-    public long currentScore { get; private set; }
+    public int currentScore { get; private set; }
 
     void Start()
     {
@@ -25,7 +25,7 @@ public class ScoreHandler : MonoBehaviour
         elapsedTime += Time.deltaTime;
 
         if(!isFrozen) {
-            currentScore = (long)(elapsedTime * 100);
+            currentScore = (int)(elapsedTime * 100);
             scoreText.text = currentScore.ToString();
         } else if(elapsedTime > 0.65f) {
             elapsedTime = 0.0f;

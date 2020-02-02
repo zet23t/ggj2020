@@ -74,5 +74,8 @@ public class MainGameLogic : MonoBehaviour
             trainAnimator.SetBool("IsExploded", true);
         }
     }
-
+        
+        PlayerPrefs.SetInt("Highscore", scoreHandler.currentScore);
+        PlayerPrefs.Save();
+    }
 }
