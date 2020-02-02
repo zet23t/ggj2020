@@ -1469,14 +1469,13 @@ PrefabInstance:
         type: 3}
       propertyPath: LevelPatternSaveAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 0d21d013c34363a42826351b9d155090,
+      objectReference: {fileID: 11400000, guid: 94a72e2f77c558243b18b89fe3e0a761,
         type: 2}
     - target: {fileID: 8751514867400965333, guid: b1cf2d06196db4d83bdf208c88ad1248,
         type: 3}
       propertyPath: LevelRegistry
       value: 
-      objectReference: {fileID: 11400000, guid: 687e2d0ca78c3b1439a8f7ba4ba0a391,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8751514868745791556, guid: b1cf2d06196db4d83bdf208c88ad1248,
         type: 3}
       propertyPath: m_Name

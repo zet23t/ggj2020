@@ -67,6 +67,10 @@ public class BlockMapVisualizer : MonoBehaviour
         }
         else
         {
+            if (LevelPatternSaveAsset)
+            {
+                LoadFromLevelPatternAsset();
+            }
             int x = 0;
             int y = 4;
             foreach (var block in BlockRegistry.Blocks)
