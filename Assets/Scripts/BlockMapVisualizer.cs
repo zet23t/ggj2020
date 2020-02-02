@@ -41,7 +41,7 @@ public class BlockMapVisualizer : MonoBehaviour
     private BlockLevelGenerator levelGenerator;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         simulator = new BlockMapSimulator(Width, Height, BlockRegistry);
         levelGenerator = new BlockLevelGenerator(BlockRegistry, MaterialRegistry, InstantiateBlock, CanPlace);
