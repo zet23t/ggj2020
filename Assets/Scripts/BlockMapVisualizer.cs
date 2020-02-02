@@ -26,7 +26,7 @@ public class BlockMapVisualizer : MonoBehaviour
 
     private BlockMapSimulator simulator;
 
-    private HashSet<KinematicBlock> kinematicBlocks;
+    private List<KinematicBlock> kinematicBlocks = new List<KinematicBlock>();
 
     public Vector3 MovePlanePoint => transform.TransformPoint(new Vector3(0, 0, -1.05f));
     public Vector3 PlayPlanePoint => transform.TransformPoint(new Vector3(0, 0, 0));
@@ -45,7 +45,7 @@ public class BlockMapVisualizer : MonoBehaviour
 
         if (!IsEditor)
         {
-            kinematicBlocks = levelGenerator.GenerateLevel();
+            levelGenerator.GenerateLevel();
         }
         else
         {
@@ -70,28 +70,22 @@ public class BlockMapVisualizer : MonoBehaviour
 
     public bool ExplodeRandomBlock()
     {
-        var amountOfTries = 0;
+        if (kinematicBlocks.Count == 0)
+        {
+            return false;
+        }
+
+        var kblock = kinematicBlocks[Random.Range(0, kinematicBlocks.Count)];
+        var block = kblock.GetOrientedBlock(out Vector2Int point);
+        var possiblyExplodedBlocks = Explode(point.x + block.Width / 2, point.y + block.Height / 2, 3.0f);
+        foreach (var blockExploded in possiblyExplodedBlocks)
+        {
+            var currentKineticBlock = kinematicBlocks.FirstOrDefault(b => b.BlockID == blockExploded.BlockId);
+            currentKineticBlock?.PushOut();
+            kinematicBlocks.Remove(currentKineticBlock);
+        }
+
         return true;
-        // while (true)
-        // {
-        //     if (++amountOfTries > 50)
-        //     {
-        //         return !simulator.IsEmpty();
-        //     }
-
-        //     var possiblyExplodedBlocks = simulator.Explode(Random.Range(0, Width), Random.Range(0, Height), 1.0f);
-        //     if (possiblyExplodedBlocks.Count != 0)
-        //     {
-        //         foreach (var blockExploded in possiblyExplodedBlocks)
-        //         {
-        //             var currentKineticBlock = kinematicBlocks.FirstOrDefault(block => block.BlockID == blockExploded.BlockId);
-
-        //             currentKineticBlock?.PushOut();
-        //         }
-
-        //         return true;
-        //     }
-        // }
     }
 
     private KinematicBlock InstantiateBlock(Block block, BlockOrientation orientation, int x, int y, BlockMaterial m, bool place = true)
@@ -131,7 +125,7 @@ public class BlockMapVisualizer : MonoBehaviour
         // {
         //     DebugOutput.text = simulator.ToString();
         // }
-        
+
         if (IsEditor)
         {
             HandleInput();
@@ -147,7 +141,8 @@ public class BlockMapVisualizer : MonoBehaviour
             }
 
             // Re-Spawn blocks
-            kinematicBlocks = levelGenerator.GenerateLevel();
+            kinematicBlocks.Clear();
+            levelGenerator.GenerateLevel();
         }
 
         HandleInput();
@@ -164,28 +159,32 @@ public class BlockMapVisualizer : MonoBehaviour
         if (touches[0].Down)
         {
             var ray = WorldCamera.ScreenPointToRay(touches[0].ScreenPosition);
-            Debug.DrawRay(ray.origin,ray.direction * 20);
+            Debug.DrawRay(ray.origin, ray.direction * 20);
             if (Physics.Raycast(ray, out RaycastHit hit, 20, ~(1 << 2)) && hit.collider.GetComponent<KinematicBlock>())
             {
                 var kb = hit.collider.GetComponent<KinematicBlock>();
                 var block = kb.GetOrientedBlock(out Vector2Int pos);
-                for (int x = 0; x < block.Width; x += 1)
-                {
-                    for (int y = 0; y < block.Height; y += 1)
-                    {
-                        if (block.IsFieldSet(x, y))
-                        {
-                            Explode(pos.x +x, pos.y - y);
-                            x += block.Width;
-                            break;
-                        }
-                    }
-                }
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     kb = kb.Clone();
                 }
+                else
+                {
+                    for (int x = 0; x < block.Width; x += 1)
+                    {
+                        for (int y = 0; y < block.Height; y += 1)
+                        {
+                            if (block.IsFieldSet(x, y))
+                            {
+                                Explode(pos.x + x, pos.y - y);
+                                x += block.Width;
+                                break;
+                            }
+                        }
+                    }
+                }
                 kb.Activate(touches[0], hit);
+                kinematicBlocks.Remove(kb);
             }
         }
     }
@@ -206,11 +205,12 @@ public class BlockMapVisualizer : MonoBehaviour
         pos.y = Height - pos.y;
         Debug.Log("Place @ " + pos.x + ", " + pos.y);
         kinematicBlock.BlockID = simulator.PlaceBlock(block, kinematicBlock.CurrentRotationToOrientation(), pos.x, pos.y);
+        kinematicBlocks.Add(kinematicBlock);
     }
 
-    public void Explode(int x, int y, float rad = 0f)
+    public List<BlockPlacement> Explode(int x, int y, float rad = 0f)
     {
-        simulator.Explode(x, Height - y, rad);
+        return simulator.Explode(x, Height - y, rad);
     }
 
     public bool CanPlace(KinematicBlock block)
@@ -228,12 +228,12 @@ public class BlockMapVisualizer : MonoBehaviour
         {
             return;
         }
-        int[]grid = simulator.BlockGrid;
+        int[] grid = simulator.BlockGrid;
         int width = simulator.Width;
         int height = simulator.Height;
-        for (int y = 0; y < height; y+=1)
+        for (int y = 0; y < height; y += 1)
         {
-            for (int x = 0; x < height; x+=1)
+            for (int x = 0; x < height; x += 1)
             {
                 int index = x + y * width;
                 if (grid[index] < 0) continue;
