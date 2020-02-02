@@ -12,7 +12,7 @@ public class ScoreHandler : MonoBehaviour
     
     public double elapsedTime = 0;
 
-    public int currentScore { get; private set; }
+    public int currentScore;
 
     void Start()
     {
@@ -44,7 +44,7 @@ public class ScoreHandler : MonoBehaviour
 
     public void AddSimulatorPoints(BlockMapSimulator simulator)
     {
-        currentScore += simulator.GetPoints();
+        //currentScore += simulator.GetPoints();
     }
 
     public void FreezeTimer()

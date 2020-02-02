@@ -48,7 +48,8 @@ public class BlockMapSimulator
     /// </summary>
     private readonly Dictionary<int, BlockPlacement> _blocks;
 
-    private int _points;
+    private ScoreHandler scoreHandler;
+
     public int[] BlockGrid => _blockGrid;
 
     public BlockMapSimulator(int width, int height, BlockRegistry blockRegistry)
@@ -130,12 +131,8 @@ public class BlockMapSimulator
 
         return explodedBlocks;
     }
-
-    public int GetPoints()
-    {
-        return _points;
-    }
-
+    
+    
     /// <summary>
     /// Places a block at the given position and orientation.
     /// </summary>
@@ -178,16 +175,16 @@ public class BlockMapSimulator
                         {
                             if (bp.Color == color)
                             {
-                                _points += 200;
+                                scoreHandler.currentScore += 200;
                             }
                             else
                             {
-                                _points += 50;
+                                scoreHandler.currentScore += 50;
                             }
                         }
                         else
                         {
-                            _points -= 400;
+                            scoreHandler.currentScore -= 400;
                         }
                     }
                 }
@@ -250,5 +247,10 @@ public class BlockMapSimulator
         }
 
         return str;
+    }
+
+    public void SetScoreHandler(ScoreHandler scoreHandler)
+    {
+        this.scoreHandler = scoreHandler;
     }
 }

@@ -23,6 +23,8 @@ public class MainGameLogic : MonoBehaviour
     void Start()
     {
         UpdateTrainAnimSpeed();
+
+        blockMapVisualizer.Simulator.SetScoreHandler(scoreHandler);
     }
 
     // Update is called once per frame
