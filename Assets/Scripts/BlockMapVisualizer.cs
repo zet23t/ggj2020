@@ -87,8 +87,12 @@ public class BlockMapVisualizer : MonoBehaviour
         IsEditor = false;
         foreach (var placement in LevelPatternSaveAsset.Placements)
         {
-            InstantiateBlock(placement.Block, placement.Orientation, placement.Position.x, placement.Position.y,
-                MaterialRegistry.Materials[0]);
+            BlockMaterial m = MaterialRegistry.Materials[0];
+            if (placement.Material)
+            {
+                m = placement.Material;
+            }
+            InstantiateBlock(placement.Block, placement.Orientation, placement.Position.x, placement.Position.y, m);
         }
         IsEditor = editor;
     }
@@ -120,6 +124,7 @@ public class BlockMapVisualizer : MonoBehaviour
         var go = Instantiate(block.Prefab, worldSpacePos, KinematicBlock.OrientationToRotation(orientation), transform);
         var kblock = go.AddComponent<KinematicBlock>();
         kblock.Initialize(this, block, m, BlockMaterial);
+
         Vector2Int simPos = kblock.GetTopLeftPoint();
         var localpos = go.transform.localPosition;
         localpos.x += x - simPos.x;
@@ -195,6 +200,21 @@ public class BlockMapVisualizer : MonoBehaviour
             {
                 var kb = hit.collider.GetComponent<KinematicBlock>();
                 var block = kb.GetOrientedBlock(out Vector2Int pos);
+                if (
+                    CheckAlphaKey(kb, KeyCode.Alpha0, 0) ||
+                    CheckAlphaKey(kb, KeyCode.Alpha1, 1) ||
+                    CheckAlphaKey(kb, KeyCode.Alpha2, 2) ||
+                    CheckAlphaKey(kb, KeyCode.Alpha3, 3) ||
+                    CheckAlphaKey(kb, KeyCode.Alpha4, 4) ||
+                    CheckAlphaKey(kb, KeyCode.Alpha5, 5) ||
+                    CheckAlphaKey(kb, KeyCode.Alpha6, 6) ||
+                    CheckAlphaKey(kb, KeyCode.Alpha7, 7) ||
+                    CheckAlphaKey(kb, KeyCode.Alpha8, 8)
+                )
+                {
+                    return;
+                }
+
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     kb = kb.Clone();
@@ -214,18 +234,34 @@ public class BlockMapVisualizer : MonoBehaviour
                         }
                     }
                     kinematicBlocks.Remove(kb);
-                    if (LevelPatternSaveAsset && IsEditor)
-                    {
-                        // just reset and readd to avoid "problems"
-                        LevelPatternSaveAsset.RemoveAll();
-                        foreach(var kblock in kinematicBlocks)
-                        {
-                            var b = kblock.GetOrientedBlock(out Vector2Int posi);
-                            LevelPatternSaveAsset.Add(b, kblock.CurrentRotationToOrientation(), posi);
-                        }
-                    }
+                    Reserialize();
                 }
                 kb.Activate(touches[0], hit);
+            }
+        }
+    }
+
+    private bool CheckAlphaKey(KinematicBlock kb, KeyCode keyCode, int index)
+    {
+        if (Input.GetKey(keyCode) && MaterialRegistry.Materials.Length > index)
+        {
+            kb.SetBlockMaterial(MaterialRegistry.Materials[index]);
+            Reserialize();
+            return true;
+        }
+        return false;
+    }
+
+    private void Reserialize()
+    {
+        if (LevelPatternSaveAsset && IsEditor)
+        {
+            // just reset and readd to avoid "problems"
+            LevelPatternSaveAsset.RemoveAll();
+            foreach (var kblock in kinematicBlocks)
+            {
+                var b = kblock.GetOrientedBlock(out Vector2Int posi);
+                LevelPatternSaveAsset.Add(b, kblock.CurrentRotationToOrientation(), kblock.BlockMaterial, posi);
             }
         }
     }
@@ -245,7 +281,7 @@ public class BlockMapVisualizer : MonoBehaviour
 
         BlockOrientation orientation = kinematicBlock.CurrentRotationToOrientation();
         if (LevelPatternSaveAsset && IsEditor)
-            LevelPatternSaveAsset.Add(block, orientation, pos);
+            LevelPatternSaveAsset.Add(block, orientation, kinematicBlock.BlockMaterial, pos);
         pos.y = Height - pos.y;
         Debug.Log("Place @ " + pos.x + ", " + pos.y);
         var color = kinematicBlock.GetComponent<MeshRenderer>().sharedMaterial.color;

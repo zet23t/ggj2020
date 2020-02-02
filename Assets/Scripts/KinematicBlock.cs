@@ -13,6 +13,7 @@ public class KinematicBlock : MonoBehaviour
     private BlockOrientation orientation;
 
     public int BlockID;
+    public BlockMaterial BlockMaterial;
 
     public static Quaternion OrientationToRotation(BlockOrientation block)
     {
@@ -118,6 +119,7 @@ public class KinematicBlock : MonoBehaviour
         }
         body = gameObject.AddComponent<Rigidbody>();
         body.isKinematic = true;
+        BlockMaterial = m;
     }
 
     public void Activate(Lean.Touch.LeanFinger leanFinger, RaycastHit hit)
@@ -216,6 +218,12 @@ public class KinematicBlock : MonoBehaviour
             yield break;
         }
         body.isKinematic = false;
+    }
+
+    internal void SetBlockMaterial(BlockMaterial blockMaterial)
+    {
+        BlockMaterial = blockMaterial;
+        GetComponent<MeshRenderer>().sharedMaterial = blockMaterial.MaterialPrefab;
     }
 
     private IEnumerator PushOutRoutine()
