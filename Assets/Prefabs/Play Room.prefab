@@ -2150,9 +2150,9 @@ MonoBehaviour:
   bgMusic: {fileID: 7410781556765402328}
   sfxCrowdShock: {fileID: 2017863542269624027}
   sfxExplosion: {fileID: 944819110241371180}
-  BlockPushInterval: 3
-  BlockPushMinInterval: 0.5
-  BlockPushSpeedRetainPercentage: 0.9
+  BlockPushInterval: 15
+  BlockPushMinInterval: 0.3
+  BlockPushSpeedRetainPercentage: 0.95
 --- !u!82 &7410781556765402328
 AudioSource:
   m_ObjectHideFlags: 0
